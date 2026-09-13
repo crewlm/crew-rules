@@ -2,13 +2,13 @@
 Different models.
 """
 
-from typing import Literal, Iterable, Any, Hashable
+from typing import Literal, Iterable, Any, Hashable, Annotated
 from functools import cached_property
 from operator import attrgetter
 from uuid import uuid4, UUID
 from datetime import datetime, timedelta, time
 
-from utilites.pydantic import CustomBaseModel, Field
+from utilites.pydantic import CustomBaseModel, Field, PrivateAttr
 
 
 class EqualNumberComparison(CustomBaseModel):
@@ -155,7 +155,7 @@ class ContainSetComparison(CustomBaseModel):
         return set(value).issuperset(self.items)
 
 
-Comparison = (
+Comparison = Comparison = Annotated[
     EqualNumberComparison
     | LENumberComparison
     | GENumberComparison
@@ -168,8 +168,9 @@ Comparison = (
     | TimeWindowOverlapComparison
     | EqualSetComparison
     | WithinSetComparison
-    | ContainSetComparison
-)
+    | ContainSetComparison,
+    Field(discriminator="kind"),
+]
 
 
 class Condition(CustomBaseModel):
