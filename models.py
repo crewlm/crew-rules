@@ -4,7 +4,7 @@ Different models.
 
 from typing import Literal, Iterable, Any, Hashable
 from uuid import uuid4, UUID
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, time
 
 from utilites.pydantic import CustomBaseModel, Field
 
@@ -77,6 +77,35 @@ class RangeDurationComparison(CustomBaseModel):
 
     def matches(self, value: timedelta):
         return self.lower <= value <= self.upper
+
+
+class RangeDatetimeComparison(CustomBaseModel):
+    kind: Literal["range_datetime_comparison"] = "range_datetime_comparison"
+    lower: datetime
+    upper: datetime
+
+    def matches(self, value: datetime):
+        return self.lower <= value <= self.upper
+
+
+class TimeWindowOverlapComparison(CustomBaseModel):
+    kind: Literal["time_window_overlap_comparison"] = "time_window_overlap_comparison"
+    start: time
+    end: time
+    overlap: timedelta = Field(
+        timedelta(seconds=1), description="Minimum amount of overlap to check for."
+    )
+
+    def matches(self, value: tuple[datetime, datetime]):
+        """TODO: Account for fact that the overlap time of day
+        could be any day from value[0] to value[1], which could
+        be multiple days"""
+        start_day = value[0].date()
+        start_ts = datetime.combine(start_day, self.start)
+        end_ts = datetime.combine(start_day, self.end)
+        if end_ts < start_ts:
+            end_ts += timedelta(days=1)
+        return False
 
 
 class EqualSetComparison(CustomBaseModel):
