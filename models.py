@@ -55,6 +55,15 @@ class Condition(CustomBaseModel):
     comparison: Comparison = Field(description="Comparison to make")
     reverse_match: bool = Field(False, description="TRUE inverts the match")
 
+    def matches(self, obj):
+        """TODO"""
+        # val = do some sort of python getattr with chain to get field from obj
+        # comparison_match = comparison.matches(val)
+        # return (not comparison_match) if self.reverse_match else comparison_match
+        value = None  # chain(getattr(obj, self.fields.split(".")))
+        comparison_match = True  # self.comparison.matches(value)
+        return (not comparison_match) if self.reverse_match else comparison_match
+
 
 class Value(CustomBaseModel):
     pass
@@ -66,10 +75,19 @@ class ConditionValue(CustomBaseModel):
     )
     value: Value
 
+    def matches(self, obj):
+        return all(c.matches(obj) for c in self.condition)
+
 
 class DecisionTable(CustomBaseModel):
     default: Value
     items: list[ConditionValue] = Field(default_factory=list)
+
+    def get_matching_value(self, obj):
+        for item in self.items:
+            if item.matches(obj):
+                return item.value
+        return self.default
 
 
 class Rule(CustomBaseModel):
