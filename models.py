@@ -155,7 +155,7 @@ class ContainSetComparison(CustomBaseModel):
         return set(value).issuperset(self.items)
 
 
-Comparison = Comparison = Annotated[
+Comparison = Annotated[
     EqualNumberComparison
     | LENumberComparison
     | GENumberComparison
