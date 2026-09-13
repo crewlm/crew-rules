@@ -3,6 +3,8 @@ Different models.
 """
 
 from typing import Literal, Iterable, Any, Hashable
+from functools import cached_property
+from operator import attrgetter
 from uuid import uuid4, UUID
 from datetime import datetime, timedelta, time
 
@@ -96,15 +98,36 @@ class TimeWindowOverlapComparison(CustomBaseModel):
         timedelta(seconds=1), description="Minimum amount of overlap to check for."
     )
 
-    def matches(self, value: tuple[datetime, datetime]):
-        """TODO: Account for fact that the overlap time of day
-        could be any day from value[0] to value[1], which could
-        be multiple days"""
-        start_day = value[0].date()
-        start_ts = datetime.combine(start_day, self.start)
-        end_ts = datetime.combine(start_day, self.end)
-        if end_ts < start_ts:
-            end_ts += timedelta(days=1)
+    def matches(self, value: tuple[datetime, datetime]) -> bool:
+        interval_start, interval_end = value
+        if interval_end <= interval_start:
+            return False
+
+        total_overlap = timedelta(seconds=0)
+
+        # Iterate day-by-day over the interval duration
+        current_date = interval_start.date()
+        end_date = interval_end.date() + timedelta(days=1)
+
+        while current_date <= end_date:
+            # Construct window for current day (handling overnight windows like 22:00 - 06:00)
+            window_start = datetime.combine(current_date, self.start)
+            window_end = datetime.combine(current_date, self.end)
+
+            if window_end <= window_start:
+                window_end += timedelta(days=1)
+
+            # Intersection of [interval_start, interval_end] and [window_start, window_end]
+            overlap_start = max(interval_start, window_start)
+            overlap_end = min(interval_end, window_end)
+
+            if overlap_end > overlap_start:
+                total_overlap += overlap_end - overlap_start
+                if total_overlap >= self.overlap:
+                    return True
+
+            current_date += timedelta(days=1)
+
         return False
 
 
@@ -154,13 +177,13 @@ class Condition(CustomBaseModel):
     comparison: Comparison = Field(description="Comparison to make")
     reverse_match: bool = Field(False, description="TRUE inverts the match")
 
+    @cached_property
+    def _field_getter(self):
+        return attrgetter(self.field)
+
     def matches(self, obj):
-        """TODO"""
-        # val = do some sort of python getattr with chain to get field from obj
-        # comparison_match = comparison.matches(val)
-        # return (not comparison_match) if self.reverse_match else comparison_match
-        value = None  # chain(getattr(obj, self.fields.split(".")))
-        comparison_match = True  # self.comparison.matches(value)
+        value = self._field_getter(obj)
+        comparison_match = self.comparison.matches(value)
         return (not comparison_match) if self.reverse_match else comparison_match
 
 
