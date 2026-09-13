@@ -164,6 +164,8 @@ Comparison = (
     | LEDurationComparison
     | GEDurationComparison
     | RangeDurationComparison
+    | RangeDatetimeComparison
+    | TimeWindowOverlapComparison
     | EqualSetComparison
     | WithinSetComparison
     | ContainSetComparison
