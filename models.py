@@ -359,7 +359,8 @@ class AircraftGroundTimeRule(Rule[AircraftGroundTime]):
 
 
 class PortTimePeriodRule(Rule[PortTimePeriod]):
-    scope: Literal["port_time_period"]
+    scope: Literal["port_time_period"] = "port_time_period"
+    time_period: TimePeriod
 
 
 AnyRule = Annotated[
