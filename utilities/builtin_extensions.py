@@ -1,4 +1,5 @@
 from typing import TypeVar, Any, Generic
+from collections import defaultdict
 from pydantic import GetCoreSchemaHandler
 from pydantic_core import core_schema
 
@@ -96,6 +97,47 @@ class GettableDict(dict[K, V], Generic[K, V]):
         if colliding:
             raise ValueError(
                 f"{type(self).__name__} keys collide with dict attributes/methods "
+                f"and won't be reachable via dot access: {sorted(colliding)}"
+            )
+
+    def __getattr__(self, name):
+        try:
+            return self[name]
+        except KeyError:
+            raise AttributeError(f"'{type(self).__name__}' object has no key '{name}'")
+
+    @classmethod
+    def __get_pydantic_core_schema__(
+        cls, source_type: Any, handler: GetCoreSchemaHandler
+    ) -> core_schema.CoreSchema:
+        std_type = _to_std_type(source_type, dict)
+        return core_schema.no_info_after_validator_function(
+            cls,
+            handler.generate_schema(std_type),
+        )
+
+
+class GettableDefaultDict(defaultdict[K, V], Generic[K, V]):
+    """
+    defaultdict subclass enabling dot-notation field access for attrgetter.
+    E.g., calculated_numbers.frms_score
+
+    Since this is a defaultdict, dot access to a missing key will trigger
+    default_factory and create the entry, just like `d[key]` would.
+    """
+
+    # Computed once at class definition time
+    _RESERVED_NAMES = frozenset(dir(defaultdict))
+
+    def __init__(self, default_factory=None, *args, **kwargs):
+        super().__init__(default_factory, *args, **kwargs)
+        self._check_key_collisions()
+
+    def _check_key_collisions(self):
+        colliding = self._RESERVED_NAMES & self.keys()
+        if colliding:
+            raise ValueError(
+                f"{type(self).__name__} keys collide with dict/defaultdict attributes/methods "
                 f"and won't be reachable via dot access: {sorted(colliding)}"
             )
 
