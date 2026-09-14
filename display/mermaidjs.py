@@ -44,8 +44,10 @@ class MermaidDiagramBuilder:
                 first_id = cond_id
 
             # Clean HTML line-breaks for Mermaid decision nodes
-            cond_text = item.display_condition().replace("\n", "<br/>")
-            val_text = item.display_value()
+            cond_text = (
+                item.display_condition().replace("\n", "<br/>").replace('"', "'")
+            )
+            val_text = item.display_value().replace('"', "'")
 
             self.lines.append(f'        {cond_id}{{"{cond_text}?"}}')
             self.lines.append(f'        {val_id}["{val_text}"]:::{node_class}')
@@ -74,15 +76,20 @@ class MermaidDiagramBuilder:
         self.lines.append('\n    subgraph SubjectValue ["Initial Value"]')
         self.add_decision_table(self.rule.value, "valNode")
         self.lines.append("    end")
+
         if self.rule.value_updates:
             self.lines.append('\n    subgraph ValueUpdates ["Value Updates"]')
+            prev_update_exit = None
             for upd in self.rule.value_updates:
                 u_header_id = self._next_node_id()
+                if prev_update_exit:
+                    self.lines.append(f"        {prev_update_exit} --> {u_header_id}")
                 self.lines.append(
                     f'        {u_header_id}[["Value Update: {upd.name} ({upd.method.title()})"]]:::valUpdNode'
                 )
                 upd_entry = self.add_decision_table(upd.table, "valUpdNode")
                 self.lines.append(f"        {u_header_id} --> {upd_entry}")
+                prev_update_exit = upd_entry
             self.lines.append("    end")
         return self
 
@@ -96,13 +103,17 @@ class MermaidDiagramBuilder:
             self.lines.append(
                 '\n    subgraph RequirementUpdates ["Requirement Updates"]'
             )
+            prev_update_exit = None
             for upd in self.rule.requirement_updates:
                 u_header_id = self._next_node_id()
+                if prev_update_exit:
+                    self.lines.append(f"        {prev_update_exit} --> {u_header_id}")
                 self.lines.append(
                     f'        {u_header_id}[["Requirement Update: {upd.name} ({upd.method.title()})"]]:::reqUpdNode'
                 )
                 upd_entry = self.add_decision_table(upd.table, "reqUpdNode")
                 self.lines.append(f"        {u_header_id} --> {upd_entry}")
+                prev_update_exit = upd_entry
             self.lines.append("    end")
 
         if self.rule.limit:
@@ -112,13 +123,17 @@ class MermaidDiagramBuilder:
 
         if self.rule.limit_updates:
             self.lines.append('\n    subgraph LimitUpdates ["Limit Updates"]')
+            prev_update_exit = None
             for upd in self.rule.limit_updates:
                 u_header_id = self._next_node_id()
+                if prev_update_exit:
+                    self.lines.append(f"        {prev_update_exit} --> {u_header_id}")
                 self.lines.append(
                     f'        {u_header_id}[["Limit Update: {upd.name} ({upd.method.title()})"]]:::limUpdNode'
                 )
                 upd_entry = self.add_decision_table(upd.table, "limUpdNode")
                 self.lines.append(f"        {u_header_id} --> {upd_entry}")
+                prev_update_exit = upd_entry
             self.lines.append("    end")
         return self
 
