@@ -86,12 +86,12 @@ class EmployeeRestTime(CustomBaseModel):
 
 
 class EmployeeGroundTime(CustomBaseModel):
-    inbound: Activity
-    outbound: Activity
+    inbound_activity: Activity
+    outbound_activity: Activity
     employee: Employee
 
 
 class AircraftGroundTime(CustomBaseModel):
-    inbound: Activity
-    outbound: Activity
+    inbound_activity: Activity
+    outbound_activity: Activity
     aircraft: Aircraft
