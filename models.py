@@ -54,6 +54,13 @@ class Condition[C](CustomBaseModel):
     comparison: Comparison = Field(description="Comparison to make")
     reverse_match: bool = Field(False, description="TRUE inverts the match")
 
+    def get_generic_param_name(self) -> str:
+        # Loop through the class MRO to find who defined the [C] parameter
+        for cls in self.__class__.__mro__:
+            if hasattr(cls, "__type_params__") and cls.__type_params__:
+                return cls.__type_params__[0].__name__
+        return "Unknown"
+
     @cached_property
     def _field_getter(self):
         return attrgetter(self.field)
@@ -64,7 +71,7 @@ class Condition[C](CustomBaseModel):
         return (not comparison_match) if self.reverse_match else comparison_match
 
     def __str__(self):
-        entity_name: str = self.__orig_class__.__args__[0]
+        entity_name = self.get_generic_param_name()
         op = "is not" if self.reverse_match else "is"
         return f"{format_field(entity_name, self.field)} {op} {str(self.comparison)}"
 

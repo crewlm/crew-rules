@@ -22,6 +22,7 @@ from comparisons import (
     TruthComparison,
     FalseComparison,
 )
+from display.mermaidjs import rule_to_mermaid
 
 
 def test_max_fdp_01():
@@ -127,3 +128,7 @@ def test_max_fdp_01():
     assert isinstance(parsed_rule, DutyRule)
     assert parsed_rule.scope == "duty"
     assert parsed_rule.limit.default.table_name == "MaxFDPTableA"
+
+    # check mermaid diagram
+    diagram = rule_to_mermaid(parsed_rule)
+    assert diagram != ""
