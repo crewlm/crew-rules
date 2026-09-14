@@ -62,7 +62,7 @@ class LTNumberComparison(CustomBaseModel):
     number: float
 
     def matches(self, value: float):
-        return value <= self.number
+        return value < self.number
 
 
 class RangeNumberComparison(CustomBaseModel):
@@ -357,22 +357,24 @@ class Update[C, V](CustomBaseModel):
     method: Literal["set", "increase", "decrease", "max", "min", "scale"] = "set"
     table: DecisionTable[C, V]
 
-    def update_number(self, original_number: float, number: float):
+    def apply(self, current_val: Any, update_val: Any) -> Any:
         match self.method:
             case "set":
-                return number
+                return update_val
             case "increase":
-                return original_number + number
+                return current_val + update_val
             case "decrease":
-                return original_number - number
+                return current_val - update_val
             case "max":
-                return max(original_number, number)
+                return max(current_val, update_val)
             case "min":
-                return min(original_number, number)
+                return min(current_val, update_val)
             case "scale":
-                return original_number * number
+                if isinstance(current_val, timedelta):
+                    return current_val * update_val
+                return current_val * update_val
             case _:
-                raise ValueError(f"Unsupported method for update_number: {self.method}")
+                raise ValueError(f"Unsupported method: {self.method}")
 
 
 class TimePeriod(CustomBaseModel):
