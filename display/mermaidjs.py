@@ -10,7 +10,7 @@ class MermaidDiagramBuilder:
         self.rule = rule
         self.node_counter: int = 0
         self.lines: list[str] = [
-            "graph TD",
+            "graph LR",
             f"    %% Diagram for Rule: {rule.name} (Scope: {getattr(rule, 'scope', 'Rule')})",
             "    classDef appNode fill:#e1f5fe,stroke:#0288d1,stroke-width:1px;",
             "    classDef valNode fill:#f3e5f5,stroke:#7b1fa2,stroke-width:1px;",
@@ -68,17 +68,20 @@ class MermaidDiagramBuilder:
 
     def add_applicability_section(self) -> "MermaidDiagramBuilder":
         self.lines.append('\n    subgraph Applicability ["Applicability"]')
+        self.lines.append("        direction TB")
         self.add_decision_table(self.rule.applicability, "appNode")
         self.lines.append("    end")
         return self
 
     def add_subject_value_section(self) -> "MermaidDiagramBuilder":
         self.lines.append('\n    subgraph SubjectValue ["Initial Value"]')
+        self.lines.append("        direction TB")
         self.add_decision_table(self.rule.value, "valNode")
         self.lines.append("    end")
 
         if self.rule.value_updates:
             self.lines.append('\n    subgraph ValueUpdates ["Value Updates"]')
+            self.lines.append("        direction TB")
             prev_update_exit = None
             for upd in self.rule.value_updates:
                 u_header_id = self._next_node_id()
@@ -96,6 +99,7 @@ class MermaidDiagramBuilder:
     def add_threshold_sections(self) -> "MermaidDiagramBuilder":
         if self.rule.requirement:
             self.lines.append('\n    subgraph Requirement ["Initial Requirement"]')
+            self.lines.append("        direction TB")
             self.add_decision_table(self.rule.requirement, "reqNode")
             self.lines.append("    end")
 
@@ -103,6 +107,7 @@ class MermaidDiagramBuilder:
             self.lines.append(
                 '\n    subgraph RequirementUpdates ["Requirement Updates"]'
             )
+            self.lines.append("        direction TB")
             prev_update_exit = None
             for upd in self.rule.requirement_updates:
                 u_header_id = self._next_node_id()
@@ -118,11 +123,13 @@ class MermaidDiagramBuilder:
 
         if self.rule.limit:
             self.lines.append('\n    subgraph Limit ["Initial Limit"]')
+            self.lines.append("        direction TB")
             self.add_decision_table(self.rule.limit, "limNode")
             self.lines.append("    end")
 
         if self.rule.limit_updates:
             self.lines.append('\n    subgraph LimitUpdates ["Limit Updates"]')
+            self.lines.append("        direction TB")
             prev_update_exit = None
             for upd in self.rule.limit_updates:
                 u_header_id = self._next_node_id()
