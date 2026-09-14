@@ -65,8 +65,8 @@ def test_max_fdp_01():
             ConditionValue[C, TableLookupValue](
                 condition=[
                     Condition[C](
-                        field="is_acclimatised",
-                        comparison=FalseComparison(),
+                        field="acclimatised_state",
+                        comparison=EqualTextComparison(text="acclimatised"),
                     )
                 ],
                 value=TableLookupValue(
