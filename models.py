@@ -59,7 +59,7 @@ class Condition[C](CustomBaseModel):
         for cls in self.__class__.__mro__:
             if hasattr(cls, "__type_params__") and cls.__type_params__:
                 return cls.__type_params__[0].__name__
-        return "Unknown"
+        return "Entity"
 
     @cached_property
     def _field_getter(self):
