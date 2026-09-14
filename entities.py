@@ -66,7 +66,7 @@ class GettableList(list):
     ) -> core_schema.CoreSchema:
         return core_schema.no_info_after_validator_function(
             cls,
-            core_schema.list_schema(),
+            handler.generate_schema(source_type),
         )
 
 
@@ -88,7 +88,7 @@ class GettableDict(dict):
     ) -> core_schema.CoreSchema:
         return core_schema.no_info_after_validator_function(
             cls,
-            core_schema.dict_schema(),
+            handler.generate_schema(source_type),
         )
 
 
