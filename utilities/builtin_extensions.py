@@ -116,8 +116,8 @@ class GettableDict(dict[K, V], Generic[K, V]):
         )
 
 
-if __name__ == "__main__":
-    # simple tests
+def test_classes():
+    """Runs tests in same file. TODO: Move into pytest module."""
     from pydantic import BaseModel
 
     class Model(BaseModel):
@@ -145,3 +145,7 @@ if __name__ == "__main__":
     n = Nested(groups=[{"x": 1}, {"y": 2}])
     assert n.groups.first.x == 1
     assert isinstance(n.groups.first, GettableDict)
+
+
+if __name__ == "__main__":
+    test_classes()
