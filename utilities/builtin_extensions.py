@@ -114,3 +114,34 @@ class GettableDict(dict[K, V], Generic[K, V]):
             cls,
             handler.generate_schema(std_type),
         )
+
+
+if __name__ == "__main__":
+    # simple tests
+    from pydantic import BaseModel
+
+    class Model(BaseModel):
+        items: GettableList[int]
+        data: GettableDict[str, int]
+
+    m = Model(items=[3, 1, 2], data={"a": 1, "b": 2})
+    assert m.items.largest == 3
+    assert m.items.first == 3
+    assert m.data.a == 1
+    assert isinstance(m.items, GettableList)
+    assert isinstance(m.data, GettableDict)
+
+    # collision check fires
+    try:
+        Model(items=[1], data={"items": 1})  # "items" collides with dict.items
+        assert False, "should have raised"
+    except ValueError:
+        pass
+
+    # nested case
+    class Nested(BaseModel):
+        groups: GettableList[GettableDict[str, int]]
+
+    n = Nested(groups=[{"x": 1}, {"y": 2}])
+    assert n.groups.first.x == 1
+    assert isinstance(n.groups.first, GettableDict)
