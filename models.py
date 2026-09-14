@@ -8,6 +8,7 @@ from operator import attrgetter
 from uuid import uuid4, UUID
 from datetime import datetime, timedelta, time
 from pydantic import Field, TypeAdapter
+import re
 
 from utilities.pydantic import CustomBaseModel
 from entities import (
@@ -90,6 +91,18 @@ class EqualTextComparison(CustomBaseModel):
 
     def matches(self, value: str):
         return self.text == value
+
+
+class RegexTextComparison(CustomBaseModel):
+    kind: Literal["regex_text_comparison"] = "regex_text_comparison"
+    expression: str
+
+    @cached_property
+    def _regex_compiled(self):
+        return re.compile(self.expression)
+
+    def matches(self, value: str):
+        return self._regex_compiled.search(value) is not None
 
 
 class GEDurationComparison(CustomBaseModel):
@@ -201,6 +214,7 @@ class ContainSetComparison(CustomBaseModel):
 Comparison = Annotated[
     EqualNumberComparison
     | EqualTextComparison
+    | RegexTextComparison
     | LENumberComparison
     | GENumberComparison
     | LTNumberComparison

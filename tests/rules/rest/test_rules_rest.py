@@ -10,7 +10,7 @@ from models import (
     AnyRule,
     ConditionValue,
     Condition,
-    EqualSetComparison,
+    EqualTextComparison,
     GTNumberComparison,
     TruthComparison,
     Update,
@@ -55,7 +55,7 @@ def test_rest_02():
                 condition=[
                     Condition[C](
                         field="preceding.category",
-                        comparison=EqualSetComparison(items={"flying"}),
+                        comparison=EqualTextComparison(text="flying"),
                     )
                 ],
                 value=ApplicableValue(phrase="Flight duty", applicable=True),
