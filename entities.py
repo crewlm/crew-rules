@@ -51,7 +51,12 @@ class GettableList(list):
             raise AttributeError(
                 f"'{type(self).__name__}' object has no attribute '{name}'"
             )
-        return self[idx]
+        try:
+            return self[idx]
+        except IndexError:
+            raise AttributeError(
+                f"'{type(self).__name__}' list doesn't have an element at index '{idx}'"
+            )
 
 
 class GettableDict(dict):
@@ -61,7 +66,10 @@ class GettableDict(dict):
     """
 
     def __getattr__(self, name):
-        return self[name]
+        try:
+            return self[name]
+        except KeyError:
+            raise AttributeError(f"'{type(self).__name__}' object has no key '{name}'")
 
 
 class Port(CustomBaseModel):
