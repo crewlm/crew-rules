@@ -352,12 +352,15 @@ class DecisionTable[C, V](CustomBaseModel):
         return self.default
 
 
+N = TypeVar("N")
+
+
 class Update[C, V](CustomBaseModel):
     name: str
     method: Literal["set", "increase", "decrease", "max", "min", "scale"] = "set"
     table: DecisionTable[C, V]
 
-    def apply(self, current_val: Any, update_val: Any) -> Any:
+    def apply(self, current_val: N, update_val: N) -> N:
         match self.method:
             case "set":
                 return update_val
