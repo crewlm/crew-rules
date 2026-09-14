@@ -13,6 +13,7 @@ from models import (
     CalculationValue,
     NoneValue,
     DurationValue,
+    NullableCalculationValue,
     AnyRule,
 )
 from comparisons import (
@@ -88,10 +89,10 @@ def test_max_fdp_01():
         ),
     )
 
-    limit_update_discretion = Update[C, CalculationValue](
+    limit_update_discretion = Update[C, NullableCalculationValue](
         name="Commander's Discretion Extension",
         method="increase",
-        table=DecisionTable[C, CalculationValue](
+        table=DecisionTable[C, NullableCalculationValue](
             default=NoneValue(),
             items=[
                 ConditionValue[C, DurationValue](

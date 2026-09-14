@@ -113,7 +113,7 @@ class ApplicableValue(Value):
     applicable: bool
 
     def get_calculated_value(self, obj):
-        return int(self.applicable)
+        return self.applicable
 
 
 class NoneValue(Value):
@@ -211,19 +211,20 @@ class TableLookupValue(Value):
 
 
 CalculationValue = Annotated[
-    NoneValue
-    | NumberValue
+    NumberValue
     | DurationValue
     | FieldValue
     | FieldDifferenceValue
     | NumberRangeValue
     | DurationRangeValue
-    | ApplicableValue
     | TableLookupValue,
     Field(discriminator="kind"),
 ]
+NullableCalculationValue = Annotated[
+    CalculationValue | NoneValue, Field(discriminator="kind")
+]
 
-V = TypeVar("V", bound=CalculationValue)
+V = TypeVar("V", bound=NullableCalculationValue)
 
 
 class ConditionValue[C, V](CustomBaseModel):
@@ -303,11 +304,17 @@ class Rule[C](CustomBaseModel):
     name: str
     applicability: DecisionTable[C, ApplicableValue]
     value: DecisionTable[C, CalculationValue]
-    value_updates: list[Update[C, CalculationValue]] = Field(default_factory=list)
+    value_updates: list[Update[C, NullableCalculationValue]] = Field(
+        default_factory=list
+    )
     requirement: DecisionTable[C, CalculationValue] | None = None
-    requirement_updates: list[Update[C, CalculationValue]] = Field(default_factory=list)
+    requirement_updates: list[Update[C, NullableCalculationValue]] = Field(
+        default_factory=list
+    )
     limit: DecisionTable[C, CalculationValue] | None = None
-    limit_updates: list[Update[C, CalculationValue]] = Field(default_factory=list)
+    limit_updates: list[Update[C, NullableCalculationValue]] = Field(
+        default_factory=list
+    )
 
     def model_post_init(self, context):
         if self.requirement is None and len(self.requirement_updates) > 0:

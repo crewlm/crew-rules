@@ -4,6 +4,7 @@ from entities import EmployeeRestTime, Duty
 from models import (
     EmployeeRestTimeRule,
     CalculationValue,
+    NullableCalculationValue,
     NoneValue,
     DecisionTable,
     ApplicableValue,
@@ -81,10 +82,10 @@ def test_rest_02():
         ],
         default=DurationValue(phrase="Default", duration=timedelta(hours=14)),
     )
-    requirement_update_table1 = Update[C, CalculationValue](
+    requirement_update_table1 = Update[C, NullableCalculationValue](
         name="Long prior FDP",
         method="increase",
-        table=DecisionTable[C, CalculationValue](
+        table=DecisionTable[C, NullableCalculationValue](
             default=NoneValue(),
             items=[
                 ConditionValue[C, DurationValue](
@@ -99,10 +100,10 @@ def test_rest_02():
             ],
         ),
     )
-    requirement_update_table2 = Update[C, CalculationValue](
+    requirement_update_table2 = Update[C, NullableCalculationValue](
         name="Crossed multiple time zones",
         method="increase",
-        table=DecisionTable[C, CalculationValue](
+        table=DecisionTable[C, NullableCalculationValue](
             default=NoneValue(),
             items=[
                 ConditionValue[C, FieldValue](
