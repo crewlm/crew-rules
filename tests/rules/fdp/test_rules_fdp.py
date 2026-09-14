@@ -162,6 +162,8 @@ def test_max_fdp_01():
 
     # JSON round-trip validation
     json_data = rule.model_dump_json(indent=4)
+    fpath_json = FILES_DIR / "max_fdp_01.json"
+    fpath_json.write_text(json_data)
     parsed_rule = AnyRule.validate_json(json_data)
 
     assert isinstance(parsed_rule, DutyRule)

@@ -1,0 +1,183 @@
+{
+    "id": "1e6268b2-f487-42db-b769-125ca11a46dd",
+    "name": "Max FDP 2-Pilot Operations",
+    "scope": "duty",
+    "applicability": {
+        "default": {
+            "phrase": "Default",
+            "kind": "applicable_value",
+            "applicable": false
+        },
+        "items": [
+            {
+                "condition": [
+                    {
+                        "field": "category",
+                        "comparison": {
+                            "kind": "equal_text_comparison",
+                            "text": "flying",
+                            "case_sensitive": true
+                        },
+                        "reverse_match": false
+                    },
+                    {
+                        "field": "operating_pilot_count",
+                        "comparison": {
+                            "kind": "equal_number_comparison",
+                            "number": 2.0,
+                            "tolerance": 1e-6
+                        },
+                        "reverse_match": false
+                    }
+                ],
+                "value": {
+                    "phrase": "2-Pilot Flying Duty",
+                    "kind": "applicable_value",
+                    "applicable": true
+                }
+            }
+        ]
+    },
+    "value": {
+        "default": {
+            "phrase": "Actual Duty FDP Duration",
+            "kind": "field_difference_value",
+            "start_field": "calculated_datetime.fdp_start_timestamp",
+            "end_field": "operating_flights.-1.on_blocks",
+            "multiplier": 1.0,
+            "offset": 0.0,
+            "clamp_lower": null,
+            "clamp_upper": null
+        },
+        "items": []
+    },
+    "value_updates": [],
+    "requirement": null,
+    "requirement_updates": [],
+    "limit": {
+        "default": {
+            "phrase": "Standard Max FDP Limit (Table A)",
+            "kind": "table_lookup_number_value",
+            "table_name": "MaxFDPTableA",
+            "lookup_map": [
+                {
+                    "name": "sectors",
+                    "field": "calculated_numbers.fdp_sectors"
+                },
+                {
+                    "name": "start_time_of_day",
+                    "field": "duty.report_time_of_day_local"
+                }
+            ]
+        },
+        "items": [
+            {
+                "condition": [
+                    {
+                        "field": "acclimatised_state",
+                        "comparison": {
+                            "kind": "equal_text_comparison",
+                            "text": "acclimatised",
+                            "case_sensitive": true
+                        },
+                        "reverse_match": false
+                    }
+                ],
+                "value": {
+                    "phrase": "Unacclimatised Max FDP Limit (Table B)",
+                    "kind": "table_lookup_number_value",
+                    "table_name": "MaxFDPTableB",
+                    "lookup_map": [
+                        {
+                            "name": "sectors",
+                            "field": "calculated_numbers.fdp_sectors"
+                        },
+                        {
+                            "name": "preceding_rest",
+                            "field": "preceding_rest.duration"
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "limit_updates": [
+        {
+            "name": "Short Rest Reduction",
+            "method": "decrease",
+            "table": {
+                "default": {
+                    "phrase": "No modification",
+                    "kind": "none_value"
+                },
+                "items": [
+                    {
+                        "condition": [
+                            {
+                                "field": "calculated_number.preceding_rest_infringement",
+                                "comparison": {
+                                    "kind": "gt_number_comparison",
+                                    "number": 0.0
+                                },
+                                "reverse_match": false
+                            }
+                        ],
+                        "value": {
+                            "phrase": "Short preceding rest",
+                            "kind": "field_value",
+                            "field": "calculated_number.preceding_rest_infringement",
+                            "multiplier": 1.0,
+                            "offset": 0.0,
+                            "clamp_lower": null,
+                            "clamp_upper": null
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Commander's Discretion Extension",
+            "method": "increase",
+            "table": {
+                "default": {
+                    "phrase": "No modification",
+                    "kind": "none_value"
+                },
+                "items": [
+                    {
+                        "condition": [
+                            {
+                                "field": "commander_discretion",
+                                "comparison": {
+                                    "kind": "truth_comparison"
+                                },
+                                "reverse_match": false
+                            }
+                        ],
+                        "value": {
+                            "phrase": "Commander's discretion given",
+                            "kind": "duration_value",
+                            "duration": "PT1H"
+                        }
+                    },
+                    {
+                        "condition": [
+                            {
+                                "field": "class_1_override",
+                                "comparison": {
+                                    "kind": "truth_comparison"
+                                },
+                                "reverse_match": false
+                            }
+                        ],
+                        "value": {
+                            "phrase": "Class 1 override given",
+                            "kind": "duration_value",
+                            "duration": "PT30M"
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}
