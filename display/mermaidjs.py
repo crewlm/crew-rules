@@ -33,7 +33,7 @@ class MermaidDiagramBuilder:
         if not table.items:
             default_id = self._next_node_id()
             self.lines.append(
-                f'        {default_id}["{action if table.default else ''}{str(table.default)}"]:::{node_class}'
+                f"""        {default_id}["{action if table.default else ''}{str(table.default)}"]:::{node_class}"""
             )
             return default_id
 
@@ -54,7 +54,7 @@ class MermaidDiagramBuilder:
 
             self.lines.append(f'        {cond_id}{{"{cond_text}?"}}')
             self.lines.append(
-                f'        {val_id}["{action if item.value else ''}{val_text}"]:::{node_class}'
+                f"""        {val_id}["{action if item.value else ''}{val_text}"]:::{node_class}"""
             )
             self.lines.append(f"        {cond_id} -->|Match| {val_id}")
 
