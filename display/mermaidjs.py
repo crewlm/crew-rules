@@ -2,7 +2,7 @@
 Mermaid Diagram Builder from Rule
 """
 
-from models import Rule, DecisionTable
+from models import Rule, DecisionTable, Update
 
 
 class MermaidDiagramBuilder:
@@ -17,9 +17,9 @@ class MermaidDiagramBuilder:
             "    classDef valNode fill:#f3e5f5,stroke:#7b1fa2,stroke-width:1px;",
             "    classDef reqNode fill:#fff3e0,stroke:#f57c00,stroke-width:1px;",
             "    classDef limNode fill:#fff3e0,stroke:#f57c00,stroke-width:1px;",
-            "    classDef valUpdNode fill:#e8f5e9,stroke:#388e3c,stroke-width:1px;",
-            "    classDef reqUpdNode fill:#e8f5e9,stroke:#388e3c,stroke-width:1px;",
-            "    classDef limUpdNode fill:#e8f5e9,stroke:#388e3c,stroke-width:1px;",
+            "    classDef ValueUpdateNode fill:#e8f5e9,stroke:#388e3c,stroke-width:1px;",
+            "    classDef RequirementUpdateNode fill:#e8f5e9,stroke:#388e3c,stroke-width:1px;",
+            "    classDef LimitUpdateNode fill:#e8f5e9,stroke:#388e3c,stroke-width:1px;",
         ]
 
     def _next_node_id(self) -> str:
@@ -75,69 +75,45 @@ class MermaidDiagramBuilder:
         self.lines.append("    end")
         return self
 
-    def add_subject_value_section(self) -> "MermaidDiagramBuilder":
+    def add_updates_section(
+        self, updates: list[Update], name: str
+    ) -> "MermaidDiagramBuilder":
+        for idx, upd in enumerate(updates, start=1):
+            self.lines.append(
+                f'\n    subgraph {name}Update_{idx} ["{name} Update: {upd.name}"]'
+            )
+            self.lines.append("        direction TB")
+            u_header_id = self._next_node_id()
+            self.subgraph_entries.append(u_header_id)
+            self.lines.append(f"        {u_header_id}:::{name}UpdateNode")
+            upd_entry = self.add_decision_table(upd.table, f"{name}UpdateNode")
+            self.lines.append(f"        {u_header_id} --> {upd_entry}")
+            self.lines.append("    end")
+        return self
+
+    def add_value_section(self) -> "MermaidDiagramBuilder":
         self.lines.append('\n    subgraph SubjectValue ["Initial Value"]')
         self.lines.append("        direction TB")
         entry_id = self.add_decision_table(self.rule.value, "valNode")
         self.subgraph_entries.append(entry_id)
         self.lines.append("    end")
-
-        for idx, upd in enumerate(self.rule.value_updates, start=1):
-            self.lines.append(
-                f'\n    subgraph ValueUpdate_{idx} ["Value Update: {upd.name}"]'
-            )
-            self.lines.append("        direction TB")
-            u_header_id = self._next_node_id()
-            self.subgraph_entries.append(u_header_id)
-            self.lines.append(
-                f'        {u_header_id}[["{upd.name} ({upd.method.title()})"]]:::valUpdNode'
-            )
-            upd_entry = self.add_decision_table(upd.table, "valUpdNode")
-            self.lines.append(f"        {u_header_id} --> {upd_entry}")
-            self.lines.append("    end")
         return self
 
-    def add_threshold_sections(self) -> "MermaidDiagramBuilder":
+    def add_requirement_section(self) -> "MermaidDiagramBuilder":
         if self.rule.requirement:
             self.lines.append('\n    subgraph Requirement ["Initial Requirement"]')
             self.lines.append("        direction TB")
             entry_id = self.add_decision_table(self.rule.requirement, "reqNode")
             self.subgraph_entries.append(entry_id)
             self.lines.append("    end")
+        return self
 
-        for idx, upd in enumerate(self.rule.requirement_updates, start=1):
-            self.lines.append(
-                f'\n    subgraph ReqUpdate_{idx} ["Requirement Update: {upd.name}"]'
-            )
-            self.lines.append("        direction TB")
-            u_header_id = self._next_node_id()
-            self.subgraph_entries.append(u_header_id)
-            self.lines.append(
-                f'        {u_header_id}[["{upd.name} ({upd.method.title()})"]]:::reqUpdNode'
-            )
-            upd_entry = self.add_decision_table(upd.table, "reqUpdNode")
-            self.lines.append(f"        {u_header_id} --> {upd_entry}")
-            self.lines.append("    end")
-
+    def add_limit_section(self) -> "MermaidDiagramBuilder":
         if self.rule.limit:
             self.lines.append('\n    subgraph Limit ["Initial Limit"]')
             self.lines.append("        direction TB")
             entry_id = self.add_decision_table(self.rule.limit, "limNode")
             self.subgraph_entries.append(entry_id)
-            self.lines.append("    end")
-
-        for idx, upd in enumerate(self.rule.limit_updates, start=1):
-            self.lines.append(
-                f'\n    subgraph LimUpdate_{idx} ["Limit Update: {upd.name}"]'
-            )
-            self.lines.append("        direction TB")
-            u_header_id = self._next_node_id()
-            self.subgraph_entries.append(u_header_id)
-            self.lines.append(
-                f'        {u_header_id}[["{upd.name} ({upd.method.title()})"]]:::limUpdNode'
-            )
-            upd_entry = self.add_decision_table(upd.table, "limUpdNode")
-            self.lines.append(f"        {u_header_id} --> {upd_entry}")
             self.lines.append("    end")
         return self
 
@@ -153,10 +129,14 @@ class MermaidDiagramBuilder:
 
 def rule_to_mermaid(rule: Rule) -> str:
     """Convert rule to mermaidjs diagram."""
+    diagram = MermaidDiagramBuilder(rule)
     return (
-        MermaidDiagramBuilder(rule)
-        .add_applicability_section()
-        .add_subject_value_section()
-        .add_threshold_sections()
+        diagram.add_applicability_section()
+        .add_value_section()
+        .add_updates_section(diagram.rule.value_updates, "Value")
+        .add_requirement_section()
+        .add_updates_section(diagram.rule.requirement_updates, "Requirement")
+        .add_limit_section()
+        .add_updates_section(diagram.rule.limit, "Limit")
         .build()
     )
