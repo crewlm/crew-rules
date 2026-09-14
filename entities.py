@@ -8,8 +8,9 @@ Some notes:
 
 from functools import cached_property
 from datetime import datetime
+from typing import Any
 
-from utilites.pydantic import CustomBaseModel, Field
+from utilites.pydantic import CustomBaseModel, Field, GetCoreSchemaHandler, core_schema
 
 
 class GettableList(list):
@@ -58,6 +59,15 @@ class GettableList(list):
                 f"'{type(self).__name__}' list doesn't have an element at index '{idx}'"
             )
 
+    @classmethod
+    def __get_pydantic_core_schema__(
+        cls, source_type: Any, handler: GetCoreSchemaHandler
+    ) -> core_schema.CoreSchema:
+        return core_schema.no_info_after_validator_function(
+            cls,
+            core_schema.list_schema(),
+        )
+
 
 class GettableDict(dict):
     """
@@ -70,6 +80,15 @@ class GettableDict(dict):
             return self[name]
         except KeyError:
             raise AttributeError(f"'{type(self).__name__}' object has no key '{name}'")
+
+    @classmethod
+    def __get_pydantic_core_schema__(
+        cls, source_type: Any, handler: GetCoreSchemaHandler
+    ) -> core_schema.CoreSchema:
+        return core_schema.no_info_after_validator_function(
+            cls,
+            core_schema.dict_schema(),
+        )
 
 
 class Port(CustomBaseModel):
