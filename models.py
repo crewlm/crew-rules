@@ -64,10 +64,9 @@ class Condition[C](CustomBaseModel):
         return (not comparison_match) if self.reverse_match else comparison_match
 
     def __str__(self):
+        entity_name: str = self.__orig_class__.__args__[0]
         op = "is not" if self.reverse_match else "is"
-        return (
-            f"{format_field(type(C).__name__, self.field)} {op} {str(self.comparison)}"
-        )
+        return f"{format_field(entity_name, self.field)} {op} {str(self.comparison)}"
 
 
 class Value(CustomBaseModel):
@@ -90,7 +89,7 @@ class NumberValue(Value):
         return self.number
 
     def __str__(self):
-        return f"{self.number}:g"
+        return f"{self.number:g}"
 
 
 class DurationValue(Value):
