@@ -159,6 +159,6 @@ def test_max_fdp_01():
     # check mermaid diagram
     diagram = rule_to_mermaid(parsed_rule)
     fpath = FILES_DIR / "mermaidjs_max_fdp_01.txt"
-    fpath.write_text(diagram)
+    # fpath.write_text(diagram)
     diagram_expected = fpath.read_text()
     assert diagram == diagram_expected
