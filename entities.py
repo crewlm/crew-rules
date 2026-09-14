@@ -19,7 +19,7 @@ class Port(CustomBaseModel):
 
 
 class Activity(CustomBaseModel):
-    pass
+    category: Literal["flight", "deadhead", "ground_transport", "other"]
 
 
 class Duty(CustomBaseModel):
@@ -39,6 +39,14 @@ class Duty(CustomBaseModel):
     calculated_numbers: GettableDefaultDict[str, float] = Field(
         default_factory=lambda: GettableDefaultDict(float)
     )
+
+    @property
+    def flights(self):
+        return [x for x in self.activities if x.category in ("flight", "deadhead")]
+
+    @property
+    def operating_flights(self):
+        return [x for x in self.activities if x.category == "flight"]
 
 
 class Pairing(CustomBaseModel):
