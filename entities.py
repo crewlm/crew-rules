@@ -8,12 +8,26 @@ Some notes:
 
 from functools import cached_property
 from datetime import datetime
-from typing import Any
+from typing import Any, Generic, TypeVar
 
 from utilites.pydantic import CustomBaseModel, Field, GetCoreSchemaHandler, core_schema
 
+T = TypeVar("T")
+K = TypeVar("K")
+V = TypeVar("V")
 
-class GettableList(list):
+
+def _to_std_type(source_type: Any, std_base: type) -> Any:
+    """Replaces GettableList/GettableDict with standard list/dict while preserving generic args."""
+    origin = getattr(source_type, "__origin__", source_type)
+    args = getattr(source_type, "__args__", ())
+
+    if args:
+        return std_base[args]
+    return std_base
+
+
+class GettableList(list[T], Generic[T]):
     """
     List subclass enabling dot-notation field access for attrgetter.
     Supports index access (.0, .1) and property access (.first, .last, .max, .min).
@@ -64,13 +78,14 @@ class GettableList(list):
     def __get_pydantic_core_schema__(
         cls, source_type: Any, handler: GetCoreSchemaHandler
     ) -> core_schema.CoreSchema:
+        std_type = _to_std_type(source_type, list)
         return core_schema.no_info_after_validator_function(
             cls,
-            handler.generate_schema(source_type),
+            handler.generate_schema(std_type),
         )
 
 
-class GettableDict(dict):
+class GettableDict(dict[K, V], Generic[K, V]):
     """
     Dict subclass enabling dot-notation field access for attrgetter.
     E.g., calculated_numbers.frms_score
@@ -86,9 +101,10 @@ class GettableDict(dict):
     def __get_pydantic_core_schema__(
         cls, source_type: Any, handler: GetCoreSchemaHandler
     ) -> core_schema.CoreSchema:
+        std_type = _to_std_type(source_type, dict)
         return core_schema.no_info_after_validator_function(
             cls,
-            handler.generate_schema(source_type),
+            handler.generate_schema(std_type),
         )
 
 
