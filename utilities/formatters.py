@@ -2,11 +2,11 @@ from datetime import timedelta
 
 
 def format_field(entity_name: str, field: str):
-    if entity_name:
-        field = entity_name + "." + field
+    # if entity_name:
+    #     field = entity_name + "." + field
     field = field.replace("s.", "s' ").replace(".", "'s ").replace("_", " ")
-    if not field:
-        return field
+    # if not field:
+    #     return field
     return field[0].upper() + field[1:]
 
 

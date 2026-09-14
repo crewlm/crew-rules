@@ -10,7 +10,7 @@ graph LR
 
     subgraph Applicability ["Applicability"]
         direction TB
-        N1{"C's category is equal to 'flying' (case-sensitive),<br/>and C's operating pilot count is equal to 2.0?"}
+        N1{"Category is equal to 'flying',<br/>and Operating pilot count is equal to 2.0?"}
         N2["Applicable"]:::appNode
         N1 -->|Match| N2
         N3["Not applicable"]:::appNode
@@ -24,7 +24,7 @@ graph LR
 
     subgraph Limit ["Initial Limit"]
         direction TB
-        N5{"C's is acclimatised is false?"}
+        N5{"Acclimatised state is equal to 'acclimatised'?"}
         N6["Look up the value in MaxFDPTableB using Calculated numbers' fdp sectors as sectors, Preceding rest's duration as preceding_rest"]:::limNode
         N5 -->|Match| N6
         N7["Look up the value in MaxFDPTableA using Calculated numbers' fdp sectors as sectors, Duty's report time of day local as start_time_of_day"]:::limNode
@@ -34,7 +34,7 @@ graph LR
     subgraph LimUpdate_1 ["Limit Update: Short Rest Reduction"]
         direction TB
         N8[["Short Rest Reduction (Decrease)"]]:::limUpdNode
-        N9{"C's calculated number's preceding rest infringement is greater than 0.0?"}
+        N9{"Calculated number's preceding rest infringement is greater than 0.0?"}
         N10["Calculated number's preceding rest infringement"]:::limUpdNode
         N9 -->|Match| N10
         N11["Nothing"]:::limUpdNode
@@ -45,7 +45,7 @@ graph LR
     subgraph LimUpdate_2 ["Limit Update: Commander's Discretion Extension"]
         direction TB
         N12[["Commander's Discretion Extension (Increase)"]]:::limUpdNode
-        N13{"C's discretion's commander is true?"}
+        N13{"Discretion's commander is true?"}
         N14["PT1H"]:::limUpdNode
         N13 -->|Match| N14
         N15["Nothing"]:::limUpdNode

@@ -106,7 +106,7 @@ class EqualTextComparison(CustomBaseModel):
         return self.text == value
 
     def __str__(self):
-        return f"equal to '{self.text}' (case-{'' if self.case_sensitive else 'in'}sensitive)"
+        return f"equal to '{self.text}'{'' if self.case_sensitive else ' (case-insensitive)'}"
 
 
 class RegexTextComparison(CustomBaseModel):
