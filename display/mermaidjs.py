@@ -135,10 +135,10 @@ class MermaidDiagramBuilder:
 
     def build(self) -> str:
         # Link consecutive subgraphs invisibly using `~~~` to enforce left-to-right ordering
-        # if len(self.subgraph_entries) > 1:
-        #     self.lines.append("\n    %% Force left-to-right ordering of subgraphs")
-        #     for src, dst in zip(self.subgraph_entries[:-1], self.subgraph_entries[1:]):
-        #         self.lines.append(f"    {src} ~~~ {dst}")
+        if len(self.subgraph_entries) > 1:
+            self.lines.append("\n    %% Force left-to-right ordering of subgraphs")
+            for src, dst in zip(self.subgraph_entries[:-1], self.subgraph_entries[1:]):
+                self.lines.append(f"    {src} ~~~ {dst}")
 
         return "\n".join(self.lines)
 
