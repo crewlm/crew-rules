@@ -6,7 +6,6 @@ Some notes:
 - We
 """
 
-from functools import cached_property
 from datetime import datetime
 from typing import Any, Generic, TypeVar
 
@@ -35,32 +34,33 @@ class GettableList(list[T], Generic[T]):
     Supports index access (.0, .1) and property access (.first, .last, .max, .min).
     """
 
-    # Necessary for @cached_property to store instance attributes on a list subclass
-    __slots__ = ("__dict__",)
-
-    @cached_property
+    @property
     def first(self):
         return self[0]
 
-    @cached_property
+    @property
     def last(self):
         return self[-1]
 
-    @cached_property
-    def max(self):
+    @property
+    def largest(self):
         return max(self)
 
-    @cached_property
-    def min(self):
+    @property
+    def smallest(self):
         return min(self)
 
-    @cached_property
-    def argmax(self):
+    @property
+    def arg_largest(self):
         return max(range(len(self)), key=lambda i: self[i])
 
-    @cached_property
-    def argmin(self):
+    @property
+    def arg_smallest(self):
         return min(range(len(self)), key=lambda i: self[i])
+
+    @property
+    def count(self):
+        return len(self)
 
     def __getattr__(self, name: str):
         try:
