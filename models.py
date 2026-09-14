@@ -367,6 +367,17 @@ class Rule[C](CustomBaseModel):
     limit: DecisionTable[C, CalculationValue] | None = None
     limit_updates: list[Update[C, CalculationValue]] = Field(default_factory=list)
 
+    def model_post_init(self, context):
+        if self.requirement is None and len(self.requirement_updates) > 0:
+            raise ValueError(
+                "Must set base requirement if there are any requirement updates"
+            )
+        if self.limit is None and len(self.limit_updates) > 0:
+            raise ValueError("Must set base limit if there are any limit updates")
+        if self.limit is None and self.requirement is None:
+            raise ValueError("Must have at least one of limit or requirement set")
+        return super().model_post_init(context)
+
     def evaluate(self, obj: Any) -> RuleResult:
         """TODO: Returns a ruleresult object"""
 
