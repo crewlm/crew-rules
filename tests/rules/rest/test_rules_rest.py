@@ -80,11 +80,11 @@ def test_rest_02():
         ],
         default=DurationValue(phrase="Default", duration=timedelta(hours=14)),
     )
-    requirement_update_table1 = Update[C, DurationValue](
+    requirement_update_table1 = Update[C, DurationValue | None](
         name="Long prior FDP",
         method="increase",
-        table=DecisionTable[C, DurationValue](
-            default=DurationValue(duration=timedelta()),
+        table=DecisionTable[C, DurationValue | None](
+            default=None,
             items=[
                 ConditionValue[C, DurationValue](
                     condition=[
@@ -98,11 +98,11 @@ def test_rest_02():
             ],
         ),
     )
-    requirement_update_table1 = Update[C, FieldValue](
+    requirement_update_table1 = Update[C, FieldValue | None](
         name="Crossed multiple time zones",
         method="increase",
-        table=DecisionTable[C, FieldValue](
-            default=FieldValue(field=None),
+        table=DecisionTable[C, FieldValue | None](
+            default=None,
             items=[
                 ConditionValue[C, FieldValue](
                     condition=[

@@ -204,7 +204,9 @@ class Update[C, V](CustomBaseModel):
     method: Literal["set", "increase", "decrease", "max", "min", "scale"] = "set"
     table: DecisionTable[C, V]
 
-    def apply(self, current_val: N, update_val: N) -> N:
+    def apply(self, current_val: N, update_val: N | None) -> N:
+        if update_val is None:
+            return current_val
         match self.method:
             case "set":
                 return update_val
