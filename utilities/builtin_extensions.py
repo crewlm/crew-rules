@@ -20,6 +20,14 @@ def _to_std_type(source_type: Any, std_base: type):
     return std_base
 
 
+class _MapProxy:
+    def __init__(self, items: list):
+        self.items: list = items
+
+    def __getattr__(self, name: str):
+        return GettableList(getattr(item, name) for item in self.items)
+
+
 class GettableList(list[T], Generic[T]):
     """
     List subclass enabling dot-notation field access for attrgetter.
@@ -43,12 +51,16 @@ class GettableList(list[T], Generic[T]):
         return min(self)
 
     @property
-    def arg_largest(self):
+    def largest_index(self):
         return max(range(len(self)), key=lambda i: self[i])
 
     @property
-    def arg_smallest(self):
+    def smallest_index(self):
         return min(range(len(self)), key=lambda i: self[i])
+
+    @property
+    def all_items(self):
+        return _MapProxy(self)
 
     @property
     def count_items(self):
