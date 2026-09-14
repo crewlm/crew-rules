@@ -126,15 +126,27 @@ def test_max_fdp_01():
                 ConditionValue[C, NullableCalculationValue](
                     condition=[
                         Condition[C](
-                            field="discretion.commander",
+                            field="commander_discretion",
                             comparison=TruthComparison(),
                         )
                     ],
                     value=DurationValue(
-                        phrase="1-hour discretion extension",
+                        phrase="Commander's discretion given",
                         duration=timedelta(hours=1),
                     ),
-                )
+                ),
+                ConditionValue[C, NullableCalculationValue](
+                    condition=[
+                        Condition[C](
+                            field="class_1_override",
+                            comparison=TruthComparison(),
+                        )
+                    ],
+                    value=DurationValue(
+                        phrase="Class 1 override given",
+                        duration=timedelta(minutes=30),
+                    ),
+                ),
             ],
         ),
     )
@@ -159,6 +171,6 @@ def test_max_fdp_01():
     # check mermaid diagram
     diagram = rule_to_mermaid(parsed_rule)
     fpath = FILES_DIR / "mermaidjs_max_fdp_01.txt"
-    # fpath.write_text(diagram)
+    fpath.write_text(diagram)
     diagram_expected = fpath.read_text()
     assert diagram == diagram_expected

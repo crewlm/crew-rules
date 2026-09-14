@@ -48,9 +48,13 @@ graph LR
 
     subgraph LimitUpdate_2 ["Limit Update: Commander's Discretion Extension"]
         direction TB
-        N12{"Discretion's commander is true?"}
+        N12{"Commander discretion is true?"}
         N13["Increase limit by PT1H"]:::LimitUpdateNode
         N12 -->|Match| N13
-        N14["Do nothing"]:::LimitUpdateNode
+        N14{"Class 1 override is true?"}
+        N15["Increase limit by PT30M"]:::LimitUpdateNode
+        N14 -->|Match| N15
         N12 -->|No Match| N14
+        N16["Do nothing"]:::LimitUpdateNode
+        N14 -->|No Match| N16
     end
