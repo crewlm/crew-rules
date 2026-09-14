@@ -338,6 +338,10 @@ class TimePeriod(CustomBaseModel):
     duration: int
 
 
+class RuleResult(CustomBaseModel):
+    pass
+
+
 class Rule[C](CustomBaseModel):
     id: UUID = Field(default_factory=uuid4)
     name: str
@@ -348,6 +352,9 @@ class Rule[C](CustomBaseModel):
     requirement_updates: list[Update[C, CalculationValue]] = Field(default_factory=list)
     limit: DecisionTable[C, CalculationValue] | None = None
     limit_updates: list[Update[C, CalculationValue]] = Field(default_factory=list)
+
+    def evaluate(self, obj: Any) -> RuleResult:
+        """TODO: Returns a ruleresult object"""
 
 
 class ActivityRule(Rule[Activity]):
