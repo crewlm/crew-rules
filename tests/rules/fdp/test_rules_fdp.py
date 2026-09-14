@@ -1,4 +1,5 @@
 from datetime import timedelta
+from pathlib import Path
 from entities import Duty
 from models import (
     DutyRule,
@@ -23,6 +24,8 @@ from comparisons import (
     FalseComparison,
 )
 from display.mermaidjs import rule_to_mermaid
+
+FILES_DIR = Path(__file__).resolve().parent / ".files"
 
 
 def test_max_fdp_01():
@@ -131,4 +134,6 @@ def test_max_fdp_01():
 
     # check mermaid diagram
     diagram = rule_to_mermaid(parsed_rule)
-    assert diagram != ""
+    fpath = FILES_DIR / "mermaidjs_max_fdp_01.txt"
+    diagram_expected = fpath.read_text()
+    assert diagram == diagram_expected

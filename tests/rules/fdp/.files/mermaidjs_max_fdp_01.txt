@@ -1,0 +1,39 @@
+graph TD
+    %% Diagram for Rule: Max FDP 2-Pilot Operations (Scope: duty)
+    classDef appNode fill:#e1f5fe,stroke:#0288d1,stroke-width:1px;
+    classDef valNode fill:#f3e5f5,stroke:#7b1fa2,stroke-width:1px;
+    classDef reqNode fill:#fff3e0,stroke:#f57c00,stroke-width:1px;
+    classDef limNode fill:#fff3e0,stroke:#f57c00,stroke-width:1px;
+    classDef valUpdNode fill:#e8f5e9,stroke:#388e3c,stroke-width:1px;
+    classDef reqUpdNode fill:#e8f5e9,stroke:#388e3c,stroke-width:1px;
+    classDef limUpdNode fill:#e8f5e9,stroke:#388e3c,stroke-width:1px;
+
+    subgraph Applicability ["Applicability"]
+        N1{"C's category is equal to 'flying' (case-sensitive),<br/>and C's operating_pilot_count is equal to 2.0?"}
+        N2["True"]:::appNode
+        N1 -->|Match| N2
+        N3["Default: False"]:::appNode
+        N1 -->|No Match| N3
+    end
+
+    subgraph SubjectValue ["Initial Value"]
+        N4["Default: From Calculated_datetime's fdp_start_timestamp to Operating_flights' -1's on_blocks"]:::valNode
+    end
+
+    subgraph Limit ["Initial Limit"]
+        N5{"C's is_acclimatised is false?"}
+        N6["Look up the value in MaxFDPTableB using Calculated_numbers' fdp_sectors as sectors, Preceding_rest's duration as preceding_rest"]:::limNode
+        N5 -->|Match| N6
+        N7["Default: Look up the value in MaxFDPTableA using Calculated_numbers' fdp_sectors as sectors, Duty's report_time_of_day_local as start_time_of_day"]:::limNode
+        N5 -->|No Match| N7
+    end
+
+    subgraph LimitUpdates ["Limit Updates"]
+        N8[["Limit Update: Commander's Discretion Extension (Increase)"]]:::limUpdNode
+        N9{"C's discretion's commander is true?"}
+        N10["PT1H"]:::limUpdNode
+        N9 -->|Match| N10
+        N11["Default: Nothing"]:::limUpdNode
+        N9 -->|No Match| N11
+        N8 --> N9
+    end
