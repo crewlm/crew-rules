@@ -64,7 +64,7 @@ class DurationValue(Value):
     duration: timedelta
 
     def get_calculated_value(self, obj):
-        return self.duration
+        return self.duration.total_seconds() / 3600.0
 
 
 class NumberRangeValue(Value):
@@ -82,7 +82,10 @@ class DurationRangeValue(Value):
     upper: timedelta
 
     def get_calculated_value(self, obj):
-        return (self.lower, self.upper)
+        return (
+            self.lower.total_seconds() / 3600.0,
+            self.upper.total_seconds() / 3600.0,
+        )
 
 
 class ApplicableValue(Value):
@@ -90,50 +93,39 @@ class ApplicableValue(Value):
     applicable: bool
 
     def get_calculated_value(self, obj):
-        return self.applicable
+        return int(self.applicable)
 
 
-class FieldNumberValue(Value):
-    kind: Literal["field_number_value"] = "field_number_value"
+class FieldValue(Value):
+    kind: Literal["field_value"] = "field_value"
     field: str | None = None
     multiplier: float = 1.0
     offset: float = 0.0
-    cap_lower: float | None = None
-    cap_upper: float | None = None
-
-    @cached_property
-    def _field_getter(self):
-        if self.field is None:
-            return lambda x: 0
-        return attrgetter(self.field)
-
-    def get_calculated_value(self, obj):
-        val: float = self._field_getter(obj)
-        val *= self.multiplier
-        val += self.offset
-        if self.cap_lower is not None and self.cap_lower > val:
-            val = self.cap_lower
-        if self.cap_upper is not None and self.cap_upper < val:
-            val = self.cap_upper
-        return val
-
-
-class FieldDurationValue(Value):
-    kind: Literal["field_duration_value"] = "field_duration_value"
-    field: str | None = None
-    multiplier: float = 1.0
-    offset: timedelta = timedelta()
     cap_lower: timedelta | None = None
     cap_upper: timedelta | None = None
 
     @cached_property
     def _field_getter(self):
         if self.field is None:
-            return lambda x: timedelta()
+            return lambda x: 0.0
         return attrgetter(self.field)
 
     def get_calculated_value(self, obj):
-        val: timedelta = self._field_getter(obj)
+        val = self._field_getter(obj)
+        # convert from everything else to float
+        if isinstance(val, float):
+            pass
+        elif isinstance(val, int):
+            val = float(val)
+        elif isinstance(val, datetime):
+            val = val.timestamp()
+        elif isinstance(val, timedelta):
+            val = val.total_seconds() / 3600.0
+        elif isinstance(val, time):
+            val = val.hour + val.minute / 60.0 + val.second / 3600.0
+        else:
+            raise ValueError(f"Cannot convert field to number: {self.field}")
+        #
         val *= self.multiplier
         val += self.offset
         if self.cap_lower is not None and self.cap_lower > val:
@@ -171,8 +163,7 @@ class TableLookupDurationValue(Value):
 CalculationValue = Annotated[
     NumberValue
     | DurationValue
-    | FieldNumberValue
-    | FieldDurationValue
+    | FieldValue
     | NumberRangeValue
     | DurationRangeValue
     | ApplicableValue
@@ -262,11 +253,17 @@ class Rule[C](CustomBaseModel):
     name: str
     applicability: DecisionTable[C, ApplicableValue]
     value: DecisionTable[C, CalculationValue]
-    value_updates: list[Update[C, CalculationValue]] = Field(default_factory=list)
+    value_updates: list[Update[C, CalculationValue | None]] = Field(
+        default_factory=list
+    )
     requirement: DecisionTable[C, CalculationValue] | None = None
-    requirement_updates: list[Update[C, CalculationValue]] = Field(default_factory=list)
+    requirement_updates: list[Update[C, CalculationValue | None]] = Field(
+        default_factory=list
+    )
     limit: DecisionTable[C, CalculationValue] | None = None
-    limit_updates: list[Update[C, CalculationValue]] = Field(default_factory=list)
+    limit_updates: list[Update[C, CalculationValue | None]] = Field(
+        default_factory=list
+    )
 
     def model_post_init(self, context):
         if self.requirement is None and len(self.requirement_updates) > 0:

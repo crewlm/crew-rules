@@ -6,8 +6,8 @@ from models import (
     DecisionTable,
     ApplicableValue,
     DurationValue,
-    FieldNumberValue,
-    FieldDurationValue,
+    FieldValue,
+    FieldValue,
     AnyRule,
     ConditionValue,
     Condition,
@@ -24,8 +24,8 @@ def test_rest_01():
     applicability_table = DecisionTable[EmployeeRestTime, ApplicableValue](
         default=ApplicableValue(phrase="Default", applicable=True)
     )
-    value_table = DecisionTable[EmployeeRestTime, FieldDurationValue](
-        default=FieldDurationValue(phrase="Rest duration", field="duration")
+    value_table = DecisionTable[EmployeeRestTime, FieldValue](
+        default=FieldValue(phrase="Rest duration", field="duration")
     )
     requirement_table = DecisionTable[EmployeeRestTime, DurationValue](
         default=DurationValue(phrase="Default", duration=timedelta(hours=12))
@@ -44,9 +44,7 @@ def test_rest_01():
     parsed_rule = AnyRule.validate_json(json_data)
 
     assert isinstance(parsed_rule, EmployeeRestTimeRule)
-    assert parsed_rule.requirement.default.get_calculated_value(None) == timedelta(
-        hours=12
-    )
+    assert parsed_rule.requirement.default.get_calculated_value(None) == 12.0
 
 
 def test_rest_02():
@@ -65,8 +63,8 @@ def test_rest_02():
             )
         ],
     )
-    value_table = DecisionTable[C, FieldDurationValue](
-        default=FieldDurationValue(phrase="Rest duration", field="duration")
+    value_table = DecisionTable[C, FieldValue](
+        default=FieldValue(phrase="Rest duration", field="duration")
     )
     requirement_table = DecisionTable[C, DurationValue](
         items=[
@@ -100,20 +98,20 @@ def test_rest_02():
             ],
         ),
     )
-    requirement_update_table1 = Update[C, FieldNumberValue](
+    requirement_update_table1 = Update[C, FieldValue](
         name="Crossed multiple time zones",
         method="increase",
-        table=DecisionTable[C, FieldNumberValue](
-            default=FieldNumberValue(field=None),
+        table=DecisionTable[C, FieldValue](
+            default=FieldValue(field=None),
             items=[
-                ConditionValue[C, FieldNumberValue](
+                ConditionValue[C, FieldValue](
                     condition=[
                         Condition[C](
                             field="preceding_duty.calculated_numbers.time_zones_crossed",
                             comparison=GTNumberComparison(number=2),
                         )
                     ],
-                    value=FieldNumberValue(
+                    value=FieldValue(
                         field="preceding_duty.calculated_numbers.time_zones_crossed",
                         offset=-2,
                     ),
@@ -136,6 +134,4 @@ def test_rest_02():
     parsed_rule = AnyRule.validate_json(json_data)
 
     assert isinstance(parsed_rule, EmployeeRestTimeRule)
-    assert parsed_rule.requirement.default.get_calculated_value(None) == timedelta(
-        hours=14
-    )
+    assert parsed_rule.requirement.default.get_calculated_value(None) == 14.0
