@@ -9,6 +9,7 @@ class MermaidDiagramBuilder:
     def __init__(self, rule: Rule):
         self.rule = rule
         self.node_counter: int = 0
+        self.subgraph_entries: list[str] = []
         self.lines: list[str] = [
             "graph LR",
             f"    %% Diagram for Rule: {rule.name} (Scope: {getattr(rule, 'scope', 'Rule')})",
@@ -69,14 +70,16 @@ class MermaidDiagramBuilder:
     def add_applicability_section(self) -> "MermaidDiagramBuilder":
         self.lines.append('\n    subgraph Applicability ["Applicability"]')
         self.lines.append("        direction TB")
-        self.add_decision_table(self.rule.applicability, "appNode")
+        entry_id = self.add_decision_table(self.rule.applicability, "appNode")
+        self.subgraph_entries.append(entry_id)
         self.lines.append("    end")
         return self
 
     def add_subject_value_section(self) -> "MermaidDiagramBuilder":
         self.lines.append('\n    subgraph SubjectValue ["Initial Value"]')
         self.lines.append("        direction TB")
-        self.add_decision_table(self.rule.value, "valNode")
+        entry_id = self.add_decision_table(self.rule.value, "valNode")
+        self.subgraph_entries.append(entry_id)
         self.lines.append("    end")
 
         for idx, upd in enumerate(self.rule.value_updates, start=1):
@@ -85,6 +88,7 @@ class MermaidDiagramBuilder:
             )
             self.lines.append("        direction TB")
             u_header_id = self._next_node_id()
+            self.subgraph_entries.append(u_header_id)
             self.lines.append(
                 f'        {u_header_id}[["{upd.name} ({upd.method.title()})"]]:::valUpdNode'
             )
@@ -97,7 +101,8 @@ class MermaidDiagramBuilder:
         if self.rule.requirement:
             self.lines.append('\n    subgraph Requirement ["Initial Requirement"]')
             self.lines.append("        direction TB")
-            self.add_decision_table(self.rule.requirement, "reqNode")
+            entry_id = self.add_decision_table(self.rule.requirement, "reqNode")
+            self.subgraph_entries.append(entry_id)
             self.lines.append("    end")
 
         for idx, upd in enumerate(self.rule.requirement_updates, start=1):
@@ -106,6 +111,7 @@ class MermaidDiagramBuilder:
             )
             self.lines.append("        direction TB")
             u_header_id = self._next_node_id()
+            self.subgraph_entries.append(u_header_id)
             self.lines.append(
                 f'        {u_header_id}[["{upd.name} ({upd.method.title()})"]]:::reqUpdNode'
             )
@@ -116,7 +122,8 @@ class MermaidDiagramBuilder:
         if self.rule.limit:
             self.lines.append('\n    subgraph Limit ["Initial Limit"]')
             self.lines.append("        direction TB")
-            self.add_decision_table(self.rule.limit, "limNode")
+            entry_id = self.add_decision_table(self.rule.limit, "limNode")
+            self.subgraph_entries.append(entry_id)
             self.lines.append("    end")
 
         for idx, upd in enumerate(self.rule.limit_updates, start=1):
@@ -125,6 +132,7 @@ class MermaidDiagramBuilder:
             )
             self.lines.append("        direction TB")
             u_header_id = self._next_node_id()
+            self.subgraph_entries.append(u_header_id)
             self.lines.append(
                 f'        {u_header_id}[["{upd.name} ({upd.method.title()})"]]:::limUpdNode'
             )
@@ -134,6 +142,12 @@ class MermaidDiagramBuilder:
         return self
 
     def build(self) -> str:
+        # Link consecutive subgraphs invisibly using `~~~` to enforce left-to-right ordering
+        if len(self.subgraph_entries) > 1:
+            self.lines.append("\n    %% Force left-to-right ordering of subgraphs")
+            for src, dst in zip(self.subgraph_entries[:-1], self.subgraph_entries[1:]):
+                self.lines.append(f"    {src} ~~~ {dst}")
+
         return "\n".join(self.lines)
 
 
