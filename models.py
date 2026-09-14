@@ -8,7 +8,7 @@ from operator import attrgetter
 from uuid import uuid4, UUID
 from datetime import datetime, timedelta, time
 
-from utilities.pydantic import CustomBaseModel, Field
+from utilities.pydantic import CustomBaseModel, Field, TypeAdapter
 from entities import (
     Activity,
     Duty,
@@ -374,3 +374,5 @@ AnyRule = Annotated[
     | PortTimePeriodRule,
     Field(discriminator="scope"),
 ]
+
+AnyRuleModel = TypeAdapter(AnyRule)
