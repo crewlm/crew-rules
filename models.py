@@ -18,6 +18,7 @@ from entities import (
     EmployeeGroundTime,
     AircraftTimePeriod,
     AircraftGroundTime,
+    PortTimePeriod,
 )
 
 
@@ -357,6 +358,10 @@ class AircraftGroundTimeRule(Rule[AircraftGroundTime]):
     scope: Literal["aircraft_ground_time"] = "aircraft_ground_time"
 
 
+class PortTimePeriodRule(Rule[PortTimePeriod]):
+    scope: Literal["port_time_period"]
+
+
 AnyRule = Annotated[
     ActivityRule
     | DutyRule
@@ -365,6 +370,7 @@ AnyRule = Annotated[
     | AircraftTimePeriodRule
     | EmployeeRestTimeRule
     | EmployeeGroundTimeRule
-    | AircraftGroundTimeRule,
+    | AircraftGroundTimeRule
+    | PortTimePeriodRule,
     Field(discriminator="scope"),
 ]
