@@ -7,6 +7,32 @@ from functools import cached_property
 from utilities.pydantic import CustomBaseModel
 
 
+def _timedelta_to_iso8601(td: timedelta) -> str:
+    # Extract total seconds and handle negative durations if necessary
+    total_seconds = int(td.total_seconds())
+    days = td.days
+
+    # Extract hours, minutes, and seconds from the remaining seconds of the day
+    remaining_seconds = total_seconds % 86400
+    hours = remaining_seconds // 3600
+    minutes = (remaining_seconds % 3600) // 60
+    seconds = remaining_seconds % 60
+
+    # Build date and time components
+    date_part = f"{days}D" if days else ""
+    time_part = ""
+    if hours or minutes or seconds:
+        time_part = "T"
+        if hours:
+            time_part += f"{hours}H"
+        if minutes:
+            time_part += f"{minutes}M"
+        if seconds:
+            time_part += f"{seconds}S"
+
+    return f"P{date_part}{time_part}"
+
+
 class EqualNumberComparison(CustomBaseModel):
     kind: Literal["equal_number_comparison"] = "equal_number_comparison"
     number: float
@@ -14,6 +40,9 @@ class EqualNumberComparison(CustomBaseModel):
 
     def matches(self, value: float):
         return abs(self.number - value) <= self.tolerance
+
+    def get_display_target(self):
+        return f"is equal to {self.number}"
 
 
 class GENumberComparison(CustomBaseModel):
@@ -23,6 +52,9 @@ class GENumberComparison(CustomBaseModel):
     def matches(self, value: float):
         return value >= self.number
 
+    def get_display_target(self):
+        return f"is greater than or equal to {self.number}"
+
 
 class LENumberComparison(CustomBaseModel):
     kind: Literal["le_number_comparison"] = "le_number_comparison"
@@ -30,6 +62,9 @@ class LENumberComparison(CustomBaseModel):
 
     def matches(self, value: float):
         return value <= self.number
+
+    def get_display_target(self):
+        return f"is less than or equal to {self.number}"
 
 
 class GTNumberComparison(CustomBaseModel):
@@ -39,6 +74,9 @@ class GTNumberComparison(CustomBaseModel):
     def matches(self, value: float):
         return value > self.number
 
+    def get_display_target(self):
+        return f"is greater than {self.number}"
+
 
 class LTNumberComparison(CustomBaseModel):
     kind: Literal["lt_number_comparison"] = "lt_number_comparison"
@@ -46,6 +84,9 @@ class LTNumberComparison(CustomBaseModel):
 
     def matches(self, value: float):
         return value < self.number
+
+    def get_display_target(self):
+        return f"is less than {self.number}"
 
 
 class RangeNumberComparison(CustomBaseModel):
@@ -55,6 +96,9 @@ class RangeNumberComparison(CustomBaseModel):
 
     def matches(self, value: float):
         return self.lower <= value <= self.upper
+
+    def get_display_target(self):
+        return f"is within range {self.lower} to {self.upper}"
 
 
 class EqualDurationComparison(CustomBaseModel):
@@ -67,16 +111,27 @@ class EqualDurationComparison(CustomBaseModel):
     def matches(self, value: timedelta):
         return abs(self.duration - value) <= self.tolerance
 
+    def get_display_target(self):
+        return f"is equal to {_timedelta_to_iso8601(self.duration)}"
+
 
 class EqualTextComparison(CustomBaseModel):
     kind: Literal["equal_text_comparison"] = "equal_text_comparison"
     text: str
     case_sensitive: bool = True
 
+    def model_post_init(self, context):
+        if not self.case_sensitive:
+            self.text = self.text.lower()
+        return super().model_post_init(context)
+
     def matches(self, value: str):
         if not self.case_sensitive:
-            return self.text.lower() == value.lower()
+            return self.text == value.lower()
         return self.text == value
+
+    def get_display_target(self):
+        return f"is equal to '{self.text}' (case-{'' if self.case_sensitive else 'in'}sensitive)"
 
 
 class RegexTextComparison(CustomBaseModel):
@@ -90,21 +145,52 @@ class RegexTextComparison(CustomBaseModel):
     def matches(self, value: str):
         return self._regex_compiled.search(value) is not None
 
+    def get_display_target(self):
+        return f"matches regular expression '{self.expression}'"
+
 
 class GEDurationComparison(CustomBaseModel):
     kind: Literal["ge_duration_comparison"] = "ge_duration_comparison"
-    number: timedelta
+    duration: timedelta
 
     def matches(self, value: timedelta):
-        return value >= self.number
+        return value >= self.duration
+
+    def get_display_target(self):
+        return f"is greater than or equal to {_timedelta_to_iso8601(self.duration)}"
 
 
 class LEDurationComparison(CustomBaseModel):
     kind: Literal["le_duration_comparison"] = "le_duration_comparison"
-    number: timedelta
+    duration: timedelta
 
     def matches(self, value: timedelta):
-        return value <= self.number
+        return value <= self.duration
+
+    def get_display_target(self):
+        return f"is less than or equal to {_timedelta_to_iso8601(self.duration)}"
+
+
+class GTDurationComparison(CustomBaseModel):
+    kind: Literal["gt_duration_comparison"] = "gt_duration_comparison"
+    duration: timedelta
+
+    def matches(self, value: timedelta):
+        return value >= self.duration
+
+    def get_display_target(self):
+        return f"is greater than {_timedelta_to_iso8601(self.duration)}"
+
+
+class LTDurationComparison(CustomBaseModel):
+    kind: Literal["lt_duration_comparison"] = "lt_duration_comparison"
+    duration: timedelta
+
+    def matches(self, value: timedelta):
+        return value <= self.duration
+
+    def get_display_target(self):
+        return f"is less than {_timedelta_to_iso8601(self.duration)}"
 
 
 class RangeDurationComparison(CustomBaseModel):
@@ -115,6 +201,9 @@ class RangeDurationComparison(CustomBaseModel):
     def matches(self, value: timedelta):
         return self.lower <= value <= self.upper
 
+    def get_display_target(self):
+        return f"is within range {_timedelta_to_iso8601(self.lower)} to {_timedelta_to_iso8601(self.upper)}"
+
 
 class RangeDatetimeComparison(CustomBaseModel):
     kind: Literal["range_datetime_comparison"] = "range_datetime_comparison"
@@ -123,6 +212,9 @@ class RangeDatetimeComparison(CustomBaseModel):
 
     def matches(self, value: datetime):
         return self.lower <= value <= self.upper
+
+    def get_display_target(self):
+        return f"is within range {self.lower.isoformat()} to {self.upper.isoformat()}"
 
 
 class TimeWindowOverlapComparison(CustomBaseModel):
@@ -165,6 +257,9 @@ class TimeWindowOverlapComparison(CustomBaseModel):
 
         return False
 
+    def get_display_target(self):
+        return f"has overlap of {_timedelta_to_iso8601(self.overlap)} or more with {self.start.strftime('%H:%M:%S')} to {self.end.strftime('%H:%M:%S')}"
+
 
 class TruthComparison(CustomBaseModel):
     kind: Literal["truth_comparison"] = "truth_comparison"
@@ -172,12 +267,18 @@ class TruthComparison(CustomBaseModel):
     def matches(self, value: Any):
         return bool(value)
 
+    def get_display_target(self):
+        return f"is true"
+
 
 class FalseComparison(CustomBaseModel):
     kind: Literal["false_comparison"] = "false_comparison"
 
     def matches(self, value: Any):
         return not bool(value)
+
+    def get_display_target(self):
+        return f"is false"
 
 
 class EqualSetComparison(CustomBaseModel):
@@ -187,6 +288,9 @@ class EqualSetComparison(CustomBaseModel):
     def matches(self, value: Iterable[Any]):
         return self.items == set(value)
 
+    def get_display_target(self):
+        return f"is equal to {', '.join(map(str, self.items))}"
+
 
 class WithinSetComparison(CustomBaseModel):
     kind: Literal["within_set_comparison"] = "within_set_comparison"
@@ -195,6 +299,9 @@ class WithinSetComparison(CustomBaseModel):
     def matches(self, value: Iterable[Any]):
         return set(value).issubset(self.items)
 
+    def get_display_target(self):
+        return f"is a subset of {', '.join(map(str, self.items))}"
+
 
 class ContainSetComparison(CustomBaseModel):
     kind: Literal["contain_set_comparison"] = "contain_set_comparison"
@@ -202,6 +309,9 @@ class ContainSetComparison(CustomBaseModel):
 
     def matches(self, value: Iterable[Any]):
         return set(value).issuperset(self.items)
+
+    def get_display_target(self):
+        return f"contains all the following items: {', '.join(map(str, self.items))}"
 
 
 Comparison = Annotated[
@@ -216,6 +326,8 @@ Comparison = Annotated[
     | EqualDurationComparison
     | LEDurationComparison
     | GEDurationComparison
+    | LTDurationComparison
+    | GTDurationComparison
     | RangeDurationComparison
     | RangeDatetimeComparison
     | TimeWindowOverlapComparison
