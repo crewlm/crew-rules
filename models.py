@@ -143,6 +143,13 @@ class TimeWindowOverlapComparison(CustomBaseModel):
         return False
 
 
+class TruthComparison(CustomBaseModel):
+    kind: Literal["truth_comparison"] = "truth_comparison"
+
+    def matches(self, value: Any):
+        return bool(value)
+
+
 class EqualSetComparison(CustomBaseModel):
     kind: Literal["equal_set_comparison"] = "equal_set_comparison"
     items: set[Hashable]
@@ -179,6 +186,7 @@ Comparison = Annotated[
     | RangeDatetimeComparison
     | TimeWindowOverlapComparison
     | EqualSetComparison
+    | TruthComparison
     | WithinSetComparison
     | ContainSetComparison,
     Field(discriminator="kind"),
@@ -186,7 +194,7 @@ Comparison = Annotated[
 
 
 class Condition[C](CustomBaseModel):
-    """C constraints the fields allowed (scoping to the object's available fields)"""
+    """TODO: C constraints the fields allowed (scoping to the object's available fields)"""
 
     field: str = Field(
         description="Dot-separated field, accessing object's field using dot notation."
@@ -302,7 +310,7 @@ class DecisionTable[C, V](CustomBaseModel):
 
 class Update[C, V](CustomBaseModel):
     name: str
-    method: Literal["set", "add", "max", "min"] = "set"
+    method: Literal["set", "increase", "max", "min"] = "set"
     table: DecisionTable[C, V]
 
 

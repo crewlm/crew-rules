@@ -4,7 +4,7 @@ a rule on.
 """
 
 from datetime import datetime
-from typing import Any, Generic, TypeVar
+from typing import Any, Generic, TypeVar, Literal
 from pydantic import Field
 
 from utilities.pydantic import CustomBaseModel
@@ -23,7 +23,19 @@ class Activity(CustomBaseModel):
 
 
 class Duty(CustomBaseModel):
-    pass
+    activities: GettableList[Activity] = Field(default_factory=GettableList)
+    category: Literal[
+        "flying",
+        "deadhead_only",
+        "home_standby",
+        "airport_standby",
+        "ground",
+        "simulator",
+        "training",
+        "admin",
+        "generic_work",
+        "generic_rest",
+    ] = Field(default="generic_work")
 
 
 class Pairing(CustomBaseModel):
