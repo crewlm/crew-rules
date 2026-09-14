@@ -1,4 +1,4 @@
-graph TD
+graph LR
     %% Diagram for Rule: Max FDP 2-Pilot Operations (Scope: duty)
     classDef appNode fill:#e1f5fe,stroke:#0288d1,stroke-width:1px;
     classDef valNode fill:#f3e5f5,stroke:#7b1fa2,stroke-width:1px;
@@ -9,6 +9,7 @@ graph TD
     classDef limUpdNode fill:#e8f5e9,stroke:#388e3c,stroke-width:1px;
 
     subgraph Applicability ["Applicability"]
+        direction TB
         N1{"C's category is equal to 'flying' (case-sensitive),<br/>and C's operating pilot count is equal to 2.0?"}
         N2["True"]:::appNode
         N1 -->|Match| N2
@@ -17,10 +18,12 @@ graph TD
     end
 
     subgraph SubjectValue ["Initial Value"]
+        direction TB
         N4["Default: From Calculated datetime's fdp start timestamp to Operating flights' -1's on blocks"]:::valNode
     end
 
     subgraph Limit ["Initial Limit"]
+        direction TB
         N5{"C's is acclimatised is false?"}
         N6["Look up the value in MaxFDPTableB using Calculated numbers' fdp sectors as sectors, Preceding rest's duration as preceding_rest"]:::limNode
         N5 -->|Match| N6
@@ -29,6 +32,7 @@ graph TD
     end
 
     subgraph LimitUpdates ["Limit Updates"]
+        direction TB
         N8[["Limit Update: Commander's Discretion Extension (Increase)"]]:::limUpdNode
         N9{"C's discretion's commander is true?"}
         N10["PT1H"]:::limUpdNode
