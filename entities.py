@@ -7,6 +7,7 @@ Some notes:
 """
 
 from functools import cached_property
+from datetime import datetime
 
 from utilites.pydantic import CustomBaseModel, Field
 
@@ -92,10 +93,20 @@ class Aircraft(CustomBaseModel):
 
 class EmployeeTimePeriod(CustomBaseModel):
     employee: Employee
+    start: datetime
+    end: datetime
 
 
 class AircraftTimePeriod(CustomBaseModel):
     aircraft: Aircraft
+    start: datetime
+    end: datetime
+
+
+class PortTimePeriod(CustomBaseModel):
+    port: Port
+    start: datetime
+    end: datetime
 
 
 class EmployeeRestTime(CustomBaseModel):
