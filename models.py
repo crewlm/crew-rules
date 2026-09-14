@@ -159,7 +159,10 @@ class NoneValue(Value):
         return None
 
     def __str__(self):
-        return "Nothing"
+        return "Do nothing"
+
+    def __bool__(self):
+        return False
 
 
 class FieldDifferenceValue(Value):
