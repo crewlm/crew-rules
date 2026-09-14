@@ -259,11 +259,16 @@ class Update[C, V](CustomBaseModel):
     table: DecisionTable[C, V]
 
 
+class TimePeriod(CustomBaseModel):
+    anchor: Literal["day", "duty_end", "duty_start", "week", "month", "year"]
+    unit: Literal["minute", "hour", "day", "month", "year"]
+    duration: int
+
+
 class Rule[C](CustomBaseModel):
     id: UUID = Field(default_factory=uuid4)
     name: str
     rule_type: str
-    input: str
     applicability: DecisionTable[C, ApplicableValue]
     value: DecisionTable[C, CalculationValue]
     value_updates: list[Update[C, CalculationValue]] = Field(default_factory=list)
@@ -271,3 +276,96 @@ class Rule[C](CustomBaseModel):
     requirement_updates: list[Update[C, CalculationValue]] = Field(default_factory=list)
     limit: DecisionTable[C, CalculationValue] | None = None
     limit_updates: list[Update[C, CalculationValue]] = Field(default_factory=list)
+
+
+class Activity(CustomBaseModel):
+    pass
+
+
+class Duty(CustomBaseModel):
+    pass
+
+
+class Pairing(CustomBaseModel):
+    pass
+
+
+class EmployeeTimePeriod(CustomBaseModel):
+    pass
+
+
+class AircraftTimePeriod(CustomBaseModel):
+    pass
+
+
+class Employee(CustomBaseModel):
+    pass
+
+
+class Aircraft(CustomBaseModel):
+    pass
+
+
+class EmployeeRestTime(CustomBaseModel):
+    preceding: Duty
+    succeeding: Duty
+    employee: Employee
+
+
+class EmployeeGroundTime(CustomBaseModel):
+    inbound: Activity
+    outbound: Activity
+    employee: Employee
+
+
+class AircraftGroundTime(CustomBaseModel):
+    inbound: Activity
+    outbound: Activity
+    aircraft: Aircraft
+
+
+class ActivityRule(Rule[Activity]):
+    scope: Literal["activity"] = "activity"
+
+
+class DutyRule(Rule[Duty]):
+    scope: Literal["duty"] = "duty"
+
+
+class PairingRule(Rule[Pairing]):
+    scope: Literal["pairing"] = "pairing"
+
+
+class EmployeeTimePeriodRule(Rule[EmployeeTimePeriod]):
+    scope: Literal["employee_time_period"] = "employee_time_period"
+    time_period: TimePeriod
+
+
+class AircraftTimePeriodRule(Rule[AircraftTimePeriod]):
+    scope: Literal["aircraft_time_period"] = "aircraft_time_period"
+    time_period: TimePeriod
+
+
+class EmployeeRestTimeRule(Rule[EmployeeRestTime]):
+    scope: Literal["employee_rest_time_rule"] = "employee_rest_time_rule"
+
+
+class EmployeeGroundTimeRule(Rule[EmployeeGroundTime]):
+    scope: Literal["employee_ground_time"] = "employee_ground_time"
+
+
+class AircraftGroundTimeRule(Rule[AircraftGroundTime]):
+    scope: Literal["aircraft_ground_time"] = "aircraft_ground_time"
+
+
+AnyRule = Annotated[
+    ActivityRule
+    | DutyRule
+    | PairingRule
+    | EmployeeTimePeriodRule
+    | AircraftTimePeriodRule
+    | EmployeeRestTimeRule
+    | EmployeeGroundTimeRule
+    | AircraftGroundTimeRule,
+    Field(discriminator="scope"),
+]
