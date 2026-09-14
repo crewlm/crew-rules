@@ -148,7 +148,7 @@ class ApplicableValue(Value):
         return self.applicable
 
     def __str__(self):
-        return str(self.applicable).title()
+        return "Applicable" if self.applicable else "Not applicable"
 
 
 class NoneValue(Value):

@@ -11,9 +11,9 @@ graph LR
     subgraph Applicability ["Applicability"]
         direction TB
         N1{"C's category is equal to 'flying' (case-sensitive),<br/>and C's operating pilot count is equal to 2.0?"}
-        N2["True"]:::appNode
+        N2["Applicable"]:::appNode
         N1 -->|Match| N2
-        N3["False"]:::appNode
+        N3["Not applicable"]:::appNode
         N1 -->|No Match| N3
     end
 
