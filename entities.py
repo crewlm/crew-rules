@@ -1,15 +1,13 @@
 """
 This module defines all the different entities which we might evaluate
 a rule on.
-
-Some notes:
-- We
 """
 
 from datetime import datetime
 from typing import Any, Generic, TypeVar
 
 from utilites.pydantic import CustomBaseModel, Field
+from utilites.builtin_extensions import GettableDict, GettableList
 
 
 class Port(CustomBaseModel):
