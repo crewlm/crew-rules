@@ -24,9 +24,9 @@ from entities import (
 from comparisons import Comparison
 
 
-def _convert_to_float(val: Any) -> float | None:
+def _convert_to_float(val: Any, null_replacement: float | None = None) -> float | None:
     if val is None:
-        return 0.0
+        return null_replacement
     elif isinstance(val, float):
         return val
     elif isinstance(val, (str, bytes, bytearray)):
