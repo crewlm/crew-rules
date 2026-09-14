@@ -58,3 +58,10 @@ graph LR
         N16["Do nothing"]:::LimitUpdateNode
         N14 -->|No| N16
     end
+
+    %% Force left-to-right column flow across subgraphs
+    N1 ~~~ N2
+    N4 ~~~ N5
+    N5 ~~~ N6
+    N8 ~~~ N9
+    N11 ~~~ N12

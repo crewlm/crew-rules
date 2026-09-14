@@ -9,7 +9,8 @@ class MermaidDiagramBuilder:
     def __init__(self, rule: Rule):
         self.rule = rule
         self.node_counter: int = 0
-        self.subgraph_entries: list[str] = []
+        # Track (entry_node_id, exit_node_id) for every subgraph column
+        self.subgraph_bounds: list[tuple[str, str]] = []
         self.lines: list[str] = [
             "graph LR",
             f"    %% Diagram for Rule: {rule.name} (Scope: {getattr(rule, 'scope', 'Rule')})",
@@ -29,14 +30,14 @@ class MermaidDiagramBuilder:
 
     def add_decision_table(
         self, table: DecisionTable, node_class: str, action: str = ""
-    ) -> str:
-        """Renders any DecisionTable into decision diamonds and action boxes."""
+    ) -> tuple[str, str]:
+        """Renders any DecisionTable into decision diamonds and action boxes. Returns (first_id, last_id)."""
         if not table.items:
             default_id = self._next_node_id()
             self.lines.append(
                 f"""        {default_id}["{action if table.default else ''}{str(table.default)}"]:::{node_class}"""
             )
-            return default_id
+            return default_id, default_id
 
         prev_fail_id = None
         first_id = None
@@ -47,7 +48,6 @@ class MermaidDiagramBuilder:
             if first_id is None:
                 first_id = cond_id
 
-            # Clean HTML line-breaks for Mermaid decision nodes
             cond_text = (
                 item.display_condition().replace("\n", "<br/>").replace('"', "'")
             )
@@ -70,14 +70,52 @@ class MermaidDiagramBuilder:
         )
         self.lines.append(f"        {prev_fail_id} -->|No| {default_id}")
 
-        return first_id
+        return first_id, default_id
+
+    def add_input_section(self) -> "MermaidDiagramBuilder":
+        entity_type = self.rule.scope.replace("_", " ").title().replace(" ", "")
+        self.lines.append('\n    subgraph Input ["Input"]')
+        self.lines.append("        direction TB")
+        node_id = self._next_node_id()
+        self.lines.append(f'        {node_id}["{entity_type}"]:::inputNode')
+        self.subgraph_bounds.append((node_id, node_id))
+        self.lines.append("    end")
+        return self
 
     def add_applicability_section(self) -> "MermaidDiagramBuilder":
         self.lines.append('\n    subgraph Applicability ["Applicability"]')
         self.lines.append("        direction TB")
-        entry_id = self.add_decision_table(self.rule.applicability, "appNode")
-        self.subgraph_entries.append(entry_id)
+        entry_id, exit_id = self.add_decision_table(self.rule.applicability, "appNode")
+        self.subgraph_bounds.append((entry_id, exit_id))
         self.lines.append("    end")
+        return self
+
+    def add_value_section(self) -> "MermaidDiagramBuilder":
+        self.lines.append('\n    subgraph SubjectValue ["Initial Value"]')
+        self.lines.append("        direction TB")
+        entry_id, exit_id = self.add_decision_table(self.rule.value, "valNode")
+        self.subgraph_bounds.append((entry_id, exit_id))
+        self.lines.append("    end")
+        return self
+
+    def add_requirement_section(self) -> "MermaidDiagramBuilder":
+        if self.rule.requirement:
+            self.lines.append('\n    subgraph Requirement ["Initial Requirement"]')
+            self.lines.append("        direction TB")
+            entry_id, exit_id = self.add_decision_table(
+                self.rule.requirement, "reqNode"
+            )
+            self.subgraph_bounds.append((entry_id, exit_id))
+            self.lines.append("    end")
+        return self
+
+    def add_limit_section(self) -> "MermaidDiagramBuilder":
+        if self.rule.limit:
+            self.lines.append('\n    subgraph Limit ["Initial Limit"]')
+            self.lines.append("        direction TB")
+            entry_id, exit_id = self.add_decision_table(self.rule.limit, "limNode")
+            self.subgraph_bounds.append((entry_id, exit_id))
+            self.lines.append("    end")
         return self
 
     def add_updates_section(
@@ -88,57 +126,25 @@ class MermaidDiagramBuilder:
                 f'\n    subgraph {name}Update_{idx} ["{name} Update: {upd.name}"]'
             )
             self.lines.append("        direction TB")
-            upd_entry = self.add_decision_table(
+            upd_entry, upd_exit = self.add_decision_table(
                 upd.table,
                 f"{name}UpdateNode",
                 upd.get_method_action(item=name.lower()),
             )
-            self.subgraph_entries.append(upd_entry)
+            self.subgraph_bounds.append((upd_entry, upd_exit))
             self.lines.append("    end")
-        return self
-
-    def add_value_section(self) -> "MermaidDiagramBuilder":
-        self.lines.append('\n    subgraph SubjectValue ["Initial Value"]')
-        self.lines.append("        direction TB")
-        entry_id = self.add_decision_table(self.rule.value, "valNode")
-        self.subgraph_entries.append(entry_id)
-        self.lines.append("    end")
-        return self
-
-    def add_requirement_section(self) -> "MermaidDiagramBuilder":
-        if self.rule.requirement:
-            self.lines.append('\n    subgraph Requirement ["Initial Requirement"]')
-            self.lines.append("        direction TB")
-            entry_id = self.add_decision_table(self.rule.requirement, "reqNode")
-            self.subgraph_entries.append(entry_id)
-            self.lines.append("    end")
-        return self
-
-    def add_limit_section(self) -> "MermaidDiagramBuilder":
-        if self.rule.limit:
-            self.lines.append('\n    subgraph Limit ["Initial Limit"]')
-            self.lines.append("        direction TB")
-            entry_id = self.add_decision_table(self.rule.limit, "limNode")
-            self.subgraph_entries.append(entry_id)
-            self.lines.append("    end")
-        return self
-
-    def add_input_section(self) -> "MermaidDiagramBuilder":
-        entity_type = self.rule.scope.replace("_", " ").title()
-        self.lines.append('\n    subgraph Input ["Input"]')
-        self.lines.append("        direction TB")
-        node_id = self._next_node_id()
-        self.lines.append(f'        {node_id}["{entity_type}"]:::inputNode')
-        self.subgraph_entries.append(node_id)
-        self.lines.append("    end")
         return self
 
     def build(self) -> str:
-        # Link consecutive subgraphs invisibly using `~~~` to enforce left-to-right ordering
-        if len(self.subgraph_entries) > 1:
-            self.lines.append("\n    %% Force global left-to-right subgraph alignment")
-            for src, dst in zip(self.subgraph_entries[:-1], self.subgraph_entries[1:]):
-                self.lines.append(f"    {src} ~~~ {dst}")
+        # Link Exit(Subgraph_N) ~~~ Entry(Subgraph_N+1) to force strict horizontal row layout
+        if len(self.subgraph_bounds) > 1:
+            self.lines.append(
+                "\n    %% Force left-to-right column flow across subgraphs"
+            )
+            for i in range(len(self.subgraph_bounds) - 1):
+                prev_exit = self.subgraph_bounds[i][1]
+                next_entry = self.subgraph_bounds[i + 1][0]
+                self.lines.append(f"    {prev_exit} ~~~ {next_entry}")
 
         return "\n".join(self.lines)
 
