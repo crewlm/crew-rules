@@ -48,6 +48,22 @@ class LENumberComparison(CustomBaseModel):
         return value <= self.number
 
 
+class GTNumberComparison(CustomBaseModel):
+    kind: Literal["gt_number_comparison"] = "gt_number_comparison"
+    number: float
+
+    def matches(self, value: float):
+        return value > self.number
+
+
+class LTNumberComparison(CustomBaseModel):
+    kind: Literal["lt_number_comparison"] = "lt_number_comparison"
+    number: float
+
+    def matches(self, value: float):
+        return value <= self.number
+
+
 class RangeNumberComparison(CustomBaseModel):
     kind: Literal["range_number_comparison"] = "range_number_comparison"
     lower: float
@@ -178,6 +194,8 @@ Comparison = Annotated[
     EqualNumberComparison
     | LENumberComparison
     | GENumberComparison
+    | LTNumberComparison
+    | GTNumberComparison
     | RangeNumberComparison
     | EqualDurationComparison
     | LEDurationComparison

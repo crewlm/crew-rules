@@ -11,7 +11,7 @@ from models import (
     ConditionValue,
     Condition,
     EqualSetComparison,
-    GENumberComparison,
+    GTNumberComparison,
     TruthComparison,
     Update,
 )
@@ -89,7 +89,7 @@ def test_rest_02():
                     condition=[
                         Condition[EmployeeRestTime](
                             field="preceding.calculated_numbers.fdp_exceedance",
-                            comparison=GENumberComparison(number=0.0001),
+                            comparison=GTNumberComparison(number=0),
                         )
                     ],
                     value=DurationValue(duration=timedelta(hours=1)),
