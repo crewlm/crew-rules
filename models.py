@@ -84,6 +84,14 @@ class EqualDurationComparison(CustomBaseModel):
         return abs(self.duration - value) <= self.tolerance
 
 
+class EqualTextComparison(CustomBaseModel):
+    kind: Literal["equal_text_comparison"] = "equal_text_comparison"
+    text: str
+
+    def matches(self, value: str):
+        return self.text == value
+
+
 class GEDurationComparison(CustomBaseModel):
     kind: Literal["ge_duration_comparison"] = "ge_duration_comparison"
     number: timedelta
@@ -192,6 +200,7 @@ class ContainSetComparison(CustomBaseModel):
 
 Comparison = Annotated[
     EqualNumberComparison
+    | EqualTextComparison
     | LENumberComparison
     | GENumberComparison
     | LTNumberComparison
