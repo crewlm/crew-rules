@@ -13,7 +13,7 @@ graph LR
         N1{"C's category is equal to 'flying' (case-sensitive),<br/>and C's operating pilot count is equal to 2.0?"}
         N2["True"]:::appNode
         N1 -->|Match| N2
-        N3["Default: False"]:::appNode
+        N3["False"]:::appNode
         N1 -->|No Match| N3
     end
 
@@ -27,7 +27,7 @@ graph LR
         N5{"C's is acclimatised is false?"}
         N6["Look up the value in MaxFDPTableB using Calculated numbers' fdp sectors as sectors, Preceding rest's duration as preceding_rest"]:::limNode
         N5 -->|Match| N6
-        N7["Default: Look up the value in MaxFDPTableA using Calculated numbers' fdp sectors as sectors, Duty's report time of day local as start_time_of_day"]:::limNode
+        N7["Look up the value in MaxFDPTableA using Calculated numbers' fdp sectors as sectors, Duty's report time of day local as start_time_of_day"]:::limNode
         N5 -->|No Match| N7
     end
 
@@ -37,7 +37,7 @@ graph LR
         N9{"C's calculated number's preceding rest infringement is greater than 0.0?"}
         N10["Calculated number's preceding rest infringement"]:::limUpdNode
         N9 -->|Match| N10
-        N11["Default: Nothing"]:::limUpdNode
+        N11["Nothing"]:::limUpdNode
         N9 -->|No Match| N11
         N8 --> N9
     end
@@ -48,7 +48,7 @@ graph LR
         N13{"C's discretion's commander is true?"}
         N14["PT1H"]:::limUpdNode
         N13 -->|Match| N14
-        N15["Default: Nothing"]:::limUpdNode
+        N15["Nothing"]:::limUpdNode
         N13 -->|No Match| N15
         N12 --> N13
     end
