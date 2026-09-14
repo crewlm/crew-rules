@@ -96,13 +96,21 @@ class ApplicableValue(Value):
         return int(self.applicable)
 
 
+class NoneValue(Value):
+    kind: Literal["none_value"] = "none_value"
+    phrase: str = "No modification"
+
+    def get_calculated_value(self, obj: Any):
+        return None
+
+
 class FieldValue(Value):
     kind: Literal["field_value"] = "field_value"
     field: str | None = None
     multiplier: float = 1.0
     offset: float = 0.0
-    cap_lower: timedelta | None = None
-    cap_upper: timedelta | None = None
+    cap_lower: float | None = None
+    cap_upper: float | None = None
 
     @cached_property
     def _field_getter(self):
@@ -161,7 +169,8 @@ class TableLookupDurationValue(Value):
 
 
 CalculationValue = Annotated[
-    NumberValue
+    NoneValue
+    | NumberValue
     | DurationValue
     | FieldValue
     | NumberRangeValue
@@ -204,7 +213,9 @@ class Update[C, V](CustomBaseModel):
     method: Literal["set", "increase", "decrease", "max", "min", "scale"] = "set"
     table: DecisionTable[C, V]
 
-    def apply(self, current_val: N, update_val: N | None) -> N:
+    def apply(self, current_val: N | None, update_val: N | None) -> N:
+        if current_val is None:
+            current_val = 0.0
         if update_val is None:
             return current_val
         match self.method:
@@ -255,17 +266,11 @@ class Rule[C](CustomBaseModel):
     name: str
     applicability: DecisionTable[C, ApplicableValue]
     value: DecisionTable[C, CalculationValue]
-    value_updates: list[Update[C, CalculationValue | None]] = Field(
-        default_factory=list
-    )
+    value_updates: list[Update[C, CalculationValue]] = Field(default_factory=list)
     requirement: DecisionTable[C, CalculationValue] | None = None
-    requirement_updates: list[Update[C, CalculationValue | None]] = Field(
-        default_factory=list
-    )
+    requirement_updates: list[Update[C, CalculationValue]] = Field(default_factory=list)
     limit: DecisionTable[C, CalculationValue] | None = None
-    limit_updates: list[Update[C, CalculationValue | None]] = Field(
-        default_factory=list
-    )
+    limit_updates: list[Update[C, CalculationValue]] = Field(default_factory=list)
 
     def model_post_init(self, context):
         if self.requirement is None and len(self.requirement_updates) > 0:

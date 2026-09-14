@@ -3,6 +3,8 @@ from datetime import timedelta
 from entities import EmployeeRestTime, Duty
 from models import (
     EmployeeRestTimeRule,
+    CalculationValue,
+    NoneValue,
     DecisionTable,
     ApplicableValue,
     DurationValue,
@@ -80,11 +82,11 @@ def test_rest_02():
         ],
         default=DurationValue(phrase="Default", duration=timedelta(hours=14)),
     )
-    requirement_update_table1 = Update[C, DurationValue | None](
+    requirement_update_table1 = Update[C, CalculationValue](
         name="Long prior FDP",
         method="increase",
-        table=DecisionTable[C, DurationValue | None](
-            default=None,
+        table=DecisionTable[C, CalculationValue](
+            default=NoneValue(),
             items=[
                 ConditionValue[C, DurationValue](
                     condition=[
@@ -98,11 +100,11 @@ def test_rest_02():
             ],
         ),
     )
-    requirement_update_table1 = Update[C, FieldValue | None](
+    requirement_update_table1 = Update[C, CalculationValue](
         name="Crossed multiple time zones",
         method="increase",
-        table=DecisionTable[C, FieldValue | None](
-            default=None,
+        table=DecisionTable[C, CalculationValue](
+            default=NoneValue(),
             items=[
                 ConditionValue[C, FieldValue](
                     condition=[
