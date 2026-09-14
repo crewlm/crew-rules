@@ -88,8 +88,11 @@ class EqualDurationComparison(CustomBaseModel):
 class EqualTextComparison(CustomBaseModel):
     kind: Literal["equal_text_comparison"] = "equal_text_comparison"
     text: str
+    case_sensitive: bool = True
 
     def matches(self, value: str):
+        if not self.case_sensitive:
+            return self.text.lower() == value.lower()
         return self.text == value
 
 
