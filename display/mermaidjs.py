@@ -26,12 +26,14 @@ class MermaidDiagramBuilder:
         self.node_counter += 1
         return f"N{self.node_counter}"
 
-    def add_decision_table(self, table: DecisionTable, node_class: str) -> str:
+    def add_decision_table(
+        self, table: DecisionTable, node_class: str, action: str = ""
+    ) -> str:
         """Renders any DecisionTable into decision diamonds and action boxes."""
         if not table.items:
             default_id = self._next_node_id()
             self.lines.append(
-                f'        {default_id}["{str(table.default)}"]:::{node_class}'
+                f'        {default_id}["{action if table.default else ''}{str(table.default)}"]:::{node_class}'
             )
             return default_id
 
@@ -51,7 +53,9 @@ class MermaidDiagramBuilder:
             val_text = item.display_value().replace('"', "'")
 
             self.lines.append(f'        {cond_id}{{"{cond_text}?"}}')
-            self.lines.append(f'        {val_id}["{val_text}"]:::{node_class}')
+            self.lines.append(
+                f'        {val_id}["{action if item.value else ''}{val_text}"]:::{node_class}'
+            )
             self.lines.append(f"        {cond_id} -->|Match| {val_id}")
 
             if prev_fail_id:
@@ -80,10 +84,14 @@ class MermaidDiagramBuilder:
     ) -> "MermaidDiagramBuilder":
         for idx, upd in enumerate(updates, start=1):
             self.lines.append(
-                f'\n    subgraph {name}Update_{idx} ["{name} Update: {upd.name} ({upd.method.title()})"]'
+                f'\n    subgraph {name}Update_{idx} ["{name} Update: {upd.name}"]'
             )
             self.lines.append("        direction TB")
-            upd_entry = self.add_decision_table(upd.table, f"{name}UpdateNode")
+            upd_entry = self.add_decision_table(
+                upd.table,
+                f"{name}UpdateNode",
+                f"{upd.method.title()} {name.lower()} by ",
+            )
             self.subgraph_entries.append(upd_entry)
             self.lines.append("    end")
         return self
