@@ -11,10 +11,12 @@ from models import (
     AnyRule,
     ConditionValue,
     Condition,
+    Update,
+)
+from comparisons import (
     EqualTextComparison,
     GTNumberComparison,
     FalseComparison,
-    Update,
 )
 
 
@@ -55,7 +57,7 @@ def test_rest_02():
             ConditionValue[C, ApplicableValue](
                 condition=[
                     Condition[C](
-                        field="preceding.category",
+                        field="preceding_duty.category",
                         comparison=EqualTextComparison(text="flying"),
                     )
                 ],
@@ -89,7 +91,7 @@ def test_rest_02():
                 ConditionValue[C, DurationValue](
                     condition=[
                         Condition[C](
-                            field="preceding.calculated_numbers.fdp_exceedance",
+                            field="preceding_duty.calculated_numbers.fdp_exceedance",
                             comparison=GTNumberComparison(number=0),
                         )
                     ],
@@ -107,12 +109,12 @@ def test_rest_02():
                 ConditionValue[C, FieldNumberValue](
                     condition=[
                         Condition[C](
-                            field="preceding.calculated_numbers.time_zones_crossed",
+                            field="preceding_duty.calculated_numbers.time_zones_crossed",
                             comparison=GTNumberComparison(number=2),
                         )
                     ],
                     value=FieldNumberValue(
-                        field="preceding.calculated_numbers.time_zones_crossed",
+                        field="preceding_duty.calculated_numbers.time_zones_crossed",
                         offset=-2,
                     ),
                 )

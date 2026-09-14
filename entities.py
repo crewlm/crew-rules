@@ -72,8 +72,8 @@ class PortTimePeriod(CustomBaseModel):
 
 
 class EmployeeRestTime(CustomBaseModel):
-    preceding: Duty
-    succeeding: Duty
+    preceding_duty: Duty
+    succeeding_duty: Duty
     employee: Employee
 
 
