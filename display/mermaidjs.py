@@ -60,7 +60,7 @@ class MermaidDiagramBuilder:
 
         default_id = self._next_node_id()
         self.lines.append(
-            f'        {default_id}["Default: {str(table.default)}"]:::{node_class}'
+            f'        {default_id}["{str(table.default)}"]:::{node_class}'
         )
         self.lines.append(f"        {prev_fail_id} -->|No Match| {default_id}")
 
