@@ -173,7 +173,9 @@ Comparison = Annotated[
 ]
 
 
-class Condition(CustomBaseModel):
+class Condition[C](CustomBaseModel):
+    """C constraints the fields allowed (scoping to the object's available fields)"""
+
     field: str = Field(
         description="Dot-separated field, accessing object's field using dot notation."
     )
@@ -191,22 +193,58 @@ class Condition(CustomBaseModel):
 
 
 class Value(CustomBaseModel):
-    pass
+    phrase: str = "Matched"
 
 
-class ConditionValue(CustomBaseModel):
-    condition: list[Condition] = Field(
+class NumberValue(Value):
+    number: float
+
+
+class DurationValue(Value):
+    duration: timedelta
+
+
+class NumberRangeValue(Value):
+    lower: float
+    upper: float
+
+
+class DurationRangeValue(Value):
+    lower: timedelta
+    upper: timedelta
+
+
+class ApplicableValue(Value):
+    applicable: bool
+
+
+class FieldValue(Value):
+    field: str
+
+
+CalculationValue = (
+    NumberValue
+    | DurationValue
+    | FieldValue
+    | NumberRangeValue
+    | DurationRangeValue
+    | ApplicableValue
+)
+
+
+class ConditionValue[C, V](CustomBaseModel):
+    condition: list[Condition[C]] = Field(
         description="All conditions must be met together (AND)."
     )
-    value: Value
+    value: Value[V]
 
     def matches(self, obj):
         return all(c.matches(obj) for c in self.condition)
 
 
-class DecisionTable(CustomBaseModel):
+class DecisionTable[C, V](CustomBaseModel):
     default: Value
-    items: list[ConditionValue] = Field(default_factory=list)
+    items: list[ConditionValue[C, V]] = Field(default_factory=list)
 
     def get_matching_value(self, obj):
         for item in self.items:
@@ -215,15 +253,21 @@ class DecisionTable(CustomBaseModel):
         return self.default
 
 
-class Rule(CustomBaseModel):
+class Update[C, V](CustomBaseModel):
+    name: str
+    method: Literal["set", "add", "max", "min"] = "set"
+    table: DecisionTable[C, V]
+
+
+class Rule[C](CustomBaseModel):
     id: UUID = Field(default_factory=uuid4)
     name: str
     rule_type: str
     input: str
-    applicability: DecisionTable
-    value: DecisionTable
-    value_updates: list[DecisionTable] = Field(default_factory=list)
-    requirement: DecisionTable | None = None
-    requirement_updates: list[DecisionTable] = Field(default_factory=list)
-    limit: DecisionTable | None = None
-    limit_updates: list[DecisionTable] = Field(default_factory=list)
+    applicability: DecisionTable[C, ApplicableValue]
+    value: DecisionTable[C, CalculationValue]
+    value_updates: list[Update[C, CalculationValue]] = Field(default_factory=list)
+    requirement: DecisionTable[C, CalculationValue] | None = None
+    requirement_updates: list[Update[C, CalculationValue]] = Field(default_factory=list)
+    limit: DecisionTable[C, CalculationValue] | None = None
+    limit_updates: list[Update[C, CalculationValue]] = Field(default_factory=list)
