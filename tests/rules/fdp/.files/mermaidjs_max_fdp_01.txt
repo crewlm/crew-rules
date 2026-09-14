@@ -31,20 +31,20 @@ graph LR
         N5 -->|No Match| N7
     end
 
-    subgraph LimitUpdate_1 ["Limit Update: Short Rest Reduction (Decrease)"]
+    subgraph LimitUpdate_1 ["Limit Update: Short Rest Reduction"]
         direction TB
         N8{"Calculated number's preceding rest infringement is greater than 0.0?"}
-        N9["Calculated number's preceding rest infringement"]:::LimitUpdateNode
+        N9["Decrease limit by Calculated number's preceding rest infringement"]:::LimitUpdateNode
         N8 -->|Match| N9
-        N10["Nothing"]:::LimitUpdateNode
+        N10["Do nothing"]:::LimitUpdateNode
         N8 -->|No Match| N10
     end
 
-    subgraph LimitUpdate_2 ["Limit Update: Commander's Discretion Extension (Increase)"]
+    subgraph LimitUpdate_2 ["Limit Update: Commander's Discretion Extension"]
         direction TB
         N11{"Discretion's commander is true?"}
-        N12["PT1H"]:::LimitUpdateNode
+        N12["Increase limit by PT1H"]:::LimitUpdateNode
         N11 -->|Match| N12
-        N13["Nothing"]:::LimitUpdateNode
+        N13["Do nothing"]:::LimitUpdateNode
         N11 -->|No Match| N13
     end
