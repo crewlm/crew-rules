@@ -9,7 +9,7 @@ graph TD
     classDef limUpdNode fill:#e8f5e9,stroke:#388e3c,stroke-width:1px;
 
     subgraph Applicability ["Applicability"]
-        N1{"C's category is equal to 'flying' (case-sensitive),<br/>and C's operating_pilot_count is equal to 2.0?"}
+        N1{"C's category is equal to 'flying' (case-sensitive),<br/>and C's operating pilot count is equal to 2.0?"}
         N2["True"]:::appNode
         N1 -->|Match| N2
         N3["Default: False"]:::appNode
@@ -17,14 +17,14 @@ graph TD
     end
 
     subgraph SubjectValue ["Initial Value"]
-        N4["Default: From Calculated_datetime's fdp_start_timestamp to Operating_flights' -1's on_blocks"]:::valNode
+        N4["Default: From Calculated datetime's fdp start timestamp to Operating flights' -1's on blocks"]:::valNode
     end
 
     subgraph Limit ["Initial Limit"]
-        N5{"C's is_acclimatised is false?"}
-        N6["Look up the value in MaxFDPTableB using Calculated_numbers' fdp_sectors as sectors, Preceding_rest's duration as preceding_rest"]:::limNode
+        N5{"C's is acclimatised is false?"}
+        N6["Look up the value in MaxFDPTableB using Calculated numbers' fdp sectors as sectors, Preceding rest's duration as preceding_rest"]:::limNode
         N5 -->|Match| N6
-        N7["Default: Look up the value in MaxFDPTableA using Calculated_numbers' fdp_sectors as sectors, Duty's report_time_of_day_local as start_time_of_day"]:::limNode
+        N7["Default: Look up the value in MaxFDPTableA using Calculated numbers' fdp sectors as sectors, Duty's report time of day local as start_time_of_day"]:::limNode
         N5 -->|No Match| N7
     end
 

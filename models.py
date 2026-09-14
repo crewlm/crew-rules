@@ -55,6 +55,7 @@ class Condition[C](CustomBaseModel):
     reverse_match: bool = Field(False, description="TRUE inverts the match")
 
     def get_generic_param_name(self) -> str:
+        # TODO: This returns C not the actual class name
         # Loop through the class MRO to find who defined the [C] parameter
         for cls in self.__class__.__mro__:
             if hasattr(cls, "__type_params__") and cls.__type_params__:
