@@ -77,7 +77,7 @@ class GettableList(list):
 class GettableDict(dict):
     """
     Dict subclass enabling dot-notation field access for attrgetter.
-    E.g., calculated_numbers.max_fdp_hours
+    E.g., calculated_numbers.frms_score
     """
 
     def __getattr__(self, name):
