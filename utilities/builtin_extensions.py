@@ -119,6 +119,7 @@ class GettableDict(dict[K, V], Generic[K, V]):
 def test_classes():
     """Runs tests in same file. TODO: Move into pytest module."""
     from pydantic import BaseModel
+    from operator import attrgetter
 
     class Model(BaseModel):
         items: GettableList[int]
@@ -130,6 +131,7 @@ def test_classes():
     assert m.data.a == 1
     assert isinstance(m.items, GettableList)
     assert isinstance(m.data, GettableDict)
+    print("[PASS] basic validation + dot access")
 
     # collision check fires
     try:
@@ -137,6 +139,7 @@ def test_classes():
         assert False, "should have raised"
     except ValueError:
         pass
+    print("[PASS] collision check raises on reserved key")
 
     # nested case
     class Nested(BaseModel):
@@ -145,6 +148,41 @@ def test_classes():
     n = Nested(groups=[{"x": 1}, {"y": 2}])
     assert n.groups.first.x == 1
     assert isinstance(n.groups.first, GettableDict)
+    print("[PASS] nested GettableList[GettableDict] dot access")
+
+    # serialization round-trip
+    dumped = m.model_dump()
+    assert dumped == {"items": [3, 1, 2], "data": {"a": 1, "b": 2}}
+    assert type(dumped["items"]) is list
+    assert type(dumped["data"]) is dict
+    print("[PASS] model_dump() returns plain list/dict")
+
+    dumped_json = m.model_dump_json()
+    m2 = Model.model_validate_json(dumped_json)
+    assert m2.items.largest == 3
+    assert m2.data.a == 1
+    assert isinstance(m2.items, GettableList)
+    assert isinstance(m2.data, GettableDict)
+    print("[PASS] model_dump_json() + model_validate_json() round-trip")
+
+    # index access via attrgetter
+    assert attrgetter("1")(m.items) == 1
+    print("[PASS] integer-string index access via attrgetter")
+
+    # unknown attribute raises AttributeError, not KeyError/IndexError
+    try:
+        m.items.not_a_real_attr
+        assert False, "should have raised"
+    except AttributeError:
+        pass
+    try:
+        m.data.not_a_real_key
+        assert False, "should have raised"
+    except AttributeError:
+        pass
+    print("[PASS] unknown attribute access raises AttributeError")
+
+    print("ALL TESTS PASSED")
 
 
 if __name__ == "__main__":
