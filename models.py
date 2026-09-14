@@ -408,15 +408,17 @@ class RuleResult(CustomBaseModel):
 
 
 class Rule[C](CustomBaseModel):
-    id: UUID = Field(default_factory=uuid4)
-    name: str
+    id: UUID = Field(default_factory=uuid4, description="UUID for rule")
+    name: str = Field(description="Rule name")
     scope: Literal["entity"] = "entity"
-    applicability: DecisionTable[C, ApplicableValue]
+    applicability: DecisionTable[C, ApplicableValue] = Field(title="Applicability")
     value: DecisionTable[C, CalculationValue]
     value_updates: list[Update[C, NullableCalculationValue]] = Field(
         default_factory=list
     )
-    requirement: DecisionTable[C, CalculationValue] | None = None
+    requirement: DecisionTable[C, CalculationValue] | None = Field(
+        None, title="Requirement"
+    )
     requirement_updates: list[Update[C, NullableCalculationValue]] = Field(
         default_factory=list
     )

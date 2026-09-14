@@ -3,11 +3,13 @@
         "ActivityRule": {
             "properties": {
                 "id": {
+                    "description": "UUID for rule",
                     "format": "uuid",
                     "title": "Id",
                     "type": "string"
                 },
                 "name": {
+                    "description": "Rule name",
                     "title": "Name",
                     "type": "string"
                 },
@@ -18,7 +20,8 @@
                     "type": "string"
                 },
                 "applicability": {
-                    "$ref": "#/$defs/DecisionTable_Activity_ApplicableValue_"
+                    "$ref": "#/$defs/DecisionTable_Activity_ApplicableValue_",
+                    "title": "Applicability"
                 },
                 "value": {
                     "$ref": "#/$defs/DecisionTable_Activity_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
@@ -39,7 +42,8 @@
                             "type": "null"
                         }
                     ],
-                    "default": null
+                    "default": null,
+                    "title": "Requirement"
                 },
                 "requirement_updates": {
                     "items": {
@@ -78,11 +82,13 @@
         "AircraftGroundTimeRule": {
             "properties": {
                 "id": {
+                    "description": "UUID for rule",
                     "format": "uuid",
                     "title": "Id",
                     "type": "string"
                 },
                 "name": {
+                    "description": "Rule name",
                     "title": "Name",
                     "type": "string"
                 },
@@ -93,7 +99,8 @@
                     "type": "string"
                 },
                 "applicability": {
-                    "$ref": "#/$defs/DecisionTable_AircraftGroundTime_ApplicableValue_"
+                    "$ref": "#/$defs/DecisionTable_AircraftGroundTime_ApplicableValue_",
+                    "title": "Applicability"
                 },
                 "value": {
                     "$ref": "#/$defs/DecisionTable_AircraftGroundTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
@@ -114,7 +121,8 @@
                             "type": "null"
                         }
                     ],
-                    "default": null
+                    "default": null,
+                    "title": "Requirement"
                 },
                 "requirement_updates": {
                     "items": {
@@ -153,11 +161,13 @@
         "AircraftTimePeriodRule": {
             "properties": {
                 "id": {
+                    "description": "UUID for rule",
                     "format": "uuid",
                     "title": "Id",
                     "type": "string"
                 },
                 "name": {
+                    "description": "Rule name",
                     "title": "Name",
                     "type": "string"
                 },
@@ -168,7 +178,8 @@
                     "type": "string"
                 },
                 "applicability": {
-                    "$ref": "#/$defs/DecisionTable_AircraftTimePeriod_ApplicableValue_"
+                    "$ref": "#/$defs/DecisionTable_AircraftTimePeriod_ApplicableValue_",
+                    "title": "Applicability"
                 },
                 "value": {
                     "$ref": "#/$defs/DecisionTable_AircraftTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
@@ -189,7 +200,8 @@
                             "type": "null"
                         }
                     ],
-                    "default": null
+                    "default": null,
+                    "title": "Requirement"
                 },
                 "requirement_updates": {
                     "items": {
@@ -3789,11 +3801,13 @@
         "DutyRule": {
             "properties": {
                 "id": {
+                    "description": "UUID for rule",
                     "format": "uuid",
                     "title": "Id",
                     "type": "string"
                 },
                 "name": {
+                    "description": "Rule name",
                     "title": "Name",
                     "type": "string"
                 },
@@ -3804,7 +3818,8 @@
                     "type": "string"
                 },
                 "applicability": {
-                    "$ref": "#/$defs/DecisionTable_Duty_ApplicableValue_"
+                    "$ref": "#/$defs/DecisionTable_Duty_ApplicableValue_",
+                    "title": "Applicability"
                 },
                 "value": {
                     "$ref": "#/$defs/DecisionTable_Duty_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
@@ -3825,7 +3840,8 @@
                             "type": "null"
                         }
                     ],
-                    "default": null
+                    "default": null,
+                    "title": "Requirement"
                 },
                 "requirement_updates": {
                     "items": {
@@ -3864,11 +3880,13 @@
         "EmployeeGroundTimeRule": {
             "properties": {
                 "id": {
+                    "description": "UUID for rule",
                     "format": "uuid",
                     "title": "Id",
                     "type": "string"
                 },
                 "name": {
+                    "description": "Rule name",
                     "title": "Name",
                     "type": "string"
                 },
@@ -3879,7 +3897,8 @@
                     "type": "string"
                 },
                 "applicability": {
-                    "$ref": "#/$defs/DecisionTable_EmployeeGroundTime_ApplicableValue_"
+                    "$ref": "#/$defs/DecisionTable_EmployeeGroundTime_ApplicableValue_",
+                    "title": "Applicability"
                 },
                 "value": {
                     "$ref": "#/$defs/DecisionTable_EmployeeGroundTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
@@ -3900,7 +3919,8 @@
                             "type": "null"
                         }
                     ],
-                    "default": null
+                    "default": null,
+                    "title": "Requirement"
                 },
                 "requirement_updates": {
                     "items": {
@@ -3939,11 +3959,13 @@
         "EmployeeRestTimeRule": {
             "properties": {
                 "id": {
+                    "description": "UUID for rule",
                     "format": "uuid",
                     "title": "Id",
                     "type": "string"
                 },
                 "name": {
+                    "description": "Rule name",
                     "title": "Name",
                     "type": "string"
                 },
@@ -3954,7 +3976,8 @@
                     "type": "string"
                 },
                 "applicability": {
-                    "$ref": "#/$defs/DecisionTable_EmployeeRestTime_ApplicableValue_"
+                    "$ref": "#/$defs/DecisionTable_EmployeeRestTime_ApplicableValue_",
+                    "title": "Applicability"
                 },
                 "value": {
                     "$ref": "#/$defs/DecisionTable_EmployeeRestTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
@@ -3975,7 +3998,8 @@
                             "type": "null"
                         }
                     ],
-                    "default": null
+                    "default": null,
+                    "title": "Requirement"
                 },
                 "requirement_updates": {
                     "items": {
@@ -4014,11 +4038,13 @@
         "EmployeeTimePeriodRule": {
             "properties": {
                 "id": {
+                    "description": "UUID for rule",
                     "format": "uuid",
                     "title": "Id",
                     "type": "string"
                 },
                 "name": {
+                    "description": "Rule name",
                     "title": "Name",
                     "type": "string"
                 },
@@ -4029,7 +4055,8 @@
                     "type": "string"
                 },
                 "applicability": {
-                    "$ref": "#/$defs/DecisionTable_EmployeeTimePeriod_ApplicableValue_"
+                    "$ref": "#/$defs/DecisionTable_EmployeeTimePeriod_ApplicableValue_",
+                    "title": "Applicability"
                 },
                 "value": {
                     "$ref": "#/$defs/DecisionTable_EmployeeTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
@@ -4050,7 +4077,8 @@
                             "type": "null"
                         }
                     ],
-                    "default": null
+                    "default": null,
+                    "title": "Requirement"
                 },
                 "requirement_updates": {
                     "items": {
@@ -4569,11 +4597,13 @@
         "PairingRule": {
             "properties": {
                 "id": {
+                    "description": "UUID for rule",
                     "format": "uuid",
                     "title": "Id",
                     "type": "string"
                 },
                 "name": {
+                    "description": "Rule name",
                     "title": "Name",
                     "type": "string"
                 },
@@ -4584,7 +4614,8 @@
                     "type": "string"
                 },
                 "applicability": {
-                    "$ref": "#/$defs/DecisionTable_Pairing_ApplicableValue_"
+                    "$ref": "#/$defs/DecisionTable_Pairing_ApplicableValue_",
+                    "title": "Applicability"
                 },
                 "value": {
                     "$ref": "#/$defs/DecisionTable_Pairing_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
@@ -4605,7 +4636,8 @@
                             "type": "null"
                         }
                     ],
-                    "default": null
+                    "default": null,
+                    "title": "Requirement"
                 },
                 "requirement_updates": {
                     "items": {
@@ -4644,11 +4676,13 @@
         "PortTimePeriodRule": {
             "properties": {
                 "id": {
+                    "description": "UUID for rule",
                     "format": "uuid",
                     "title": "Id",
                     "type": "string"
                 },
                 "name": {
+                    "description": "Rule name",
                     "title": "Name",
                     "type": "string"
                 },
@@ -4659,7 +4693,8 @@
                     "type": "string"
                 },
                 "applicability": {
-                    "$ref": "#/$defs/DecisionTable_PortTimePeriod_ApplicableValue_"
+                    "$ref": "#/$defs/DecisionTable_PortTimePeriod_ApplicableValue_",
+                    "title": "Applicability"
                 },
                 "value": {
                     "$ref": "#/$defs/DecisionTable_PortTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
@@ -4680,7 +4715,8 @@
                             "type": "null"
                         }
                     ],
-                    "default": null
+                    "default": null,
+                    "title": "Requirement"
                 },
                 "requirement_updates": {
                     "items": {
