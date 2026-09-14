@@ -79,20 +79,17 @@ class MermaidDiagramBuilder:
         self.add_decision_table(self.rule.value, "valNode")
         self.lines.append("    end")
 
-        if self.rule.value_updates:
-            self.lines.append('\n    subgraph ValueUpdates ["Value Updates"]')
+        for idx, upd in enumerate(self.rule.value_updates, start=1):
+            self.lines.append(
+                f'\n    subgraph ValueUpdate_{idx} ["Value Update: {upd.name}"]'
+            )
             self.lines.append("        direction TB")
-            prev_update_exit = None
-            for upd in self.rule.value_updates:
-                u_header_id = self._next_node_id()
-                if prev_update_exit:
-                    self.lines.append(f"        {prev_update_exit} --> {u_header_id}")
-                self.lines.append(
-                    f'        {u_header_id}[["Value Update: {upd.name} ({upd.method.title()})"]]:::valUpdNode'
-                )
-                upd_entry = self.add_decision_table(upd.table, "valUpdNode")
-                self.lines.append(f"        {u_header_id} --> {upd_entry}")
-                prev_update_exit = upd_entry
+            u_header_id = self._next_node_id()
+            self.lines.append(
+                f'        {u_header_id}[["{upd.name} ({upd.method.title()})"]]:::valUpdNode'
+            )
+            upd_entry = self.add_decision_table(upd.table, "valUpdNode")
+            self.lines.append(f"        {u_header_id} --> {upd_entry}")
             self.lines.append("    end")
         return self
 
@@ -103,22 +100,17 @@ class MermaidDiagramBuilder:
             self.add_decision_table(self.rule.requirement, "reqNode")
             self.lines.append("    end")
 
-        if self.rule.requirement_updates:
+        for idx, upd in enumerate(self.rule.requirement_updates, start=1):
             self.lines.append(
-                '\n    subgraph RequirementUpdates ["Requirement Updates"]'
+                f'\n    subgraph ReqUpdate_{idx} ["Requirement Update: {upd.name}"]'
             )
             self.lines.append("        direction TB")
-            prev_update_exit = None
-            for upd in self.rule.requirement_updates:
-                u_header_id = self._next_node_id()
-                if prev_update_exit:
-                    self.lines.append(f"        {prev_update_exit} --> {u_header_id}")
-                self.lines.append(
-                    f'        {u_header_id}[["Requirement Update: {upd.name} ({upd.method.title()})"]]:::reqUpdNode'
-                )
-                upd_entry = self.add_decision_table(upd.table, "reqUpdNode")
-                self.lines.append(f"        {u_header_id} --> {upd_entry}")
-                prev_update_exit = upd_entry
+            u_header_id = self._next_node_id()
+            self.lines.append(
+                f'        {u_header_id}[["{upd.name} ({upd.method.title()})"]]:::reqUpdNode'
+            )
+            upd_entry = self.add_decision_table(upd.table, "reqUpdNode")
+            self.lines.append(f"        {u_header_id} --> {upd_entry}")
             self.lines.append("    end")
 
         if self.rule.limit:
@@ -127,20 +119,17 @@ class MermaidDiagramBuilder:
             self.add_decision_table(self.rule.limit, "limNode")
             self.lines.append("    end")
 
-        if self.rule.limit_updates:
-            self.lines.append('\n    subgraph LimitUpdates ["Limit Updates"]')
+        for idx, upd in enumerate(self.rule.limit_updates, start=1):
+            self.lines.append(
+                f'\n    subgraph LimUpdate_{idx} ["Limit Update: {upd.name}"]'
+            )
             self.lines.append("        direction TB")
-            prev_update_exit = None
-            for upd in self.rule.limit_updates:
-                u_header_id = self._next_node_id()
-                if prev_update_exit:
-                    self.lines.append(f"        {prev_update_exit} --> {u_header_id}")
-                self.lines.append(
-                    f'        {u_header_id}[["Limit Update: {upd.name} ({upd.method.title()})"]]:::limUpdNode'
-                )
-                upd_entry = self.add_decision_table(upd.table, "limUpdNode")
-                self.lines.append(f"        {u_header_id} --> {upd_entry}")
-                prev_update_exit = upd_entry
+            u_header_id = self._next_node_id()
+            self.lines.append(
+                f'        {u_header_id}[["{upd.name} ({upd.method.title()})"]]:::limUpdNode'
+            )
+            upd_entry = self.add_decision_table(upd.table, "limUpdNode")
+            self.lines.append(f"        {u_header_id} --> {upd_entry}")
             self.lines.append("    end")
         return self
 
