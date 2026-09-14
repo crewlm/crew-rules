@@ -35,4 +35,6 @@ def test_rest_01():
     parsed_rule = AnyRule.validate_json(json_data)
 
     assert isinstance(parsed_rule, EmployeeRestTimeRule)
-    assert parsed_rule.requirement.default.duration == timedelta(hours=12)
+    assert parsed_rule.requirement.default.get_calculated_value(None) == timedelta(
+        hours=12
+    )
