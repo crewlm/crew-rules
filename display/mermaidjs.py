@@ -137,6 +137,6 @@ def rule_to_mermaid(rule: Rule) -> str:
         .add_requirement_section()
         .add_updates_section(diagram.rule.requirement_updates, "Requirement")
         .add_limit_section()
-        .add_updates_section(diagram.rule.limit, "Limit")
+        .add_updates_section(diagram.rule.limit_updates, "Limit")
         .build()
     )
