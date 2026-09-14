@@ -200,22 +200,12 @@ class LookupParameter(CustomBaseModel):
     field: str = Field(description="Name of entity field to use for lookup")
 
 
-class TableLookupNumberValue(Value):
+class TableLookupValue(Value):
     kind: Literal["table_lookup_number_value"] = "table_lookup_number_value"
     table_name: str
     lookup_map: list[LookupParameter]
 
     def get_calculated_value(self, obj) -> float:
-        """TODO: Lookup value from table based on object properties"""
-        raise NotImplementedError
-
-
-class TableLookupDurationValue(Value):
-    kind: Literal["table_lookup_duration_value"] = "table_lookup_duration_value"
-    table_name: str
-    lookup_map: list[LookupParameter]
-
-    def get_calculated_value(self, obj) -> timedelta:
         """TODO: Lookup value from table based on object properties"""
         raise NotImplementedError
 
@@ -229,8 +219,7 @@ CalculationValue = Annotated[
     | NumberRangeValue
     | DurationRangeValue
     | ApplicableValue
-    | TableLookupNumberValue
-    | TableLookupDurationValue,
+    | TableLookupValue,
     Field(discriminator="kind"),
 ]
 
