@@ -314,7 +314,6 @@ class TimePeriod(CustomBaseModel):
 class Rule[C](CustomBaseModel):
     id: UUID = Field(default_factory=uuid4)
     name: str
-    rule_type: str
     applicability: DecisionTable[C, ApplicableValue]
     value: DecisionTable[C, CalculationValue]
     value_updates: list[Update[C, CalculationValue]] = Field(default_factory=list)
