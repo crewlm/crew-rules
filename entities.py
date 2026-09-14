@@ -36,7 +36,7 @@ class Duty(CustomBaseModel):
         "generic_work",
         "generic_rest",
     ] = Field(default="generic_work")
-    calculated_numbers: GettableDefaultDict[float] = Field(
+    calculated_numbers: GettableDefaultDict[str, float] = Field(
         default_factory=lambda: GettableDefaultDict(float)
     )
 
