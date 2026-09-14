@@ -100,7 +100,7 @@ def test_rest_02():
             ],
         ),
     )
-    requirement_update_table1 = Update[C, CalculationValue](
+    requirement_update_table2 = Update[C, CalculationValue](
         name="Crossed multiple time zones",
         method="increase",
         table=DecisionTable[C, CalculationValue](
@@ -126,7 +126,7 @@ def test_rest_02():
         applicability=applicability_table,
         value=value_table,
         requirement=requirement_table,
-        requirement_updates=[requirement_update_table1],
+        requirement_updates=[requirement_update_table1, requirement_update_table2],
     )
 
     # Serialize to JSON
