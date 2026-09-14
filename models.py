@@ -276,6 +276,15 @@ class TableLookupValue(Value):
         """TODO: Lookup value from table based on object properties"""
         raise NotImplementedError
 
+    def __str__(self):
+        text = f"Look up the value in {self.table_name}"
+        lookups = ", ".join(
+            f"{format_field("", x.field)} as {x.name}" for x in self.lookup_map
+        )
+        if lookups:
+            text += f" using {lookups}"
+        return text
+
 
 CalculationValue = Annotated[
     NumberValue
