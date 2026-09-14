@@ -1,5 +1,4 @@
-from pydantic import BaseModel, Field, PrivateAttr, GetCoreSchemaHandler
-from pydantic_core import core_schema
+from pydantic import BaseModel, Field, PrivateAttr
 
 
 class CustomBaseModel(BaseModel):
