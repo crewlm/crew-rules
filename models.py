@@ -354,8 +354,25 @@ class DecisionTable[C, V](CustomBaseModel):
 
 class Update[C, V](CustomBaseModel):
     name: str
-    method: Literal["set", "increase", "max", "min"] = "set"
+    method: Literal["set", "increase", "decrease", "max", "min", "scale"] = "set"
     table: DecisionTable[C, V]
+
+    def update_number(self, original_number: float, number: float):
+        match self.method:
+            case "set":
+                return number
+            case "increase":
+                return original_number + number
+            case "decrease":
+                return original_number - number
+            case "max":
+                return max(original_number, number)
+            case "min":
+                return min(original_number, number)
+            case "scale":
+                return original_number * number
+            case _:
+                raise ValueError(f"Unsupported method for update_number: {self.method}")
 
 
 class TimePeriod(CustomBaseModel):
