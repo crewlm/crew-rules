@@ -316,7 +316,7 @@ class ApplicableValue(Value):
 
 class FieldNumberValue(Value):
     kind: Literal["field_number_value"] = "field_number_value"
-    field: str
+    field: str | None = None
     multiplier: float = 1.0
     offset: float = 0.0
     cap_lower: float | None = None
@@ -324,6 +324,8 @@ class FieldNumberValue(Value):
 
     @cached_property
     def _field_getter(self):
+        if self.field is None:
+            return lambda x: 0
         return attrgetter(self.field)
 
     def get_calculated_value(self, obj):
@@ -339,7 +341,7 @@ class FieldNumberValue(Value):
 
 class FieldDurationValue(Value):
     kind: Literal["field_duration_value"] = "field_duration_value"
-    field: str
+    field: str | None = None
     multiplier: float = 1.0
     offset: timedelta = timedelta()
     cap_lower: timedelta | None = None
@@ -347,6 +349,8 @@ class FieldDurationValue(Value):
 
     @cached_property
     def _field_getter(self):
+        if self.field is None:
+            return lambda x: timedelta()
         return attrgetter(self.field)
 
     def get_calculated_value(self, obj):
@@ -376,7 +380,7 @@ class TableLookupNumberValue(Value):
 
 
 class TableLookupDurationValue(Value):
-    kind: Literal["table_lookup_number_value"] = "table_lookup_number_value"
+    kind: Literal["table_lookup_duration_value"] = "table_lookup_duration_value"
     table_name: str
     lookup_map: list[LookupParameter]
 
