@@ -1,5 +1,6 @@
 from typing import TypeVar, Any, Generic, get_args
 from collections import defaultdict
+from operator import attrgetter
 from pydantic import GetCoreSchemaHandler
 from pydantic_core import core_schema
 
@@ -25,7 +26,7 @@ class _MapProxy:
         self.items: list = items
 
     def __getattr__(self, name: str):
-        return GettableList(getattr(item, name) for item in self.items)
+        return GettableList(attrgetter(name)(item) for item in self.items)
 
 
 class GettableList(list[T], Generic[T]):
@@ -65,6 +66,16 @@ class GettableList(list[T], Generic[T]):
     @property
     def count_items(self):
         return len(self)
+
+    @property
+    def flatten(self):
+        flat = []
+        for item in self:
+            if isinstance(item, list):
+                flat.extend(item)
+            else:
+                flat.append(item)
+        return GettableList(flat)
 
     def __getattr__(self, name: str):
         try:
