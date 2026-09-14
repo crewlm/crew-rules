@@ -16,7 +16,7 @@ graph LR
 
     subgraph Applicability ["Applicability"]
         direction TB
-        N2{"Category is equal to 'flying',<br/>and Operating pilot count is equal to 2.0?"}
+        N2{"Category is equal to 'flying',<br/>and Operating pilot count is equal to 2?"}
         N3["Applicable"]:::appNode
         N2 -->|Match| N3
         N4["Not applicable"]:::appNode
@@ -39,7 +39,7 @@ graph LR
 
     subgraph LimitUpdate_1 ["Limit Update: Short Rest Reduction"]
         direction TB
-        N9{"Calculated number's preceding rest infringement is greater than 0.0?"}
+        N9{"Calculated number's preceding rest infringement is greater than 0?"}
         N10["Decrease limit by Calculated number's preceding rest infringement"]:::LimitUpdateNode
         N9 -->|Match| N10
         N11["Do nothing"]:::LimitUpdateNode
