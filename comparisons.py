@@ -42,7 +42,7 @@ class EqualNumberComparison(CustomBaseModel):
         return abs(self.number - value) <= self.tolerance
 
     def __str__(self):
-        return f"is equal to {self.number}"
+        return f"equal to {self.number}"
 
 
 class GENumberComparison(CustomBaseModel):
@@ -53,7 +53,7 @@ class GENumberComparison(CustomBaseModel):
         return value >= self.number
 
     def __str__(self):
-        return f"is greater than or equal to {self.number}"
+        return f"greater than or equal to {self.number}"
 
 
 class LENumberComparison(CustomBaseModel):
@@ -64,7 +64,7 @@ class LENumberComparison(CustomBaseModel):
         return value <= self.number
 
     def __str__(self):
-        return f"is less than or equal to {self.number}"
+        return f"less than or equal to {self.number}"
 
 
 class GTNumberComparison(CustomBaseModel):
@@ -75,7 +75,7 @@ class GTNumberComparison(CustomBaseModel):
         return value > self.number
 
     def __str__(self):
-        return f"is greater than {self.number}"
+        return f"greater than {self.number}"
 
 
 class LTNumberComparison(CustomBaseModel):
@@ -86,7 +86,7 @@ class LTNumberComparison(CustomBaseModel):
         return value < self.number
 
     def __str__(self):
-        return f"is less than {self.number}"
+        return f"less than {self.number}"
 
 
 class RangeNumberComparison(CustomBaseModel):
@@ -98,7 +98,7 @@ class RangeNumberComparison(CustomBaseModel):
         return self.lower <= value <= self.upper
 
     def __str__(self):
-        return f"is within range {self.lower} to {self.upper}"
+        return f"within range {self.lower} to {self.upper}"
 
 
 class EqualDurationComparison(CustomBaseModel):
@@ -112,7 +112,7 @@ class EqualDurationComparison(CustomBaseModel):
         return abs(self.duration - value) <= self.tolerance
 
     def __str__(self):
-        return f"is equal to {_timedelta_to_iso8601(self.duration)}"
+        return f"equal to {_timedelta_to_iso8601(self.duration)}"
 
 
 class EqualTextComparison(CustomBaseModel):
@@ -131,7 +131,7 @@ class EqualTextComparison(CustomBaseModel):
         return self.text == value
 
     def __str__(self):
-        return f"is equal to '{self.text}' (case-{'' if self.case_sensitive else 'in'}sensitive)"
+        return f"equal to '{self.text}' (case-{'' if self.case_sensitive else 'in'}sensitive)"
 
 
 class RegexTextComparison(CustomBaseModel):
@@ -146,7 +146,7 @@ class RegexTextComparison(CustomBaseModel):
         return self._regex_compiled.search(value) is not None
 
     def __str__(self):
-        return f"matches regular expression '{self.expression}'"
+        return f"matching regular expression '{self.expression}'"
 
 
 class GEDurationComparison(CustomBaseModel):
@@ -157,7 +157,7 @@ class GEDurationComparison(CustomBaseModel):
         return value >= self.duration
 
     def __str__(self):
-        return f"is greater than or equal to {_timedelta_to_iso8601(self.duration)}"
+        return f"greater than or equal to {_timedelta_to_iso8601(self.duration)}"
 
 
 class LEDurationComparison(CustomBaseModel):
@@ -168,7 +168,7 @@ class LEDurationComparison(CustomBaseModel):
         return value <= self.duration
 
     def __str__(self):
-        return f"is less than or equal to {_timedelta_to_iso8601(self.duration)}"
+        return f"less than or equal to {_timedelta_to_iso8601(self.duration)}"
 
 
 class GTDurationComparison(CustomBaseModel):
@@ -179,7 +179,7 @@ class GTDurationComparison(CustomBaseModel):
         return value >= self.duration
 
     def __str__(self):
-        return f"is greater than {_timedelta_to_iso8601(self.duration)}"
+        return f"greater than {_timedelta_to_iso8601(self.duration)}"
 
 
 class LTDurationComparison(CustomBaseModel):
@@ -190,7 +190,7 @@ class LTDurationComparison(CustomBaseModel):
         return value <= self.duration
 
     def __str__(self):
-        return f"is less than {_timedelta_to_iso8601(self.duration)}"
+        return f"less than {_timedelta_to_iso8601(self.duration)}"
 
 
 class RangeDurationComparison(CustomBaseModel):
@@ -202,7 +202,7 @@ class RangeDurationComparison(CustomBaseModel):
         return self.lower <= value <= self.upper
 
     def __str__(self):
-        return f"is within range {_timedelta_to_iso8601(self.lower)} to {_timedelta_to_iso8601(self.upper)}"
+        return f"within range {_timedelta_to_iso8601(self.lower)} to {_timedelta_to_iso8601(self.upper)}"
 
 
 class RangeDatetimeComparison(CustomBaseModel):
@@ -214,7 +214,7 @@ class RangeDatetimeComparison(CustomBaseModel):
         return self.lower <= value <= self.upper
 
     def __str__(self):
-        return f"is within range {self.lower.isoformat()} to {self.upper.isoformat()}"
+        return f"within range {self.lower.isoformat()} to {self.upper.isoformat()}"
 
 
 class TimeWindowOverlapComparison(CustomBaseModel):
@@ -258,7 +258,7 @@ class TimeWindowOverlapComparison(CustomBaseModel):
         return False
 
     def __str__(self):
-        return f"has overlap of {_timedelta_to_iso8601(self.overlap)} or more with {self.start.strftime('%H:%M:%S')} to {self.end.strftime('%H:%M:%S')}"
+        return f"overlapping of {_timedelta_to_iso8601(self.overlap)} or more with {self.start.strftime('%H:%M:%S')} to {self.end.strftime('%H:%M:%S')}"
 
 
 class TruthComparison(CustomBaseModel):
@@ -268,7 +268,7 @@ class TruthComparison(CustomBaseModel):
         return bool(value)
 
     def __str__(self):
-        return f"is true"
+        return f"true"
 
 
 class FalseComparison(CustomBaseModel):
@@ -278,7 +278,7 @@ class FalseComparison(CustomBaseModel):
         return not bool(value)
 
     def __str__(self):
-        return f"is false"
+        return f"false"
 
 
 class EqualSetComparison(CustomBaseModel):
@@ -289,7 +289,7 @@ class EqualSetComparison(CustomBaseModel):
         return self.items == set(value)
 
     def __str__(self):
-        return f"is equal to {', '.join(map(str, self.items))}"
+        return f"equal to {', '.join(map(str, self.items))}"
 
 
 class WithinSetComparison(CustomBaseModel):
@@ -300,7 +300,7 @@ class WithinSetComparison(CustomBaseModel):
         return set(value).issubset(self.items)
 
     def __str__(self):
-        return f"is a subset of {', '.join(map(str, self.items))}"
+        return f"a subset of {', '.join(map(str, self.items))}"
 
 
 class ContainSetComparison(CustomBaseModel):
@@ -311,7 +311,7 @@ class ContainSetComparison(CustomBaseModel):
         return set(value).issuperset(self.items)
 
     def __str__(self):
-        return f"contains all the following items: {', '.join(map(str, self.items))}"
+        return f"holding all the following items: {', '.join(map(str, self.items))}"
 
 
 Comparison = Annotated[
