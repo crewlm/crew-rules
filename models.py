@@ -312,6 +312,12 @@ class ConditionValue[C, V](CustomBaseModel):
     def matches(self, obj):
         return all(c.matches(obj) for c in self.condition)
 
+    def display_condition(self):
+        return ",\nand ".join(str(c) for c in self.condition)
+
+    def display_value(self):
+        return str(self.value)
+
 
 class DecisionTable[C, V](CustomBaseModel):
     default: V
