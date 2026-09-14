@@ -363,7 +363,7 @@ class PortTimePeriodRule(Rule[PortTimePeriod]):
     time_period: TimePeriod
 
 
-AnyRule = Annotated[
+_AnyRule = (
     ActivityRule
     | DutyRule
     | PairingRule
@@ -372,8 +372,11 @@ AnyRule = Annotated[
     | EmployeeRestTimeRule
     | EmployeeGroundTimeRule
     | AircraftGroundTimeRule
-    | PortTimePeriodRule,
+    | PortTimePeriodRule
+)
+_AnyRuleTypes = Annotated[
+    _AnyRule,
     Field(discriminator="scope"),
 ]
 
-AnyRuleModel = TypeAdapter(AnyRule)
+AnyRule: TypeAdapter[_AnyRule] = TypeAdapter(_AnyRuleTypes)

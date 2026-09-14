@@ -7,7 +7,7 @@ from models import (
     ApplicableValue,
     DurationValue,
     FieldValue,
-    AnyRuleModel,
+    AnyRule,
 )
 
 
@@ -29,10 +29,10 @@ def test_rest_01():
     )
 
     # Serialize to JSON
-    json_data = rule.model_dump_json(indent=2)
+    json_data = rule.model_dump_json(indent=4)
 
     # Parse back using root discriminated union
-    parsed_rule = AnyRuleModel.validate_json(json_data)
+    parsed_rule = AnyRule.validate_json(json_data)
 
     assert isinstance(parsed_rule, EmployeeRestTimeRule)
     assert parsed_rule.requirement.default.duration == timedelta(hours=12)
