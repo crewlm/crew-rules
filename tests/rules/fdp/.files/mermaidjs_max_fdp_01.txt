@@ -1,5 +1,6 @@
 graph LR
     %% Diagram for Rule: Max FDP 2-Pilot Operations (Scope: duty)
+    classDef inputNode fill:#e1f5fe,stroke:#0288d1,stroke-width:1px;
     classDef appNode fill:#e1f5fe,stroke:#0288d1,stroke-width:1px;
     classDef valNode fill:#f3e5f5,stroke:#7b1fa2,stroke-width:1px;
     classDef reqNode fill:#fff3e0,stroke:#f57c00,stroke-width:1px;
@@ -8,43 +9,48 @@ graph LR
     classDef RequirementUpdateNode fill:#e8f5e9,stroke:#388e3c,stroke-width:1px;
     classDef LimitUpdateNode fill:#e8f5e9,stroke:#388e3c,stroke-width:1px;
 
+    subgraph Input ["Input"]
+        direction TB
+        N1["Duty"]:::inputNode
+    end
+
     subgraph Applicability ["Applicability"]
         direction TB
-        N1{"Category is equal to 'flying',<br/>and Operating pilot count is equal to 2.0?"}
-        N2["Applicable"]:::appNode
-        N1 -->|Match| N2
-        N3["Not applicable"]:::appNode
-        N1 -->|No Match| N3
+        N2{"Category is equal to 'flying',<br/>and Operating pilot count is equal to 2.0?"}
+        N3["Applicable"]:::appNode
+        N2 -->|Match| N3
+        N4["Not applicable"]:::appNode
+        N2 -->|No Match| N4
     end
 
     subgraph SubjectValue ["Initial Value"]
         direction TB
-        N4["From Calculated datetime's fdp start timestamp to Operating flights' -1's on blocks"]:::valNode
+        N5["From Calculated datetime's fdp start timestamp to Operating flights' -1's on blocks"]:::valNode
     end
 
     subgraph Limit ["Initial Limit"]
         direction TB
-        N5{"Acclimatised state is equal to 'acclimatised'?"}
-        N6["Look up the value in MaxFDPTableB using Calculated numbers' fdp sectors as sectors, Preceding rest's duration as preceding_rest"]:::limNode
-        N5 -->|Match| N6
-        N7["Look up the value in MaxFDPTableA using Calculated numbers' fdp sectors as sectors, Duty's report time of day local as start_time_of_day"]:::limNode
-        N5 -->|No Match| N7
+        N6{"Acclimatised state is equal to 'acclimatised'?"}
+        N7["Look up the value in MaxFDPTableB using Calculated numbers' fdp sectors as sectors, Preceding rest's duration as preceding_rest"]:::limNode
+        N6 -->|Match| N7
+        N8["Look up the value in MaxFDPTableA using Calculated numbers' fdp sectors as sectors, Duty's report time of day local as start_time_of_day"]:::limNode
+        N6 -->|No Match| N8
     end
 
     subgraph LimitUpdate_1 ["Limit Update: Short Rest Reduction"]
         direction TB
-        N8{"Calculated number's preceding rest infringement is greater than 0.0?"}
-        N9["Decrease limit by Calculated number's preceding rest infringement"]:::LimitUpdateNode
-        N8 -->|Match| N9
-        N10["Do nothing"]:::LimitUpdateNode
-        N8 -->|No Match| N10
+        N9{"Calculated number's preceding rest infringement is greater than 0.0?"}
+        N10["Decrease limit by Calculated number's preceding rest infringement"]:::LimitUpdateNode
+        N9 -->|Match| N10
+        N11["Do nothing"]:::LimitUpdateNode
+        N9 -->|No Match| N11
     end
 
     subgraph LimitUpdate_2 ["Limit Update: Commander's Discretion Extension"]
         direction TB
-        N11{"Discretion's commander is true?"}
-        N12["Increase limit by PT1H"]:::LimitUpdateNode
-        N11 -->|Match| N12
-        N13["Do nothing"]:::LimitUpdateNode
-        N11 -->|No Match| N13
+        N12{"Discretion's commander is true?"}
+        N13["Increase limit by PT1H"]:::LimitUpdateNode
+        N12 -->|Match| N13
+        N14["Do nothing"]:::LimitUpdateNode
+        N12 -->|No Match| N14
     end

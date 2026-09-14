@@ -13,6 +13,7 @@ class MermaidDiagramBuilder:
         self.lines: list[str] = [
             "graph LR",
             f"    %% Diagram for Rule: {rule.name} (Scope: {getattr(rule, 'scope', 'Rule')})",
+            "    classDef inputNode fill:#e1f5fe,stroke:#0288d1,stroke-width:1px;",
             "    classDef appNode fill:#e1f5fe,stroke:#0288d1,stroke-width:1px;",
             "    classDef valNode fill:#f3e5f5,stroke:#7b1fa2,stroke-width:1px;",
             "    classDef reqNode fill:#fff3e0,stroke:#f57c00,stroke-width:1px;",
@@ -122,6 +123,16 @@ class MermaidDiagramBuilder:
             self.lines.append("    end")
         return self
 
+    def add_input_section(self) -> "MermaidDiagramBuilder":
+        entity_type = self.rule.scope.title().replace("_", "")
+        self.lines.append('\n    subgraph Input ["Input"]')
+        self.lines.append("        direction TB")
+        node_id = self._next_node_id()
+        self.lines.append(f'        {node_id}["{entity_type}"]:::inputNode')
+        self.subgraph_entries.append(node_id)
+        self.lines.append("    end")
+        return self
+
     def build(self) -> str:
         # Link consecutive subgraphs invisibly using `~~~` to enforce left-to-right ordering
         # if len(self.subgraph_entries) > 1:
@@ -136,7 +147,8 @@ def rule_to_mermaid(rule: Rule) -> str:
     """Convert rule to mermaidjs diagram."""
     diagram = MermaidDiagramBuilder(rule)
     return (
-        diagram.add_applicability_section()
+        diagram.add_input_section()
+        .add_applicability_section()
         .add_value_section()
         .add_updates_section(diagram.rule.value_updates, "Value")
         .add_requirement_section()

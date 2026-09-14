@@ -410,6 +410,7 @@ class RuleResult(CustomBaseModel):
 class Rule[C](CustomBaseModel):
     id: UUID = Field(default_factory=uuid4)
     name: str
+    scope: Literal["entity"] = "entity"
     applicability: DecisionTable[C, ApplicableValue]
     value: DecisionTable[C, CalculationValue]
     value_updates: list[Update[C, NullableCalculationValue]] = Field(
