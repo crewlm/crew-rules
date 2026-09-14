@@ -47,12 +47,13 @@ def test_rest_01():
 
 
 def test_rest_02():
-    applicability_table = DecisionTable[EmployeeRestTime, ApplicableValue](
+    C = EmployeeRestTime
+    applicability_table = DecisionTable[C, ApplicableValue](
         default=ApplicableValue(phrase="Default", applicable=False),
         items=[
-            ConditionValue[EmployeeRestTime, ApplicableValue](
+            ConditionValue[C, ApplicableValue](
                 condition=[
-                    Condition[EmployeeRestTime](
+                    Condition[C](
                         field="preceding.category",
                         comparison=EqualSetComparison(items={"flying"}),
                     )
@@ -61,14 +62,14 @@ def test_rest_02():
             )
         ],
     )
-    value_table = DecisionTable[EmployeeRestTime, FieldValue](
+    value_table = DecisionTable[C, FieldValue](
         default=FieldValue(phrase="Rest duration", field="duration")
     )
-    requirement_table = DecisionTable[EmployeeRestTime, DurationValue](
+    requirement_table = DecisionTable[C, DurationValue](
         items=[
-            ConditionValue[EmployeeRestTime, DurationValue](
+            ConditionValue[C, DurationValue](
                 condition=[
-                    Condition[EmployeeRestTime](
+                    Condition[C](
                         field="at_home_base",
                         comparison=TruthComparison(),
                         reverse_match=True,
@@ -79,15 +80,15 @@ def test_rest_02():
         ],
         default=DurationValue(phrase="Default", duration=timedelta(hours=14)),
     )
-    requirement_update_table1 = Update[EmployeeRestTime, DurationValue](
+    requirement_update_table1 = Update[C, DurationValue](
         name="Long prior FDP",
         method="increase",
-        table=DecisionTable[EmployeeRestTime, DurationValue](
+        table=DecisionTable[C, DurationValue](
             default=DurationValue(duration=timedelta()),
             items=[
-                ConditionValue[EmployeeRestTime, DurationValue](
+                ConditionValue[C, DurationValue](
                     condition=[
-                        Condition[EmployeeRestTime](
+                        Condition[C](
                             field="preceding.calculated_numbers.fdp_exceedance",
                             comparison=GTNumberComparison(number=0),
                         )
