@@ -10,6 +10,7 @@ from datetime import datetime, timedelta, time
 from pydantic import Field, TypeAdapter
 
 from utilities.pydantic import CustomBaseModel
+from utilities.formatters import timedelta_to_iso8601, format_field
 from entities import (
     Activity,
     Duty,
@@ -45,7 +46,7 @@ def _convert_to_float(val: Any, null_replacement: float | None = None) -> float 
 
 
 class Condition[C](CustomBaseModel):
-    """TODO: C constraints the fields allowed (scoping to the object's available fields)"""
+    """TODO: C constrains the fields allowed (scoping to the object's available fields)"""
 
     field: str = Field(
         description="Dot-separated field, accessing object's field using dot notation."
@@ -62,12 +63,22 @@ class Condition[C](CustomBaseModel):
         comparison_match = self.comparison.matches(value)
         return (not comparison_match) if self.reverse_match else comparison_match
 
+    def __str__(self):
+        op = "is not" if self.reverse_match else "is"
+        return (
+            f"{format_field(type(C).__name__, self.field)} {op} {str(self.comparison)}"
+        )
+
 
 class Value(CustomBaseModel):
     phrase: str = "Matched"
 
     def get_calculated_value(self, obj: Any):
-        """Sub classes should implement this interface"""
+        """Subclasses should implement this interface"""
+        raise NotImplementedError
+
+    def __str__(self):
+        """Subclasses implement this for displaying to user"""
         raise NotImplementedError
 
 
@@ -78,6 +89,9 @@ class NumberValue(Value):
     def get_calculated_value(self, obj):
         return self.number
 
+    def __str__(self):
+        return f"{self.number}:g"
+
 
 class DurationValue(Value):
     kind: Literal["duration_value"] = "duration_value"
@@ -85,6 +99,9 @@ class DurationValue(Value):
 
     def get_calculated_value(self, obj):
         return self.duration.total_seconds() / 3600.0
+
+    def __str__(self):
+        return timedelta_to_iso8601(self.duration)
 
 
 class NumberRangeValue(Value):
@@ -94,6 +111,9 @@ class NumberRangeValue(Value):
 
     def get_calculated_value(self, obj):
         return (self.lower, self.upper)
+
+    def __str__(self):
+        return f"{self.lower:g} to {self.upper:g}"
 
 
 class DurationRangeValue(Value):
@@ -107,6 +127,11 @@ class DurationRangeValue(Value):
             self.upper.total_seconds() / 3600.0,
         )
 
+    def __str__(self):
+        return (
+            f"{timedelta_to_iso8601(self.lower)} to {timedelta_to_iso8601(self.upper)}"
+        )
+
 
 class ApplicableValue(Value):
     kind: Literal["applicable_value"] = "applicable_value"
@@ -115,6 +140,9 @@ class ApplicableValue(Value):
     def get_calculated_value(self, obj):
         return self.applicable
 
+    def __str__(self):
+        return str(self.applicable).title()
+
 
 class NoneValue(Value):
     kind: Literal["none_value"] = "none_value"
@@ -122,6 +150,9 @@ class NoneValue(Value):
 
     def get_calculated_value(self, obj: Any):
         return None
+
+    def __str__(self):
+        return "Nothing"
 
 
 class FieldDifferenceValue(Value):
@@ -165,6 +196,24 @@ class FieldDifferenceValue(Value):
             val = self.clamp_upper
         return val
 
+    def __str__(self):
+        text = f"From {format_field("", self.start_field)} to {format_field("", self.end_field)}"
+
+        if abs(self.multiplier - 1) > 1e-6:
+            text += f", multiplied by {self.multiplier}"
+
+        if self.offset > 1e-6:
+            text += f", plus {self.offset}"
+        elif self.offset < -1e-6:
+            text += f", minus {-self.offset}"
+
+        if self.clamp_lower is not None:
+            text += f", clamped below at {self.clamp_lower:g}"
+
+        if self.clamp_upper is not None:
+            text += f", clamped above at {self.clamp_upper:g}"
+        return text
+
 
 class FieldValue(Value):
     kind: Literal["field_value"] = "field_value"
@@ -193,6 +242,24 @@ class FieldValue(Value):
         if self.clamp_upper is not None and self.clamp_upper < val:
             val = self.clamp_upper
         return val
+
+    def __str__(self):
+        text = f"{format_field("", self.field)}"
+
+        if abs(self.multiplier - 1) > 1e-6:
+            text += f", multiplied by {self.multiplier}"
+
+        if self.offset > 1e-6:
+            text += f", plus {self.offset}"
+        elif self.offset < -1e-6:
+            text += f", minus {-self.offset}"
+
+        if self.clamp_lower is not None:
+            text += f", clamped below at {self.clamp_lower:g}"
+
+        if self.clamp_upper is not None:
+            text += f", clamped above at {self.clamp_upper:g}"
+        return text
 
 
 class LookupParameter(CustomBaseModel):

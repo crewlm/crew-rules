@@ -5,32 +5,7 @@ import re
 from functools import cached_property
 
 from utilities.pydantic import CustomBaseModel
-
-
-def _timedelta_to_iso8601(td: timedelta) -> str:
-    # Extract total seconds and handle negative durations if necessary
-    total_seconds = int(td.total_seconds())
-    days = td.days
-
-    # Extract hours, minutes, and seconds from the remaining seconds of the day
-    remaining_seconds = total_seconds % 86400
-    hours = remaining_seconds // 3600
-    minutes = (remaining_seconds % 3600) // 60
-    seconds = remaining_seconds % 60
-
-    # Build date and time components
-    date_part = f"{days}D" if days else ""
-    time_part = ""
-    if hours or minutes or seconds:
-        time_part = "T"
-        if hours:
-            time_part += f"{hours}H"
-        if minutes:
-            time_part += f"{minutes}M"
-        if seconds:
-            time_part += f"{seconds}S"
-
-    return f"P{date_part}{time_part}"
+from utilities.formatters import timedelta_to_iso8601
 
 
 class EqualNumberComparison(CustomBaseModel):
@@ -112,7 +87,7 @@ class EqualDurationComparison(CustomBaseModel):
         return abs(self.duration - value) <= self.tolerance
 
     def __str__(self):
-        return f"equal to {_timedelta_to_iso8601(self.duration)}"
+        return f"equal to {timedelta_to_iso8601(self.duration)}"
 
 
 class EqualTextComparison(CustomBaseModel):
@@ -157,7 +132,7 @@ class GEDurationComparison(CustomBaseModel):
         return value >= self.duration
 
     def __str__(self):
-        return f"greater than or equal to {_timedelta_to_iso8601(self.duration)}"
+        return f"greater than or equal to {timedelta_to_iso8601(self.duration)}"
 
 
 class LEDurationComparison(CustomBaseModel):
@@ -168,7 +143,7 @@ class LEDurationComparison(CustomBaseModel):
         return value <= self.duration
 
     def __str__(self):
-        return f"less than or equal to {_timedelta_to_iso8601(self.duration)}"
+        return f"less than or equal to {timedelta_to_iso8601(self.duration)}"
 
 
 class GTDurationComparison(CustomBaseModel):
@@ -179,7 +154,7 @@ class GTDurationComparison(CustomBaseModel):
         return value >= self.duration
 
     def __str__(self):
-        return f"greater than {_timedelta_to_iso8601(self.duration)}"
+        return f"greater than {timedelta_to_iso8601(self.duration)}"
 
 
 class LTDurationComparison(CustomBaseModel):
@@ -190,7 +165,7 @@ class LTDurationComparison(CustomBaseModel):
         return value <= self.duration
 
     def __str__(self):
-        return f"less than {_timedelta_to_iso8601(self.duration)}"
+        return f"less than {timedelta_to_iso8601(self.duration)}"
 
 
 class RangeDurationComparison(CustomBaseModel):
@@ -202,7 +177,7 @@ class RangeDurationComparison(CustomBaseModel):
         return self.lower <= value <= self.upper
 
     def __str__(self):
-        return f"within range {_timedelta_to_iso8601(self.lower)} to {_timedelta_to_iso8601(self.upper)}"
+        return f"within range {timedelta_to_iso8601(self.lower)} to {timedelta_to_iso8601(self.upper)}"
 
 
 class RangeDatetimeComparison(CustomBaseModel):
@@ -258,7 +233,7 @@ class TimeWindowOverlapComparison(CustomBaseModel):
         return False
 
     def __str__(self):
-        return f"overlapping of {_timedelta_to_iso8601(self.overlap)} or more with {self.start.strftime('%H:%M:%S')} to {self.end.strftime('%H:%M:%S')}"
+        return f"overlapping of {timedelta_to_iso8601(self.overlap)} or more with {self.start.strftime('%H:%M:%S')} to {self.end.strftime('%H:%M:%S')}"
 
 
 class TruthComparison(CustomBaseModel):
