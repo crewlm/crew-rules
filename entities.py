@@ -18,10 +18,12 @@ V = TypeVar("V")
 
 
 def _to_std_type(source_type: Any, std_base: type) -> Any:
-    """Replaces GettableList/GettableDict with standard list/dict while preserving generic args."""
-    origin = getattr(source_type, "__origin__", source_type)
+    """
+    Replaces GettableList/GettableDict with standard list/dict while preserving generic args.
+    - GettableList[T] -> list[T]
+    - GettableDict[K, V] -> dict[K, V]
+    """
     args = getattr(source_type, "__args__", ())
-
     if args:
         return std_base[args]
     return std_base
