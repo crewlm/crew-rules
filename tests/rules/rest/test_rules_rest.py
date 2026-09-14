@@ -79,17 +79,19 @@ def test_rest_02():
         ],
         default=DurationValue(phrase="Default", duration=timedelta(hours=14)),
     )
-    requirement_update_table1 = Update(
+    requirement_update_table1 = Update[EmployeeRestTime, DurationValue](
         name="Long prior FDP",
         method="increase",
         table=DecisionTable[EmployeeRestTime, DurationValue](
             default=DurationValue(duration=timedelta()),
             items=[
-                ConditionValue[EmployeeRestTime][DurationValue](
-                    condition=Condition[EmployeeRestTime](
-                        field="preceding.calculated_numbers.fdp_exceedance",
-                        comparison=GENumberComparison(number=0.0001),
-                    ),
+                ConditionValue[EmployeeRestTime, DurationValue](
+                    condition=[
+                        Condition[EmployeeRestTime](
+                            field="preceding.calculated_numbers.fdp_exceedance",
+                            comparison=GENumberComparison(number=0.0001),
+                        )
+                    ],
                     value=DurationValue(duration=timedelta(hours=1)),
                 )
             ],
