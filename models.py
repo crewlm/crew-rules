@@ -2,7 +2,7 @@
 Different models.
 """
 
-from typing import Literal, Any, Annotated, TypeVar
+from typing import Literal, Any, Annotated, TypeVar, Iterable
 from functools import cached_property
 from operator import attrgetter
 from uuid import uuid4, UUID
@@ -22,6 +22,26 @@ from entities import (
     PortTimePeriod,
 )
 from comparisons import Comparison
+
+
+def _convert_to_float(val: Any) -> float | None:
+    if val is None:
+        return 0.0
+    elif isinstance(val, float):
+        return val
+    elif isinstance(val, (str, bytes, bytearray)):
+        return ord(val)
+    elif isinstance(val, Iterable):
+        return len(val)
+    elif isinstance(val, int):
+        return float(val)
+    elif isinstance(val, datetime):
+        return val.timestamp()
+    elif isinstance(val, timedelta):
+        return val.total_seconds() / 3600.0
+    elif isinstance(val, time):
+        return val.hour + val.minute / 60.0 + val.second / 3600.0
+    return None
 
 
 class Condition[C](CustomBaseModel):
@@ -121,17 +141,8 @@ class FieldValue(Value):
     def get_calculated_value(self, obj):
         val = self._field_getter(obj)
         # convert from everything else to float
-        if isinstance(val, float):
-            pass
-        elif isinstance(val, int):
-            val = float(val)
-        elif isinstance(val, datetime):
-            val = val.timestamp()
-        elif isinstance(val, timedelta):
-            val = val.total_seconds() / 3600.0
-        elif isinstance(val, time):
-            val = val.hour + val.minute / 60.0 + val.second / 3600.0
-        else:
+        val = _convert_to_float(val)
+        if val is None:
             raise ValueError(f"Cannot convert field to number: {self.field}")
         #
         val *= self.multiplier
@@ -205,15 +216,12 @@ class DecisionTable[C, V](CustomBaseModel):
         return self.default
 
 
-N = TypeVar("N")
-
-
 class Update[C, V](CustomBaseModel):
     name: str
     method: Literal["set", "increase", "decrease", "max", "min", "scale"] = "set"
     table: DecisionTable[C, V]
 
-    def apply(self, current_val: N | None, update_val: N | None) -> N:
+    def apply(self, current_val: float | None, update_val: float | None) -> float:
         if current_val is None:
             current_val = 0.0
         if update_val is None:
@@ -230,8 +238,6 @@ class Update[C, V](CustomBaseModel):
             case "min":
                 return min(current_val, update_val)
             case "scale":
-                if isinstance(current_val, timedelta):
-                    return current_val * update_val
                 return current_val * update_val
             case _:
                 raise ValueError(f"Unsupported method: {self.method}")
