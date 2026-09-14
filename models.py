@@ -124,13 +124,55 @@ class NoneValue(Value):
         return None
 
 
-class FieldValue(Value):
-    kind: Literal["field_value"] = "field_value"
-    field: str | None = None
+class FieldDifferenceValue(Value):
+    kind: Literal["field_difference_value"] = "field_difference_value"
+    start_field: str
+    end_field: str
     multiplier: float = 1.0
     offset: float = 0.0
-    cap_lower: float | None = None
-    cap_upper: float | None = None
+    clamp_lower: float | None = None
+    clamp_upper: float | None = None
+
+    @cached_property
+    def _start_field_getter(self):
+        if self.start_field is None:
+            return lambda x: 0.0
+        return attrgetter(self.start_field)
+
+    @cached_property
+    def _end_field_getter(self):
+        if self.end_field is None:
+            return lambda x: 0.0
+        return attrgetter(self.end_field)
+
+    def get_calculated_value(self, obj):
+        val_start = self._start_field_getter(obj)
+        val_end = self._end_field_getter(obj)
+        # convert from everything else to float
+        val_start = _convert_to_float(val_start)
+        if val_start is None:
+            raise ValueError(
+                f"Cannot convert start field to number: {self.start_field}"
+            )
+        val_end = _convert_to_float(val_end)
+        if val_end is None:
+            raise ValueError(f"Cannot convert end field to number: {self.end_field}")
+        #
+        val = self.multiplier * (val_end - val_start) + self.offset
+        if self.clamp_lower is not None and self.clamp_lower > val:
+            val = self.clamp_lower
+        if self.clamp_upper is not None and self.clamp_upper < val:
+            val = self.clamp_upper
+        return val
+
+
+class FieldValue(Value):
+    kind: Literal["field_value"] = "field_value"
+    field: str
+    multiplier: float = 1.0
+    offset: float = 0.0
+    clamp_lower: float | None = None
+    clamp_upper: float | None = None
 
     @cached_property
     def _field_getter(self):
@@ -145,12 +187,11 @@ class FieldValue(Value):
         if val is None:
             raise ValueError(f"Cannot convert field to number: {self.field}")
         #
-        val *= self.multiplier
-        val += self.offset
-        if self.cap_lower is not None and self.cap_lower > val:
-            val = self.cap_lower
-        if self.cap_upper is not None and self.cap_upper < val:
-            val = self.cap_upper
+        val = self.multiplier * val + self.offset
+        if self.clamp_lower is not None and self.clamp_lower > val:
+            val = self.clamp_lower
+        if self.clamp_upper is not None and self.clamp_upper < val:
+            val = self.clamp_upper
         return val
 
 
@@ -184,6 +225,7 @@ CalculationValue = Annotated[
     | NumberValue
     | DurationValue
     | FieldValue
+    | FieldDifferenceValue
     | NumberRangeValue
     | DurationRangeValue
     | ApplicableValue
