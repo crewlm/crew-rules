@@ -127,7 +127,7 @@ class MermaidDiagramBuilder:
 
 
 def rule_to_mermaid(rule: Rule) -> str:
-    """Convenience wrapper for rule diagram generation."""
+    """Convert rule to mermaidjs diagram."""
     return (
         MermaidDiagramBuilder(rule)
         .add_applicability_section()
