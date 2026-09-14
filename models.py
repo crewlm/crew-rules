@@ -7,8 +7,9 @@ from functools import cached_property
 from operator import attrgetter
 from uuid import uuid4, UUID
 from datetime import datetime, timedelta, time
+from pydantic import Field, TypeAdapter, RootModel
 
-from utilities.pydantic import CustomBaseModel, Field, TypeAdapter
+from utilities.pydantic import CustomBaseModel
 from entities import (
     Activity,
     Duty,

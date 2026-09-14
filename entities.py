@@ -5,8 +5,9 @@ a rule on.
 
 from datetime import datetime
 from typing import Any, Generic, TypeVar
+from pydantic import Field
 
-from utilities.pydantic import CustomBaseModel, Field
+from utilities.pydantic import CustomBaseModel
 from utilities.builtin_extensions import GettableDict, GettableList
 
 
