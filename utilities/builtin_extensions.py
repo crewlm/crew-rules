@@ -152,7 +152,8 @@ class GettableDefaultDict(defaultdict[K, V], Generic[K, V]):
         cls, source_type: Any, handler: GetCoreSchemaHandler
     ) -> core_schema.CoreSchema:
         std_type = _to_std_type(source_type, dict)
-        (value_type,) = get_args(source_type)
+        type_args = get_args(source_type)
+        value_type = type_args[-1] if type_args else None
 
         def _build(value: dict) -> "GettableDefaultDict":
             return cls(value_type, value)
