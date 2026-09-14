@@ -15,11 +15,12 @@ from utilites.pydantic import CustomBaseModel, Field, GetCoreSchemaHandler, core
 
 class GettableList(list):
     """
-    Use this for all lists, so that field access can
-    do things like items.0, or items.first, etc.
-
-    Can later add properties like max / min.
+    List subclass enabling dot-notation field access for attrgetter.
+    Supports index access (.0, .1) and property access (.first, .last, .max, .min).
     """
+
+    # Necessary for @cached_property to store instance attributes on a list subclass
+    __slots__ = ("__dict__",)
 
     @cached_property
     def first(self):
@@ -63,16 +64,20 @@ class GettableList(list):
     def __get_pydantic_core_schema__(
         cls, source_type: Any, handler: GetCoreSchemaHandler
     ) -> core_schema.CoreSchema:
+        # Preserve item validation when typed like GettableList[MyModel]
+        instance_schema = (
+            handler(source_type) if source_type != cls else core_schema.list_schema()
+        )
         return core_schema.no_info_after_validator_function(
             cls,
-            core_schema.list_schema(),
+            instance_schema,
         )
 
 
 class GettableDict(dict):
     """
-    Use this for all dicts to allow field
-    access instead of dict key access.
+    Dict subclass enabling dot-notation field access for attrgetter.
+    E.g., calculated_numbers.max_fdp_hours
     """
 
     def __getattr__(self, name):
@@ -85,9 +90,12 @@ class GettableDict(dict):
     def __get_pydantic_core_schema__(
         cls, source_type: Any, handler: GetCoreSchemaHandler
     ) -> core_schema.CoreSchema:
+        instance_schema = (
+            handler(source_type) if source_type != cls else core_schema.dict_schema()
+        )
         return core_schema.no_info_after_validator_function(
             cls,
-            core_schema.dict_schema(),
+            instance_schema,
         )
 
 
