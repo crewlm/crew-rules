@@ -99,7 +99,7 @@ def test_rest_02():
         ),
     )
     requirement_update_table1 = Update[C, FieldNumberValue](
-        name="Cross multiple time zones",
+        name="Crossed multiple time zones",
         method="increase",
         table=DecisionTable[C, FieldNumberValue](
             default=FieldNumberValue(field=None),
@@ -107,12 +107,13 @@ def test_rest_02():
                 ConditionValue[C, FieldNumberValue](
                     condition=[
                         Condition[C](
-                            field="preceding.calculated_numbers.fdp_exceedance",
-                            comparison=GTNumberComparison(number=0),
+                            field="preceding.calculated_numbers.time_zones_crossed",
+                            comparison=GTNumberComparison(number=2),
                         )
                     ],
                     value=FieldNumberValue(
-                        field="preceding.calculated_numbers.time_zones_crossed"
+                        field="preceding.calculated_numbers.time_zones_crossed",
+                        offset=-2,
                     ),
                 )
             ],
