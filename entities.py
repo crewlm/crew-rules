@@ -8,7 +8,7 @@ from typing import Any, Generic, TypeVar, Literal
 from pydantic import Field
 
 from utilities.pydantic import CustomBaseModel
-from utilities.builtin_extensions import GettableDict, GettableList
+from utilities.builtin_extensions import GettableDict, GettableList, GettableDefaultDict
 
 
 class Port(CustomBaseModel):
@@ -36,6 +36,9 @@ class Duty(CustomBaseModel):
         "generic_work",
         "generic_rest",
     ] = Field(default="generic_work")
+    calculated_numbers: GettableDefaultDict[float] = Field(
+        default_factory=lambda: GettableDefaultDict(float)
+    )
 
 
 class Pairing(CustomBaseModel):
