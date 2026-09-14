@@ -80,14 +80,11 @@ class MermaidDiagramBuilder:
     ) -> "MermaidDiagramBuilder":
         for idx, upd in enumerate(updates, start=1):
             self.lines.append(
-                f'\n    subgraph {name}Update_{idx} ["{name} Update: {upd.name}"]'
+                f'\n    subgraph {name}Update_{idx} ["{name} Update: {upd.name} ({upd.method.title()})"]'
             )
             self.lines.append("        direction TB")
-            u_header_id = self._next_node_id()
-            self.subgraph_entries.append(u_header_id)
-            self.lines.append(f"        {u_header_id}:::{name}UpdateNode")
             upd_entry = self.add_decision_table(upd.table, f"{name}UpdateNode")
-            self.lines.append(f"        {u_header_id} --> {upd_entry}")
+            self.subgraph_entries.append(upd_entry)
             self.lines.append("    end")
         return self
 
