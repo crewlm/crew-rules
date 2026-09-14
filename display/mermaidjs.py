@@ -90,7 +90,7 @@ class MermaidDiagramBuilder:
             upd_entry = self.add_decision_table(
                 upd.table,
                 f"{name}UpdateNode",
-                f"{upd.method.title()} {name.lower()} by ",
+                upd.get_method_action(item=name.lower()),
             )
             self.subgraph_entries.append(upd_entry)
             self.lines.append("    end")

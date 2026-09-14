@@ -345,6 +345,22 @@ class Update[C, V](CustomBaseModel):
     method: Literal["set", "increase", "decrease", "max", "min", "scale"] = "set"
     table: DecisionTable[C, V]
 
+    def get_method_action(self, item: str):
+        match self.method:
+            case "set":
+                return f"Set {item} to "
+            case "increase":
+                return f"Increase {item} by "
+            case "decrease":
+                return f"Decrease {item} by "
+            case "max":
+                return f"Set {item} to the greater of the current {item} and "
+            case "min":
+                return f"Set {item} to the lesser of the current {item} and "
+            case "scale":
+                return f"Multipler {item} by "
+        raise ValueError(f"Unsupported method {self.method}")
+
     def apply(self, current_val: float | None, update_val: float | None) -> float:
         if current_val is None:
             current_val = 0.0
