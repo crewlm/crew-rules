@@ -8,7 +8,17 @@ from operator import attrgetter
 from uuid import uuid4, UUID
 from datetime import datetime, timedelta, time
 
-from utilites.pydantic import CustomBaseModel, Field, PrivateAttr
+from utilites.pydantic import CustomBaseModel, Field
+from entities import (
+    Activity,
+    Duty,
+    Pairing,
+    EmployeeTimePeriod,
+    EmployeeRestTime,
+    EmployeeGroundTime,
+    AircraftTimePeriod,
+    AircraftGroundTime,
+)
 
 
 class EqualNumberComparison(CustomBaseModel):
@@ -311,52 +321,6 @@ class Rule[C](CustomBaseModel):
     requirement_updates: list[Update[C, CalculationValue]] = Field(default_factory=list)
     limit: DecisionTable[C, CalculationValue] | None = None
     limit_updates: list[Update[C, CalculationValue]] = Field(default_factory=list)
-
-
-class Activity(CustomBaseModel):
-    pass
-
-
-class Duty(CustomBaseModel):
-    pass
-
-
-class Pairing(CustomBaseModel):
-    pass
-
-
-class EmployeeTimePeriod(CustomBaseModel):
-    pass
-
-
-class AircraftTimePeriod(CustomBaseModel):
-    pass
-
-
-class Employee(CustomBaseModel):
-    pass
-
-
-class Aircraft(CustomBaseModel):
-    pass
-
-
-class EmployeeRestTime(CustomBaseModel):
-    preceding: Duty
-    succeeding: Duty
-    employee: Employee
-
-
-class EmployeeGroundTime(CustomBaseModel):
-    inbound: Activity
-    outbound: Activity
-    employee: Employee
-
-
-class AircraftGroundTime(CustomBaseModel):
-    inbound: Activity
-    outbound: Activity
-    aircraft: Aircraft
 
 
 class ActivityRule(Rule[Activity]):
