@@ -190,6 +190,13 @@ class TruthComparison(CustomBaseModel):
         return bool(value)
 
 
+class FalseComparison(CustomBaseModel):
+    kind: Literal["false_comparison"] = "false_comparison"
+
+    def matches(self, value: Any):
+        return not bool(value)
+
+
 class EqualSetComparison(CustomBaseModel):
     kind: Literal["equal_set_comparison"] = "equal_set_comparison"
     items: set[Hashable]
@@ -231,6 +238,7 @@ Comparison = Annotated[
     | TimeWindowOverlapComparison
     | EqualSetComparison
     | TruthComparison
+    | FalseComparison
     | WithinSetComparison
     | ContainSetComparison,
     Field(discriminator="kind"),

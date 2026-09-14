@@ -12,7 +12,7 @@ from models import (
     Condition,
     EqualTextComparison,
     GTNumberComparison,
-    TruthComparison,
+    FalseComparison,
     Update,
 )
 
@@ -71,8 +71,7 @@ def test_rest_02():
                 condition=[
                     Condition[C](
                         field="at_home_base",
-                        comparison=TruthComparison(),
-                        reverse_match=True,
+                        comparison=FalseComparison(),
                     )
                 ],
                 value=DurationValue(phrase="Outstation", duration=timedelta(hours=12)),
