@@ -317,13 +317,24 @@ class ApplicableValue(Value):
 class FieldValue(Value):
     kind: Literal["field_value"] = "field_value"
     field: str
+    multiplier: float = 1.0
+    offset: float = 0.0
+    cap_lower: float | None = None
+    cap_upper: float | None = None
 
     @cached_property
     def _field_getter(self):
         return attrgetter(self.field)
 
     def get_calculated_value(self, obj):
-        return self._field_getter(obj)
+        val = self._field_getter(obj)
+        val *= self.multiplier
+        val += self.offset
+        if self.cap_lower is not None and self.cap_lower > val:
+            val = self.cap_lower
+        if self.cap_upper is not None and self.cap_upper < val:
+            val = self.cap_upper
+        return val
 
 
 class LookupParameter(CustomBaseModel):
