@@ -339,7 +339,8 @@ class TimePeriod(CustomBaseModel):
 
 
 class RuleResult(CustomBaseModel):
-    pass
+    result: Literal["pass", "fail", "not_applicable"]
+    messages: list[str]
 
 
 class Rule[C](CustomBaseModel):
