@@ -1,4 +1,4 @@
-from typing import TypeVar, Any, Generic
+from typing import TypeVar, Any, Generic, get_args
 from collections import defaultdict
 from pydantic import GetCoreSchemaHandler
 from pydantic_core import core_schema
@@ -152,8 +152,13 @@ class GettableDefaultDict(defaultdict[K, V], Generic[K, V]):
         cls, source_type: Any, handler: GetCoreSchemaHandler
     ) -> core_schema.CoreSchema:
         std_type = _to_std_type(source_type, dict)
+        (value_type,) = get_args(source_type)
+
+        def _build(value: dict) -> "GettableDefaultDict":
+            return cls(value_type, value)
+
         return core_schema.no_info_after_validator_function(
-            cls,
+            _build,
             handler.generate_schema(std_type),
         )
 
