@@ -17,7 +17,7 @@ class EqualNumberComparison(CustomBaseModel):
         return abs(self.number - value) <= self.tolerance
 
     def __str__(self):
-        return f"equal to {self.number}"
+        return f"equal to {self.number:g}"
 
 
 class GENumberComparison(CustomBaseModel):
@@ -28,7 +28,7 @@ class GENumberComparison(CustomBaseModel):
         return value >= self.number
 
     def __str__(self):
-        return f"greater than or equal to {self.number}"
+        return f"greater than or equal to {self.number:g}"
 
 
 class LENumberComparison(CustomBaseModel):
@@ -39,7 +39,7 @@ class LENumberComparison(CustomBaseModel):
         return value <= self.number
 
     def __str__(self):
-        return f"less than or equal to {self.number}"
+        return f"less than or equal to {self.number:g}"
 
 
 class GTNumberComparison(CustomBaseModel):
@@ -50,7 +50,7 @@ class GTNumberComparison(CustomBaseModel):
         return value > self.number
 
     def __str__(self):
-        return f"greater than {self.number}"
+        return f"greater than {self.number:g}"
 
 
 class LTNumberComparison(CustomBaseModel):
@@ -61,7 +61,7 @@ class LTNumberComparison(CustomBaseModel):
         return value < self.number
 
     def __str__(self):
-        return f"less than {self.number}"
+        return f"less than {self.number:g}"
 
 
 class RangeNumberComparison(CustomBaseModel):
@@ -73,7 +73,7 @@ class RangeNumberComparison(CustomBaseModel):
         return self.lower <= value <= self.upper
 
     def __str__(self):
-        return f"within range {self.lower} to {self.upper}"
+        return f"within range {self.lower:g} to {self.upper:g}"
 
 
 class EqualDurationComparison(CustomBaseModel):
