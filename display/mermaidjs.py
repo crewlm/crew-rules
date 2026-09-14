@@ -57,10 +57,10 @@ class MermaidDiagramBuilder:
             self.lines.append(
                 f"""        {val_id}["{action if item.value else ''}{val_text}"]:::{node_class}"""
             )
-            self.lines.append(f"        {cond_id} -->|Match| {val_id}")
+            self.lines.append(f"        {cond_id} -->|Yes| {val_id}")
 
             if prev_fail_id:
-                self.lines.append(f"        {prev_fail_id} -->|No Match| {cond_id}")
+                self.lines.append(f"        {prev_fail_id} -->|No| {cond_id}")
 
             prev_fail_id = cond_id
 
@@ -68,7 +68,7 @@ class MermaidDiagramBuilder:
         self.lines.append(
             f"""        {default_id}["{action if table.default else ''}{str(table.default)}"]:::{node_class}"""
         )
-        self.lines.append(f"        {prev_fail_id} -->|No Match| {default_id}")
+        self.lines.append(f"        {prev_fail_id} -->|No| {default_id}")
 
         return first_id
 
