@@ -7,6 +7,7 @@ from models import (
     ApplicableValue,
     ConditionValue,
     Condition,
+    FieldValue,
     FieldDifferenceValue,
     TableLookupValue,
     LookupParameter,
@@ -22,6 +23,7 @@ from comparisons import (
     EqualNumberComparison,
     TruthComparison,
     FalseComparison,
+    GTNumberComparison,
 )
 from display.mermaidjs import rule_to_mermaid
 
@@ -93,13 +95,35 @@ def test_max_fdp_01():
         ),
     )
 
+    limit_update_reduced_rest = Update[C, NullableCalculationValue](
+        name="Short Rest Reduction",
+        method="decrease",
+        table=DecisionTable[C, NullableCalculationValue](
+            default=NoneValue(),
+            items=[
+                ConditionValue[C, NullableCalculationValue](
+                    condition=[
+                        Condition[C](
+                            field="calculated_number.preceding_rest_infringement",
+                            comparison=GTNumberComparison(number=0.0),
+                        )
+                    ],
+                    value=FieldValue(
+                        phrase="Short preceding rest",
+                        field="calculated_number.preceding_rest_infringement",
+                    ),
+                )
+            ],
+        ),
+    )
+
     limit_update_discretion = Update[C, NullableCalculationValue](
         name="Commander's Discretion Extension",
         method="increase",
         table=DecisionTable[C, NullableCalculationValue](
             default=NoneValue(),
             items=[
-                ConditionValue[C, DurationValue](
+                ConditionValue[C, NullableCalculationValue](
                     condition=[
                         Condition[C](
                             field="discretion.commander",
@@ -121,7 +145,7 @@ def test_max_fdp_01():
         applicability=applicability_table,
         value=value_table,
         limit=limit_table,
-        limit_updates=[limit_update_discretion],
+        limit_updates=[limit_update_reduced_rest, limit_update_discretion],
     )
 
     # JSON round-trip validation
@@ -135,5 +159,6 @@ def test_max_fdp_01():
     # check mermaid diagram
     diagram = rule_to_mermaid(parsed_rule)
     fpath = FILES_DIR / "mermaidjs_max_fdp_01.txt"
+    # fpath.write_text(diagram)
     diagram_expected = fpath.read_text()
     assert diagram == diagram_expected

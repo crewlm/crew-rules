@@ -19,7 +19,7 @@ graph LR
 
     subgraph SubjectValue ["Initial Value"]
         direction TB
-        N4["Default: From Calculated datetime's fdp start timestamp to Operating flights' -1's on blocks"]:::valNode
+        N4["From Calculated datetime's fdp start timestamp to Operating flights' -1's on blocks"]:::valNode
     end
 
     subgraph Limit ["Initial Limit"]
@@ -33,11 +33,19 @@ graph LR
 
     subgraph LimitUpdates ["Limit Updates"]
         direction TB
-        N8[["Limit Update: Commander's Discretion Extension (Increase)"]]:::limUpdNode
-        N9{"C's discretion's commander is true?"}
-        N10["PT1H"]:::limUpdNode
+        N8[["Limit Update: Short Rest Reduction (Decrease)"]]:::limUpdNode
+        N9{"C's calculated number's preceding rest infringement is greater than 0.0?"}
+        N10["Calculated number's preceding rest infringement"]:::limUpdNode
         N9 -->|Match| N10
         N11["Default: Nothing"]:::limUpdNode
         N9 -->|No Match| N11
         N8 --> N9
+        N9 --> N12
+        N12[["Limit Update: Commander's Discretion Extension (Increase)"]]:::limUpdNode
+        N13{"C's discretion's commander is true?"}
+        N14["PT1H"]:::limUpdNode
+        N13 -->|Match| N14
+        N15["Default: Nothing"]:::limUpdNode
+        N13 -->|No Match| N15
+        N12 --> N13
     end
