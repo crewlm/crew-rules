@@ -64,13 +64,9 @@ class GettableList(list):
     def __get_pydantic_core_schema__(
         cls, source_type: Any, handler: GetCoreSchemaHandler
     ) -> core_schema.CoreSchema:
-        # Preserve item validation when typed like GettableList[MyModel]
-        instance_schema = (
-            handler(source_type) if source_type != cls else core_schema.list_schema()
-        )
         return core_schema.no_info_after_validator_function(
             cls,
-            instance_schema,
+            core_schema.list_schema(),
         )
 
 
@@ -90,12 +86,9 @@ class GettableDict(dict):
     def __get_pydantic_core_schema__(
         cls, source_type: Any, handler: GetCoreSchemaHandler
     ) -> core_schema.CoreSchema:
-        instance_schema = (
-            handler(source_type) if source_type != cls else core_schema.dict_schema()
-        )
         return core_schema.no_info_after_validator_function(
             cls,
-            instance_schema,
+            core_schema.dict_schema(),
         )
 
 
