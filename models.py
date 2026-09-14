@@ -326,11 +326,29 @@ class FieldValue(Value):
         return self._field_getter(obj)
 
 
-class TableLookupValue(Value):
-    """TODO: Create duration and number lookup values from this"""
+class LookupParameter(CustomBaseModel):
+    name: str = Field(description="Name of parameter in table definition")
+    field: str = Field(description="Name of entity field to use for lookup")
 
+
+class TableLookupNumberValue(Value):
+    kind: Literal["table_lookup_number_value"] = "table_lookup_number_value"
     table_name: str
-    lookup_map: list[tuple[str, str]]  # should be some mapping of dict[str, ?]
+    lookup_map: list[LookupParameter]
+
+    def get_calculated_value(self, obj) -> float:
+        """TODO: Lookup value from table based on object properties"""
+        raise NotImplementedError
+
+
+class TableLookupDurationValue(Value):
+    kind: Literal["table_lookup_number_value"] = "table_lookup_number_value"
+    table_name: str
+    lookup_map: list[LookupParameter]
+
+    def get_calculated_value(self, obj) -> timedelta:
+        """TODO: Lookup value from table based on object properties"""
+        raise NotImplementedError
 
 
 CalculationValue = Annotated[
@@ -339,7 +357,9 @@ CalculationValue = Annotated[
     | FieldValue
     | NumberRangeValue
     | DurationRangeValue
-    | ApplicableValue,
+    | ApplicableValue
+    | TableLookupNumberValue
+    | TableLookupDurationValue,
     Field(discriminator="kind"),
 ]
 
