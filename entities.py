@@ -59,7 +59,7 @@ class GettableList(list[T], Generic[T]):
         return min(range(len(self)), key=lambda i: self[i])
 
     @property
-    def count(self):
+    def count_items(self):
         return len(self)
 
     def __getattr__(self, name: str):
