@@ -6,7 +6,8 @@ from models import (
     DecisionTable,
     ApplicableValue,
     DurationValue,
-    FieldValue,
+    FieldNumberValue,
+    FieldDurationValue,
     AnyRule,
     ConditionValue,
     Condition,
@@ -21,8 +22,8 @@ def test_rest_01():
     applicability_table = DecisionTable[EmployeeRestTime, ApplicableValue](
         default=ApplicableValue(phrase="Default", applicable=True)
     )
-    value_table = DecisionTable[EmployeeRestTime, FieldValue](
-        default=FieldValue(phrase="Rest duration", field="duration")
+    value_table = DecisionTable[EmployeeRestTime, FieldDurationValue](
+        default=FieldDurationValue(phrase="Rest duration", field="duration")
     )
     requirement_table = DecisionTable[EmployeeRestTime, DurationValue](
         default=DurationValue(phrase="Default", duration=timedelta(hours=12))
@@ -62,8 +63,8 @@ def test_rest_02():
             )
         ],
     )
-    value_table = DecisionTable[C, FieldValue](
-        default=FieldValue(phrase="Rest duration", field="duration")
+    value_table = DecisionTable[C, FieldDurationValue](
+        default=FieldDurationValue(phrase="Rest duration", field="duration")
     )
     requirement_table = DecisionTable[C, DurationValue](
         items=[
@@ -83,6 +84,24 @@ def test_rest_02():
         name="Long prior FDP",
         method="increase",
         table=DecisionTable[C, DurationValue](
+            default=DurationValue(duration=timedelta()),
+            items=[
+                ConditionValue[C, DurationValue](
+                    condition=[
+                        Condition[C](
+                            field="preceding.calculated_numbers.fdp_exceedance",
+                            comparison=GTNumberComparison(number=0),
+                        )
+                    ],
+                    value=DurationValue(duration=timedelta(hours=1)),
+                )
+            ],
+        ),
+    )
+    requirement_update_table1 = Update[C, DurationValue](
+        name="Cross multiple time zones",
+        method="increase",
+        table=DecisionTable[C, FieldDurationValue](
             default=DurationValue(duration=timedelta()),
             items=[
                 ConditionValue[C, DurationValue](

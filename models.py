@@ -314,8 +314,8 @@ class ApplicableValue(Value):
         return self.applicable
 
 
-class FieldValue(Value):
-    kind: Literal["field_value"] = "field_value"
+class FieldNumberValue(Value):
+    kind: Literal["field_number_value"] = "field_number_value"
     field: str
     multiplier: float = 1.0
     offset: float = 0.0
@@ -327,7 +327,30 @@ class FieldValue(Value):
         return attrgetter(self.field)
 
     def get_calculated_value(self, obj):
-        val = self._field_getter(obj)
+        val: float = self._field_getter(obj)
+        val *= self.multiplier
+        val += self.offset
+        if self.cap_lower is not None and self.cap_lower > val:
+            val = self.cap_lower
+        if self.cap_upper is not None and self.cap_upper < val:
+            val = self.cap_upper
+        return val
+
+
+class FieldDurationValue(Value):
+    kind: Literal["field_duration_value"] = "field_duration_value"
+    field: str
+    multiplier: float = 1.0
+    offset: timedelta = timedelta()
+    cap_lower: timedelta | None = None
+    cap_upper: timedelta | None = None
+
+    @cached_property
+    def _field_getter(self):
+        return attrgetter(self.field)
+
+    def get_calculated_value(self, obj):
+        val: timedelta = self._field_getter(obj)
         val *= self.multiplier
         val += self.offset
         if self.cap_lower is not None and self.cap_lower > val:
@@ -365,7 +388,8 @@ class TableLookupDurationValue(Value):
 CalculationValue = Annotated[
     NumberValue
     | DurationValue
-    | FieldValue
+    | FieldNumberValue
+    | FieldDurationValue
     | NumberRangeValue
     | DurationRangeValue
     | ApplicableValue
