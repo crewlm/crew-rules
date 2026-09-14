@@ -4,9 +4,9 @@ graph LR
     classDef valNode fill:#f3e5f5,stroke:#7b1fa2,stroke-width:1px;
     classDef reqNode fill:#fff3e0,stroke:#f57c00,stroke-width:1px;
     classDef limNode fill:#fff3e0,stroke:#f57c00,stroke-width:1px;
-    classDef valUpdNode fill:#e8f5e9,stroke:#388e3c,stroke-width:1px;
-    classDef reqUpdNode fill:#e8f5e9,stroke:#388e3c,stroke-width:1px;
-    classDef limUpdNode fill:#e8f5e9,stroke:#388e3c,stroke-width:1px;
+    classDef ValueUpdateNode fill:#e8f5e9,stroke:#388e3c,stroke-width:1px;
+    classDef RequirementUpdateNode fill:#e8f5e9,stroke:#388e3c,stroke-width:1px;
+    classDef LimitUpdateNode fill:#e8f5e9,stroke:#388e3c,stroke-width:1px;
 
     subgraph Applicability ["Applicability"]
         direction TB
@@ -31,24 +31,24 @@ graph LR
         N5 -->|No Match| N7
     end
 
-    subgraph LimUpdate_1 ["Limit Update: Short Rest Reduction"]
+    subgraph LimitUpdate_1 ["Limit Update: Short Rest Reduction"]
         direction TB
-        N8[["Short Rest Reduction (Decrease)"]]:::limUpdNode
+        N8:::LimitUpdateNode
         N9{"Calculated number's preceding rest infringement is greater than 0.0?"}
-        N10["Calculated number's preceding rest infringement"]:::limUpdNode
+        N10["Calculated number's preceding rest infringement"]:::LimitUpdateNode
         N9 -->|Match| N10
-        N11["Nothing"]:::limUpdNode
+        N11["Nothing"]:::LimitUpdateNode
         N9 -->|No Match| N11
         N8 --> N9
     end
 
-    subgraph LimUpdate_2 ["Limit Update: Commander's Discretion Extension"]
+    subgraph LimitUpdate_2 ["Limit Update: Commander's Discretion Extension"]
         direction TB
-        N12[["Commander's Discretion Extension (Increase)"]]:::limUpdNode
+        N12:::LimitUpdateNode
         N13{"Discretion's commander is true?"}
-        N14["PT1H"]:::limUpdNode
+        N14["PT1H"]:::LimitUpdateNode
         N13 -->|Match| N14
-        N15["Nothing"]:::limUpdNode
+        N15["Nothing"]:::LimitUpdateNode
         N13 -->|No Match| N15
         N12 --> N13
     end
