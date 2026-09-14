@@ -9,7 +9,6 @@ from models import (
     ApplicableValue,
     DurationValue,
     FieldValue,
-    FieldValue,
     AnyRule,
     ConditionValue,
     Condition,
