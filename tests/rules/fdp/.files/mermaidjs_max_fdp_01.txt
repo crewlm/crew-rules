@@ -16,7 +16,7 @@ graph LR
 
     subgraph Applicability ["Applicability"]
         direction TB
-        N2{"Input entity's category is equal to 'flying',<br/>and Input entity's operating pilot count is equal to 2?"}
+        N2{"Input entity's category is equal to 'flying',<br/><u>and</u> Input entity's operating pilot count is equal to 2?"}
         N3["Applicable"]:::appNode
         N2 -->|Yes| N3
         N4["Not applicable"]:::appNode

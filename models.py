@@ -323,7 +323,7 @@ class ConditionValue[C, V](CustomBaseModel):
         return all(c.matches(obj) for c in self.condition)
 
     def display_condition(self):
-        return ",\nand ".join(str(c) for c in self.condition)
+        return ",\n<u>and</u> ".join(str(c) for c in self.condition)
 
     def display_value(self):
         return str(self.value)
