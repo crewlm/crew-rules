@@ -326,6 +326,13 @@ class FieldValue(Value):
         return self._field_getter(obj)
 
 
+class TableLookupValue(Value):
+    """TODO: Create duration and number lookup values from this"""
+
+    table_name: str
+    lookup_map: list[tuple[str, str]]  # should be some mapping of dict[str, ?]
+
+
 CalculationValue = Annotated[
     NumberValue
     | DurationValue
