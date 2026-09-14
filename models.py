@@ -2,7 +2,7 @@
 Different models.
 """
 
-from typing import Literal, Iterable, Any, Hashable, Annotated
+from typing import Literal, Iterable, Any, Hashable, Annotated, TypeVar
 from functools import cached_property
 from operator import attrgetter
 from uuid import uuid4, UUID
@@ -195,55 +195,90 @@ class Condition[C](CustomBaseModel):
 class Value(CustomBaseModel):
     phrase: str = "Matched"
 
+    def get_calculated_value(self, obj: Any):
+        """Sub classes should implement this interface"""
+        raise NotImplementedError
+
 
 class NumberValue(Value):
+    kind: Literal["number_value"] = "number_value"
     number: float
+
+    def get_calculated_value(self, obj):
+        return self.number
 
 
 class DurationValue(Value):
+    kind: Literal["duration_value"] = "duration_value"
     duration: timedelta
+
+    def get_calculated_value(self, obj):
+        return self.duration
 
 
 class NumberRangeValue(Value):
+    kind: Literal["number_range_value"] = "number_range_value"
     lower: float
     upper: float
 
+    def get_calculated_value(self, obj):
+        return (self.lower, self.upper)
+
 
 class DurationRangeValue(Value):
+    kind: Literal["duration_range_value"] = "duration_range_value"
     lower: timedelta
     upper: timedelta
 
+    def get_calculated_value(self, obj):
+        return (self.lower, self.upper)
+
 
 class ApplicableValue(Value):
+    kind: Literal["applicable_value"] = "applicable_value"
     applicable: bool
+
+    def get_calculated_value(self, obj):
+        return self.applicable
 
 
 class FieldValue(Value):
+    kind: Literal["field_value"] = "field_value"
     field: str
 
+    @cached_property
+    def _field_getter(self):
+        return attrgetter(self.field)
 
-CalculationValue = (
+    def get_calculated_value(self, obj):
+        return self._field_getter(obj)
+
+
+CalculationValue = Annotated[
     NumberValue
     | DurationValue
     | FieldValue
     | NumberRangeValue
     | DurationRangeValue
-    | ApplicableValue
-)
+    | ApplicableValue,
+    Field(discriminator="kind"),
+]
+
+V = TypeVar("V", bound=CalculationValue)
 
 
 class ConditionValue[C, V](CustomBaseModel):
     condition: list[Condition[C]] = Field(
         description="All conditions must be met together (AND)."
     )
-    value: Value[V]
+    value: V
 
     def matches(self, obj):
         return all(c.matches(obj) for c in self.condition)
 
 
 class DecisionTable[C, V](CustomBaseModel):
-    default: Value
+    default: V
     items: list[ConditionValue[C, V]] = Field(default_factory=list)
 
     def get_matching_value(self, obj):
