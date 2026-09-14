@@ -341,6 +341,19 @@ class TimePeriod(CustomBaseModel):
 class RuleResult(CustomBaseModel):
     result: Literal["pass", "fail", "not_applicable"]
     messages: list[str]
+    slack: float
+    surplus: float
+    base_value: float
+
+    @property
+    def slack_percent(self):
+        """derive from slack and base_value"""
+        raise NotImplementedError
+
+    @property
+    def surplus_percent(self):
+        """derive from surplus and base_value"""
+        raise NotImplementedError
 
 
 class Rule[C](CustomBaseModel):
