@@ -8,7 +8,7 @@ from operator import attrgetter
 from uuid import uuid4, UUID
 from datetime import datetime, timedelta, time
 
-from utilites.pydantic import CustomBaseModel, Field
+from utilities.pydantic import CustomBaseModel, Field
 from entities import (
     Activity,
     Duty,

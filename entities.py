@@ -6,8 +6,8 @@ a rule on.
 from datetime import datetime
 from typing import Any, Generic, TypeVar
 
-from utilites.pydantic import CustomBaseModel, Field
-from utilites.builtin_extensions import GettableDict, GettableList
+from utilities.pydantic import CustomBaseModel, Field
+from utilities.builtin_extensions import GettableDict, GettableList
 
 
 class Port(CustomBaseModel):
