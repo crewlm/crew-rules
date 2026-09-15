@@ -1,7 +1,7 @@
 from pathlib import Path
 
 import json
-from models import AnyRule
+from classes.models import AnyRule
 
 FILES_DIR = Path(__file__).resolve().parent / ".files"
 
