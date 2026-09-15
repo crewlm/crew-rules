@@ -25,7 +25,7 @@ graph LR
 
     subgraph SubjectValue ["Initial Value"]
         direction TB
-        N5["From Entity's calculated datetime's fdp start timestamp to Entity's operating flights' -1's on blocks"]:::valNode
+        N5["From Entity's fdp's start to Entity's fdp's end"]:::valNode
     end
 
     subgraph Limit ["Initial Limit"]

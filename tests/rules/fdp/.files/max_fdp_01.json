@@ -42,8 +42,8 @@
         "default": {
             "phrase": "Actual Duty FDP Duration",
             "kind": "field_difference_value",
-            "start_field": "calculated_datetime.fdp_start_timestamp",
-            "end_field": "operating_flights.-1.on_blocks",
+            "start_field": "fdp.start",
+            "end_field": "fdp.end",
             "multiplier": 1.0,
             "offset": 0.0,
             "clamp_lower": null,
