@@ -153,6 +153,7 @@ def test_max_fdp_01():
 
     # Assemble rule
     rule = DutyRule(
+        id="1e6268b2-f487-42db-b769-125ca11a46dd",
         name="Max FDP 2-Pilot Operations",
         applicability=applicability_table,
         value=value_table,
