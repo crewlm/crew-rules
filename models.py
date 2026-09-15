@@ -75,7 +75,7 @@ class Condition[C](CustomBaseModel):
         return (not comparison_match) if self.reverse_match else comparison_match
 
     def __str__(self):
-        entity_name = _get_first_generic_param_name(self)
+        entity_name = ""
         op = "is not" if self.reverse_match else "is"
         return f"{format_field(entity_name, self.field)} {op} {str(self.comparison)}"
 
