@@ -55,8 +55,8 @@ def test_max_fdp_01():
     value_table = DecisionTable[C, CalculationValue](
         default=FieldDifferenceValue(
             phrase="Actual Duty FDP Duration",
-            start_field="calculated_datetime.fdp_start_timestamp",
-            end_field="operating_flights.-1.on_blocks",
+            start_field="fdp.start",
+            end_field="fdp.end",
         )
     )
 
