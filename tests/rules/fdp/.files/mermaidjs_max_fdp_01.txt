@@ -16,7 +16,7 @@ graph LR
 
     subgraph Applicability ["Applicability"]
         direction TB
-        N2{"Duty's category is equal to 'flying',<br/><u>and</u> Duty's operating pilot count is equal to 2?"}
+        N2{"Duty's category is 'flying',<br/><u>and</u> Duty's operating pilot count is 2?"}
         N3["Applicable"]:::appNode
         N2 -->|Yes| N3
         N4["Not applicable"]:::appNode
@@ -30,7 +30,7 @@ graph LR
 
     subgraph Limit ["Initial Limit"]
         direction TB
-        N6{"Duty's acclimatised state is equal to 'acclimatised'?"}
+        N6{"Duty's acclimatised state is 'acclimatised'?"}
         N7["Look up the value in MaxFDPTableB using Input entity's calculated numbers' fdp sectors as sectors, Input entity's preceding rest's duration as preceding_rest"]:::limNode
         N6 -->|Yes| N7
         N8["Look up the value in MaxFDPTableA using Input entity's calculated numbers' fdp sectors as sectors, Input entity's duty's report time of day local as start_time_of_day"]:::limNode

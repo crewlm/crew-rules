@@ -17,7 +17,7 @@ class EqualNumberComparison(CustomBaseModel):
         return abs(self.number - value) <= self.tolerance
 
     def __str__(self):
-        return f"equal to {self.number:g}"
+        return f"{self.number:g}"
 
 
 class GENumberComparison(CustomBaseModel):
@@ -87,7 +87,7 @@ class EqualDurationComparison(CustomBaseModel):
         return abs(self.duration - value) <= self.tolerance
 
     def __str__(self):
-        return f"equal to {timedelta_to_iso8601(self.duration)}"
+        return timedelta_to_iso8601(self.duration)
 
 
 class EqualTextComparison(CustomBaseModel):
@@ -106,7 +106,7 @@ class EqualTextComparison(CustomBaseModel):
         return self.text == value
 
     def __str__(self):
-        return f"equal to '{self.text}'{'' if self.case_sensitive else ' (case-insensitive)'}"
+        return f"'{self.text}'{'' if self.case_sensitive else ' (case-insensitive)'}"
 
 
 class RegexTextComparison(CustomBaseModel):
@@ -243,7 +243,7 @@ class TruthComparison(CustomBaseModel):
         return bool(value)
 
     def __str__(self):
-        return f"true"
+        return "true"
 
 
 class FalseComparison(CustomBaseModel):
@@ -253,7 +253,7 @@ class FalseComparison(CustomBaseModel):
         return not bool(value)
 
     def __str__(self):
-        return f"false"
+        return "false"
 
 
 class EqualSetComparison(CustomBaseModel):
@@ -264,7 +264,7 @@ class EqualSetComparison(CustomBaseModel):
         return self.items == set(value)
 
     def __str__(self):
-        return f"equal to {', '.join(map(str, self.items))}"
+        return ", ".join(map(str, self.items))
 
 
 class WithinSetComparison(CustomBaseModel):
