@@ -11,7 +11,7 @@ from pydantic import Field, TypeAdapter
 
 from utilities.pydantic import CustomBaseModel
 from utilities.formatters import timedelta_to_iso8601, format_field
-from classes.entities import (
+from classes.entity import (
     Entity,
     Activity,
     Duty,
@@ -23,7 +23,7 @@ from classes.entities import (
     AircraftGroundTime,
     PortTimePeriod,
 )
-from classes.comparisons import Comparison
+from classes.comparison import Comparison
 
 
 def _get_first_generic_param_name(item: CustomBaseModel) -> str:
