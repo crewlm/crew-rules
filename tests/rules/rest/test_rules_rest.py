@@ -1,7 +1,7 @@
 from datetime import timedelta
 
-from classes.entity import EmployeeRestTime, Duty
-from classes.rule import (
+from models.entity import EmployeeRestTime, Duty
+from models.rule import (
     EmployeeRestTimeRule,
     CalculationValue,
     NullableCalculationValue,
@@ -15,7 +15,7 @@ from classes.rule import (
     Condition,
     Update,
 )
-from classes.comparison import (
+from models.comparison import (
     EqualTextComparison,
     GTNumberComparison,
     FalseComparison,

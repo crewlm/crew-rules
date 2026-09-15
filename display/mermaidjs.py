@@ -2,7 +2,7 @@
 Mermaid Diagram Builder from Rule
 """
 
-from classes.rule import Rule, DecisionTable, Update
+from models.rule import Rule, DecisionTable, Update
 
 
 class MermaidDiagramBuilder:

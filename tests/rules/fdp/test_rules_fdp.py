@@ -1,7 +1,7 @@
 from datetime import timedelta
 from pathlib import Path
-from classes.entity import Duty
-from classes.rule import (
+from models.entity import Duty
+from models.rule import (
     DutyRule,
     DecisionTable,
     ApplicableValue,
@@ -18,7 +18,7 @@ from classes.rule import (
     NullableCalculationValue,
     AnyRule,
 )
-from classes.comparison import (
+from models.comparison import (
     EqualTextComparison,
     EqualNumberComparison,
     TruthComparison,
