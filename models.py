@@ -12,6 +12,7 @@ from pydantic import Field, TypeAdapter
 from utilities.pydantic import CustomBaseModel
 from utilities.formatters import timedelta_to_iso8601, format_field
 from entities import (
+    Entity,
     Activity,
     Duty,
     Pairing,
@@ -23,6 +24,16 @@ from entities import (
     PortTimePeriod,
 )
 from comparisons import Comparison
+
+
+def _get_first_generic_param_name(item: CustomBaseModel) -> str:
+    args = item.__pydantic_generic_metadata__["args"]
+    if not args:
+        class_name = type(item).__name__
+        raise TypeError(
+            f"{class_name} must be parametrized, e.g. {class_name}[Duty](...)"
+        )
+    return args[0].__name__
 
 
 def _convert_to_float(val: Any, null_replacement: float | None = None) -> float | None:
@@ -54,12 +65,6 @@ class Condition[C](CustomBaseModel):
     comparison: Comparison = Field(description="Comparison to make")
     reverse_match: bool = Field(False, description="TRUE inverts the match")
 
-    def get_generic_param_name(self) -> str:
-        args = self.__pydantic_generic_metadata__["args"]
-        if not args:
-            raise TypeError("Condition must be parametrized, e.g. Condition[Duty](...)")
-        return args[0].__name__
-
     @cached_property
     def _field_getter(self):
         return attrgetter(self.field)
@@ -70,7 +75,7 @@ class Condition[C](CustomBaseModel):
         return (not comparison_match) if self.reverse_match else comparison_match
 
     def __str__(self):
-        entity_name = self.get_generic_param_name()
+        entity_name = _get_first_generic_param_name(self)
         op = "is not" if self.reverse_match else "is"
         return f"{format_field(entity_name, self.field)} {op} {str(self.comparison)}"
 

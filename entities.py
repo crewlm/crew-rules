@@ -11,6 +11,10 @@ from utilities.pydantic import CustomBaseModel
 from utilities.builtin_extensions import GettableDict, GettableList, GettableDefaultDict
 
 
+class Entity(CustomBaseModel):
+    """Use this as a general thing where we introspect class"""
+
+
 class Port(CustomBaseModel):
     code: str
     code_iata: str = ""
