@@ -9,14 +9,14 @@ graph LR
     classDef RequirementUpdateNode fill:#e8f5e9,stroke:#388e3c,stroke-width:1px;
     classDef LimitUpdateNode fill:#e8f5e9,stroke:#388e3c,stroke-width:1px;
 
-    subgraph Input ["Input"]
+    subgraph Input ["Input Entity"]
         direction TB
         N1["Duty"]:::inputNode
     end
 
     subgraph Applicability ["Applicability"]
         direction TB
-        N2{"Input entity's category is 'flying',<br/><u>and</u> Input entity's operating pilot count is 2?"}
+        N2{"Entity's category is 'flying',<br/><u>and</u> Entity's operating pilot count is 2?"}
         N3["Applicable"]:::appNode
         N2 -->|Yes| N3
         N4["Not applicable"]:::appNode
@@ -25,22 +25,22 @@ graph LR
 
     subgraph SubjectValue ["Initial Value"]
         direction TB
-        N5["From Input entity's calculated datetime's fdp start timestamp to Input entity's operating flights' -1's on blocks"]:::valNode
+        N5["From Entity's calculated datetime's fdp start timestamp to Entity's operating flights' -1's on blocks"]:::valNode
     end
 
     subgraph Limit ["Initial Limit"]
         direction TB
-        N6{"Input entity's acclimatised state is 'acclimatised'?"}
-        N7["Look up the value in MaxFDPTableB using Input entity's calculated numbers' fdp sectors as sectors, Input entity's preceding rest's duration as preceding_rest"]:::limNode
+        N6{"Entity's acclimatised state is 'acclimatised'?"}
+        N7["Look up the value in MaxFDPTableB using Entity's calculated numbers' fdp sectors as sectors, Entity's preceding rest's duration as preceding_rest"]:::limNode
         N6 -->|Yes| N7
-        N8["Look up the value in MaxFDPTableA using Input entity's calculated numbers' fdp sectors as sectors, Input entity's duty's report time of day local as start_time_of_day"]:::limNode
+        N8["Look up the value in MaxFDPTableA using Entity's calculated numbers' fdp sectors as sectors, Entity's duty's report time of day local as start_time_of_day"]:::limNode
         N6 -->|No| N8
     end
 
     subgraph LimitUpdate_1 ["Limit Update: Short Rest Reduction"]
         direction TB
-        N9{"Input entity's calculated number's preceding rest infringement is greater than 0?"}
-        N10["Decrease limit by Input entity's calculated number's preceding rest infringement"]:::LimitUpdateNode
+        N9{"Entity's calculated number's preceding rest infringement is greater than 0?"}
+        N10["Decrease limit by Entity's calculated number's preceding rest infringement"]:::LimitUpdateNode
         N9 -->|Yes| N10
         N11["Do nothing"]:::LimitUpdateNode
         N9 -->|No| N11
@@ -48,10 +48,10 @@ graph LR
 
     subgraph LimitUpdate_2 ["Limit Update: Commander's Discretion Extension"]
         direction TB
-        N12{"Input entity's commander discretion is true?"}
+        N12{"Entity's commander discretion is true?"}
         N13["Increase limit by PT1H"]:::LimitUpdateNode
         N12 -->|Yes| N13
-        N14{"Input entity's class 1 override is true?"}
+        N14{"Entity's class 1 override is true?"}
         N15["Increase limit by PT30M"]:::LimitUpdateNode
         N14 -->|Yes| N15
         N12 -->|No| N14

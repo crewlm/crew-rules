@@ -74,7 +74,7 @@ class MermaidDiagramBuilder:
 
     def add_input_section(self) -> "MermaidDiagramBuilder":
         entity_type = self.rule.scope.replace("_", " ").title().replace(" ", "")
-        self.lines.append('\n    subgraph Input ["Input"]')
+        self.lines.append('\n    subgraph Input ["Input Entity"]')
         self.lines.append("        direction TB")
         node_id = self._next_node_id()
         self.lines.append(f'        {node_id}["{entity_type}"]:::inputNode')
