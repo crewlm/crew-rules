@@ -1,7 +1,7 @@
 {
-    "id": "1909bfe6-8137-45ee-ade6-4350bd0773c9",
+    "id": "a0c01408-64ab-49fe-bace-c27870a5ed0b",
     "name": "test",
-    "scope": "employee_rest_time_rule",
+    "scope": "employee_rest_time",
     "applicability": {
         "default": {
             "phrase": "Default",

@@ -1,5 +1,5 @@
 graph LR
-    %% Diagram for Rule: test (Scope: employee_rest_time_rule)
+    %% Diagram for Rule: test (Scope: employee_rest_time)
     classDef inputNode fill:#e1f5fe,stroke:#0288d1,stroke-width:1px;
     classDef appNode fill:#e1f5fe,stroke:#0288d1,stroke-width:1px;
     classDef valNode fill:#f3e5f5,stroke:#7b1fa2,stroke-width:1px;
@@ -11,7 +11,7 @@ graph LR
 
     subgraph Input ["Input Entity"]
         direction TB
-        N1["EmployeeRestTimeRule"]:::inputNode
+        N1["EmployeeRestTime"]:::inputNode
     end
 
     subgraph Applicability ["Applicability"]

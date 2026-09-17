@@ -3970,8 +3970,8 @@
                     "type": "string"
                 },
                 "scope": {
-                    "const": "employee_rest_time_rule",
-                    "default": "employee_rest_time_rule",
+                    "const": "employee_rest_time",
+                    "default": "employee_rest_time",
                     "title": "Scope",
                     "type": "string"
                 },
@@ -5265,7 +5265,7 @@
             "aircraft_time_period": "#/$defs/AircraftTimePeriodRule",
             "duty": "#/$defs/DutyRule",
             "employee_ground_time": "#/$defs/EmployeeGroundTimeRule",
-            "employee_rest_time_rule": "#/$defs/EmployeeRestTimeRule",
+            "employee_rest_time": "#/$defs/EmployeeRestTimeRule",
             "employee_time_period": "#/$defs/EmployeeTimePeriodRule",
             "pairing": "#/$defs/PairingRule",
             "port_time_period": "#/$defs/PortTimePeriodRule"

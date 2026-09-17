@@ -110,7 +110,7 @@ class AircraftTimePeriodRule(Rule[AircraftTimePeriod]):
 
 
 class EmployeeRestTimeRule(Rule[EmployeeRestTime]):
-    scope: Literal["employee_rest_time_rule"] = "employee_rest_time_rule"
+    scope: Literal["employee_rest_time"] = "employee_rest_time"
 
 
 class EmployeeGroundTimeRule(Rule[EmployeeGroundTime]):
