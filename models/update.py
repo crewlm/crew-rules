@@ -2,13 +2,12 @@ from typing import Literal
 
 from utilities.pydantic import CustomBaseModel
 
-from models.decision_table.decision_table import DecisionTable
+from models.decision_table.decision_table import DecisionTable, ProjectionDecisionTable
 
 
-class Update[C, V](CustomBaseModel):
+class BaseUpdate(CustomBaseModel):
     name: str
     method: Literal["set", "increase", "decrease", "max", "min", "scale"] = "set"
-    table: DecisionTable[C, V]
 
     def get_method_action(self, item: str):
         match self.method:
@@ -46,3 +45,11 @@ class Update[C, V](CustomBaseModel):
                 return current_val * update_val
             case _:
                 raise ValueError(f"Unsupported method: {self.method}")
+
+
+class ProjectionUpdate[C](BaseUpdate):
+    table: ProjectionDecisionTable[C]
+
+
+class Update[C, V](BaseUpdate):
+    table: DecisionTable[C, V]
