@@ -12,6 +12,11 @@ from utilities.pydantic import CustomBaseModel
 class Projection(CustomBaseModel):
     id: UUID = Field(default_factory=uuid4, description="UUID for projection")
     name: str
+    code: str = Field(
+        max_length=15,
+        pattern=r"^[a-zA-Z]\w*$",
+        description="Name to use for referencing from rules",
+    )
     activity_projections: list[ProjectionUpdate[Activity]] = Field(default_factory=list)
     employee_ground_time_projections: list[ProjectionUpdate[EmployeeGroundTime]] = (
         Field(default_factory=list)
