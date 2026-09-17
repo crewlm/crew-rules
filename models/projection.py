@@ -12,15 +12,12 @@ from utilities.pydantic import CustomBaseModel
 class Projection(CustomBaseModel):
     id: UUID = Field(default_factory=uuid4, description="UUID for projection")
     name: str
-    scope: Literal[
-        "duty", "pairing", "employee_rest_tine", "employee_ground_time", "activity"
-    ]
-    activity_updates: list[ProjectionUpdate[Activity]] = Field(default_factory=list)
-    employee_ground_time_updates: list[ProjectionUpdate[EmployeeGroundTime]] = Field(
+    activity_projections: list[ProjectionUpdate[Activity]] = Field(default_factory=list)
+    employee_ground_time_projections: list[ProjectionUpdate[EmployeeGroundTime]] = (
+        Field(default_factory=list)
+    )
+    duty_projections: list[ProjectionUpdate[Duty]] = Field(default_factory=list)
+    employee_rest_time_projections: list[ProjectionUpdate[EmployeeRestTime]] = Field(
         default_factory=list
     )
-    duty_updates: list[ProjectionUpdate[Duty]] = Field(default_factory=list)
-    employee_rest_time_updates: list[ProjectionUpdate[EmployeeRestTime]] = Field(
-        default_factory=list
-    )
-    pairing_updates: list[ProjectionUpdate[Pairing]] = Field(default_factory=list)
+    pairing_projections: list[ProjectionUpdate[Pairing]] = Field(default_factory=list)
