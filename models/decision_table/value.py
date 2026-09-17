@@ -298,7 +298,8 @@ CalculationValue = Annotated[
     | FieldDifferenceValue
     | NumberRangeValue
     | DurationRangeValue
-    | TableLookupValue,
+    | TableLookupValue
+    | ProjectionValue,
     Field(discriminator="kind"),
 ]
 NullableCalculationValue = Annotated[
