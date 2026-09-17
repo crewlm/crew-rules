@@ -11,7 +11,7 @@ graph LR
 
     subgraph Input ["Input Entity"]
         direction TB
-        N1["EmployeeRestTime"]:::inputNode
+        N1["Employee Rest Time"]:::inputNode
     end
 
     subgraph Applicability ["Applicability"]

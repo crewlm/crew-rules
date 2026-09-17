@@ -132,6 +132,7 @@ def test_rest_02():
         ),
     )
     rule = EmployeeRestTimeRule(
+        id="1e6268b2-f487-42db-b769-125ca11a46dd",
         name="test",
         applicability=applicability_table,
         value=value_table,
