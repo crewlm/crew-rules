@@ -1,19 +1,25 @@
 from datetime import timedelta
 
 from models.entity import EmployeeRestTime, Duty
+
 from models.rule import (
     EmployeeRestTimeRule,
-    CalculationValue,
-    NullableCalculationValue,
-    NoneValue,
-    DecisionTable,
-    ApplicableValue,
-    DurationValue,
-    FieldValue,
     AnyRule,
-    ConditionValue,
-    Condition,
-    Update,
+)
+from models.decision_table.value import (
+    ApplicableValue,
+    FieldValue,
+    NoneValue,
+    DurationValue,
+    NullableCalculationValue,
+)
+from models.decision_table.condition import Condition
+from models.decision_table.decision_table import ConditionValue, DecisionTable
+from models.update import Update
+from models.comparison import (
+    EqualTextComparison,
+    FalseComparison,
+    GTNumberComparison,
 )
 from models.comparison import (
     EqualTextComparison,

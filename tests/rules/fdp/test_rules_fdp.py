@@ -3,21 +3,22 @@ from pathlib import Path
 from models.entity import Duty
 from models.rule import (
     DutyRule,
-    DecisionTable,
+    AnyRule,
+)
+from models.decision_table.value import (
     ApplicableValue,
-    ConditionValue,
-    Condition,
     FieldValue,
     FieldDifferenceValue,
     TableLookupValue,
     LookupParameter,
-    Update,
     CalculationValue,
     NoneValue,
     DurationValue,
     NullableCalculationValue,
-    AnyRule,
 )
+from models.decision_table.condition import Condition
+from models.decision_table.decision_table import ConditionValue, DecisionTable
+from models.update import Update
 from models.comparison import (
     EqualTextComparison,
     EqualNumberComparison,
