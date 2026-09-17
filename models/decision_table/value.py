@@ -1,4 +1,4 @@
-from typing import TypeVar, Annotated, Literal, Any, Iterable
+from typing import TypeVar, Annotated, Literal, Any, Iterable, Callable
 from datetime import datetime, timedelta, time
 from functools import cached_property
 from operator import attrgetter
@@ -250,10 +250,12 @@ class TableLookupValue(Value):
 
 class ProjectionValue(Value):
     kind: Literal["projection_value"] = "projection_value"
-    start_anchor: Literal["start", "end"] = "start"
+    start_anchor: Literal["start", "end", "field"] = "start"
     start_offset: timedelta = timedelta()
-    end_anchor: Literal["start", "end"] = "end"
+    start_field: str | None = None
+    end_anchor: Literal["start", "end", "field"] = "end"
     end_offset: timedelta = timedelta()
+    end_field: str | None = None
     rate: float = Field(1.0, description="Per-minute aggregation rate")
     clamp_lower: timedelta | None = Field(
         None,
@@ -268,12 +270,26 @@ class ProjectionValue(Value):
         description="Clamping forwards constrains end, while clamping backwards constrains start",
     )
 
+    @cached_property
+    def _start_field_getter(self) -> Callable[[Any], datetime]:
+        if self.start_field is None:
+            raise ValueError("start_field cannot be null")
+        return attrgetter(self.start_field)
+
+    @cached_property
+    def _end_field_getter(self) -> Callable[[Any], datetime]:
+        if self.end_field is None:
+            raise ValueError("end_field cannot be null")
+        return attrgetter(self.end_field)
+
     def get_calculated_duration(self, obj: TimedEntity):
         match self.start_anchor:
             case "start":
                 start = obj.get_start()
             case "end":
                 start = obj.get_end()
+            case "field":
+                start = self._start_field_getter(obj)
             case _:
                 raise NotImplementedError(
                     f"Unsupported start anchor: {self.start_anchor}"
@@ -284,10 +300,10 @@ class ProjectionValue(Value):
                 end = obj.get_start()
             case "end":
                 end = obj.get_end()
+            case "field":
+                end = self._end_field_getter(obj)
             case _:
-                raise NotImplementedError(
-                    f"Unsupported end anchor: {self.start_anchor}"
-                )
+                raise NotImplementedError(f"Unsupported end anchor: {self.end_anchor}")
 
         start += self.start_offset
         end += self.end_offset
@@ -317,7 +333,12 @@ class ProjectionValue(Value):
         return duration
 
     def __str__(self):
-        start_def = f"Start is entity {self.start_anchor}"
+        start_field = (
+            f"{format_field("entity", self.start_field)}"
+            if self.start_anchor == "field"
+            else f"entity {self.start_anchor}"
+        )
+        start_def = f"Start is {start_field}"
         if self.start_offset:
             pm = "plus" if self.start_offset > timedelta() else "minus"
             start_def += f" {pm} {timedelta_to_iso8601(abs(self.start_offset))}"
@@ -327,7 +348,12 @@ class ProjectionValue(Value):
             if self.clamp_upper:
                 start_def += f"; if end minus {timedelta_to_iso8601(self.clamp_upper)} is after start, set start to end minus {timedelta_to_iso8601(self.clamp_upper)}"
 
-        end_def = f"End is entity {self.end_anchor}"
+        end_field = (
+            f"{format_field("entity", self.end_field)}"
+            if self.end_anchor == "field"
+            else f"entity {self.end_anchor}"
+        )
+        end_def = f"End is {end_field}"
         if self.end_offset:
             pm = "plus" if self.end_offset > timedelta() else "minus"
             end_def += f" {pm} {timedelta_to_iso8601(abs(self.end_offset))}"
