@@ -16,10 +16,10 @@ class Entity(CustomBaseModel):
 
 
 class TimedEntity(Entity):
-    def start_date(self) -> datetime:
+    def get_start(self) -> datetime:
         raise NotImplementedError()
 
-    def end_date(self) -> datetime:
+    def get_end(self) -> datetime:
         raise NotImplementedError()
 
 

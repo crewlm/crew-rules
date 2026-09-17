@@ -267,9 +267,9 @@ class ProjectionValue(Value):
     def get_calculated_duration(self, obj: TimedEntity):
         match self.start_anchor:
             case "start":
-                start = obj.start_date()
+                start = obj.get_start()
             case "end":
-                start = obj.end_date()
+                start = obj.get_end()
             case _:
                 raise NotImplementedError(
                     f"Unsupported start anchor: {self.start_anchor}"
@@ -277,9 +277,9 @@ class ProjectionValue(Value):
 
         match self.end_anchor:
             case "start":
-                end = obj.start_date()
+                end = obj.get_start()
             case "end":
-                end = obj.end_date()
+                end = obj.get_end()
             case _:
                 raise NotImplementedError(
                     f"Unsupported end anchor: {self.start_anchor}"
