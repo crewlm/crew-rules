@@ -23,7 +23,7 @@ from models.comparison import (
     TruthComparison,
     GTNumberComparison,
 )
-from display.mermaidjs import rule_to_mermaid
+from display.mermaidjs.rule import rule_to_mermaid
 
 FILES_DIR = Path(__file__).resolve().parent / ".files"
 
