@@ -1,0 +1,136 @@
+{
+    "id": "1909bfe6-8137-45ee-ade6-4350bd0773c9",
+    "name": "test",
+    "scope": "employee_rest_time_rule",
+    "applicability": {
+        "default": {
+            "phrase": "Default",
+            "kind": "applicable_value",
+            "applicable": false
+        },
+        "items": [
+            {
+                "condition": [
+                    {
+                        "field": "preceding_duty.category",
+                        "comparison": {
+                            "kind": "equal_text_comparison",
+                            "text": "flying",
+                            "case_sensitive": true
+                        },
+                        "reverse_match": false
+                    }
+                ],
+                "value": {
+                    "phrase": "Flight duty",
+                    "kind": "applicable_value",
+                    "applicable": true
+                }
+            }
+        ]
+    },
+    "value": {
+        "default": {
+            "phrase": "Rest duration",
+            "kind": "field_value",
+            "field": "duration",
+            "multiplier": 1.0,
+            "offset": 0.0,
+            "clamp_lower": null,
+            "clamp_upper": null
+        },
+        "items": []
+    },
+    "value_updates": [],
+    "requirement": {
+        "default": {
+            "phrase": "Default",
+            "kind": "duration_value",
+            "duration": "PT14H"
+        },
+        "items": [
+            {
+                "condition": [
+                    {
+                        "field": "at_home_base",
+                        "comparison": {
+                            "kind": "false_comparison"
+                        },
+                        "reverse_match": false
+                    }
+                ],
+                "value": {
+                    "phrase": "Outstation",
+                    "kind": "duration_value",
+                    "duration": "PT12H"
+                }
+            }
+        ]
+    },
+    "requirement_updates": [
+        {
+            "name": "Long prior FDP",
+            "method": "increase",
+            "table": {
+                "default": {
+                    "phrase": "No modification",
+                    "kind": "none_value"
+                },
+                "items": [
+                    {
+                        "condition": [
+                            {
+                                "field": "preceding_duty.calculated_numbers.fdp_exceedance",
+                                "comparison": {
+                                    "kind": "gt_number_comparison",
+                                    "number": 0.0
+                                },
+                                "reverse_match": false
+                            }
+                        ],
+                        "value": {
+                            "phrase": "Matched",
+                            "kind": "duration_value",
+                            "duration": "PT1H"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Crossed multiple time zones",
+            "method": "increase",
+            "table": {
+                "default": {
+                    "phrase": "No modification",
+                    "kind": "none_value"
+                },
+                "items": [
+                    {
+                        "condition": [
+                            {
+                                "field": "preceding_duty.calculated_numbers.time_zones_crossed",
+                                "comparison": {
+                                    "kind": "gt_number_comparison",
+                                    "number": 2.0
+                                },
+                                "reverse_match": false
+                            }
+                        ],
+                        "value": {
+                            "phrase": "Matched",
+                            "kind": "field_value",
+                            "field": "preceding_duty.calculated_numbers.time_zones_crossed",
+                            "multiplier": 1.0,
+                            "offset": -2.0,
+                            "clamp_lower": null,
+                            "clamp_upper": null
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "limit": null,
+    "limit_updates": []
+}

@@ -1,4 +1,5 @@
 from datetime import timedelta
+from pathlib import Path
 
 from models.entity import EmployeeRestTime, Duty
 
@@ -26,6 +27,9 @@ from models.comparison import (
     GTNumberComparison,
     FalseComparison,
 )
+from display.mermaidjs import rule_to_mermaid
+
+FILES_DIR = Path(__file__).resolve().parent / ".files"
 
 
 def test_rest_01():
@@ -135,11 +139,18 @@ def test_rest_02():
         requirement_updates=[requirement_update_table1, requirement_update_table2],
     )
 
-    # Serialize to JSON
+    # JSON round-trip validation
     json_data = rule.model_dump_json(indent=4)
-
-    # Parse back using root discriminated union
+    fpath_json = FILES_DIR / "min_rest_02.json"
+    fpath_json.write_text(json_data)
     parsed_rule = AnyRule.validate_json(json_data)
 
     assert isinstance(parsed_rule, EmployeeRestTimeRule)
     assert parsed_rule.requirement.default.get_calculated_value(None) == 14.0
+
+    # check mermaid diagram
+    diagram = rule_to_mermaid(parsed_rule)
+    fpath = FILES_DIR / "mermaidjs_min_rest_02.txt"
+    # fpath.write_text(diagram)
+    diagram_expected = fpath.read_text()
+    assert diagram == diagram_expected
