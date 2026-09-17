@@ -255,6 +255,14 @@ class ProjectionValue(Value):
     end_anchor: Literal["start", "end"] = "end"
     end_offset: timedelta = timedelta()
     rate: float = Field(1.0, description="Per-minute aggregation rate")
+    clamp_lower: timedelta | None = Field(
+        None,
+        description="End will be set to max(end, start + clamp_lower), if provided",
+    )
+    clamp_upper: timedelta | None = Field(
+        None,
+        description="End will be set to min(end, start + clamp_upper), if provided",
+    )
 
     def get_calculated_duration(self, obj: TimedEntity):
         match self.start_anchor:
@@ -279,6 +287,12 @@ class ProjectionValue(Value):
 
         start += self.start_offset
         end += self.end_offset
+
+        if self.clamp_lower is not None:
+            end = max(end, start + self.clamp_lower)
+        if self.clamp_upper is not None:
+            end = min(end, start + self.clamp_upper)
+
         duration = ((end - start).total_seconds() / 60.0) * self.rate
         return start, end, duration
 
