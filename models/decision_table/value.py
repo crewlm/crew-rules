@@ -1,0 +1,264 @@
+from typing import TypeVar, Annotated, Literal, Any, Iterable
+from datetime import datetime, timedelta, time
+from functools import cached_property
+from operator import attrgetter
+from pydantic import Field
+
+from utilities.pydantic import CustomBaseModel
+from utilities.formatters import timedelta_to_iso8601, format_field
+
+
+def _convert_to_float(val: Any, null_replacement: float | None = None) -> float | None:
+    if val is None:
+        return null_replacement
+    elif isinstance(val, float):
+        return val
+    elif isinstance(val, (str, bytes, bytearray)):
+        return ord(val)
+    elif isinstance(val, Iterable):
+        return len(val)
+    elif isinstance(val, int):
+        return float(val)
+    elif isinstance(val, datetime):
+        return val.timestamp()
+    elif isinstance(val, timedelta):
+        return val.total_seconds() / 3600.0
+    elif isinstance(val, time):
+        return val.hour + val.minute / 60.0 + val.second / 3600.0
+    return None
+
+
+class Value(CustomBaseModel):
+    phrase: str = "Matched"
+
+    def get_calculated_value(self, obj: Any):
+        """Subclasses should implement this interface"""
+        raise NotImplementedError
+
+    def __str__(self):
+        """Subclasses implement this for displaying to user"""
+        raise NotImplementedError
+
+
+class NumberValue(Value):
+    kind: Literal["number_value"] = "number_value"
+    number: float
+
+    def get_calculated_value(self, obj):
+        return self.number
+
+    def __str__(self):
+        return f"{self.number:g}"
+
+
+class DurationValue(Value):
+    kind: Literal["duration_value"] = "duration_value"
+    duration: timedelta
+
+    def get_calculated_value(self, obj):
+        return self.duration.total_seconds() / 3600.0
+
+    def __str__(self):
+        return timedelta_to_iso8601(self.duration)
+
+
+class NumberRangeValue(Value):
+    kind: Literal["number_range_value"] = "number_range_value"
+    lower: float
+    upper: float
+
+    def get_calculated_value(self, obj):
+        return (self.lower, self.upper)
+
+    def __str__(self):
+        return f"{self.lower:g} to {self.upper:g}"
+
+
+class DurationRangeValue(Value):
+    kind: Literal["duration_range_value"] = "duration_range_value"
+    lower: timedelta
+    upper: timedelta
+
+    def get_calculated_value(self, obj):
+        return (
+            self.lower.total_seconds() / 3600.0,
+            self.upper.total_seconds() / 3600.0,
+        )
+
+    def __str__(self):
+        return (
+            f"{timedelta_to_iso8601(self.lower)} to {timedelta_to_iso8601(self.upper)}"
+        )
+
+
+class ApplicableValue(Value):
+    kind: Literal["applicable_value"] = "applicable_value"
+    applicable: bool
+
+    def get_calculated_value(self, obj):
+        return self.applicable
+
+    def __str__(self):
+        return "Applicable" if self.applicable else "Not applicable"
+
+
+class NoneValue(Value):
+    kind: Literal["none_value"] = "none_value"
+    phrase: str = "No modification"
+
+    def get_calculated_value(self, obj: Any):
+        return None
+
+    def __str__(self):
+        return "Do nothing"
+
+    def __bool__(self):
+        return False
+
+
+class FieldDifferenceValue(Value):
+    kind: Literal["field_difference_value"] = "field_difference_value"
+    start_field: str
+    end_field: str
+    multiplier: float = 1.0
+    offset: float = 0.0
+    clamp_lower: float | None = None
+    clamp_upper: float | None = None
+
+    @cached_property
+    def _start_field_getter(self):
+        if self.start_field is None:
+            return lambda x: 0.0
+        return attrgetter(self.start_field)
+
+    @cached_property
+    def _end_field_getter(self):
+        if self.end_field is None:
+            return lambda x: 0.0
+        return attrgetter(self.end_field)
+
+    def get_calculated_value(self, obj):
+        val_start = self._start_field_getter(obj)
+        val_end = self._end_field_getter(obj)
+        # convert from everything else to float
+        val_start = _convert_to_float(val_start)
+        if val_start is None:
+            raise ValueError(
+                f"Cannot convert start field to number: {self.start_field}"
+            )
+        val_end = _convert_to_float(val_end)
+        if val_end is None:
+            raise ValueError(f"Cannot convert end field to number: {self.end_field}")
+        #
+        val = self.multiplier * (val_end - val_start) + self.offset
+        if self.clamp_lower is not None and self.clamp_lower > val:
+            val = self.clamp_lower
+        if self.clamp_upper is not None and self.clamp_upper < val:
+            val = self.clamp_upper
+        return val
+
+    def __str__(self):
+        text = f"From {format_field("", self.start_field)} to {format_field("", self.end_field)}"
+
+        if abs(self.multiplier - 1) > 1e-6:
+            text += f", multiplied by {self.multiplier}"
+
+        if self.offset > 1e-6:
+            text += f", plus {self.offset}"
+        elif self.offset < -1e-6:
+            text += f", minus {-self.offset}"
+
+        if self.clamp_lower is not None:
+            text += f", clamped below at {self.clamp_lower:g}"
+
+        if self.clamp_upper is not None:
+            text += f", clamped above at {self.clamp_upper:g}"
+        return text
+
+
+class FieldValue(Value):
+    kind: Literal["field_value"] = "field_value"
+    field: str
+    multiplier: float = 1.0
+    offset: float = 0.0
+    clamp_lower: float | None = None
+    clamp_upper: float | None = None
+
+    @cached_property
+    def _field_getter(self):
+        if self.field is None:
+            return lambda x: 0.0
+        return attrgetter(self.field)
+
+    def get_calculated_value(self, obj):
+        val = self._field_getter(obj)
+        # convert from everything else to float
+        val = _convert_to_float(val)
+        if val is None:
+            raise ValueError(f"Cannot convert field to number: {self.field}")
+        #
+        val = self.multiplier * val + self.offset
+        if self.clamp_lower is not None and self.clamp_lower > val:
+            val = self.clamp_lower
+        if self.clamp_upper is not None and self.clamp_upper < val:
+            val = self.clamp_upper
+        return val
+
+    def __str__(self):
+        text = f"{format_field("", self.field)}"
+
+        if abs(self.multiplier - 1) > 1e-6:
+            text += f", multiplied by {self.multiplier}"
+
+        if self.offset > 1e-6:
+            text += f", plus {self.offset}"
+        elif self.offset < -1e-6:
+            text += f", minus {-self.offset}"
+
+        if self.clamp_lower is not None:
+            text += f", clamped below at {self.clamp_lower:g}"
+
+        if self.clamp_upper is not None:
+            text += f", clamped above at {self.clamp_upper:g}"
+        return text
+
+
+class LookupParameter(CustomBaseModel):
+    name: str = Field(description="Name of parameter in table definition")
+    field: str = Field(description="Name of entity field to use for lookup")
+
+
+class TableLookupValue(Value):
+    kind: Literal["table_lookup_number_value"] = "table_lookup_number_value"
+    table_name: str
+    lookup_map: list[LookupParameter]
+
+    def get_calculated_value(self, obj) -> float:
+        """TODO: Lookup value from table based on object properties"""
+        raise NotImplementedError
+
+    def __str__(self):
+        text = f"Look up the value in {self.table_name}"
+        lookups = ", ".join(
+            f"{format_field("", x.field)} as {x.name}" for x in self.lookup_map
+        )
+        if lookups:
+            text += f" using {lookups}"
+        return text
+
+
+CalculationValue = Annotated[
+    NumberValue
+    | DurationValue
+    | FieldValue
+    | FieldDifferenceValue
+    | NumberRangeValue
+    | DurationRangeValue
+    | TableLookupValue,
+    Field(discriminator="kind"),
+]
+NullableCalculationValue = Annotated[
+    CalculationValue | NoneValue, Field(discriminator="kind")
+]
+
+V = TypeVar("V", bound=NullableCalculationValue)
