@@ -20,12 +20,8 @@ from models.update import Update
 from models.comparison import (
     EqualTextComparison,
     FalseComparison,
+    TruthComparison,
     GTNumberComparison,
-)
-from models.comparison import (
-    EqualTextComparison,
-    GTNumberComparison,
-    FalseComparison,
 )
 from display.mermaidjs import rule_to_mermaid
 
@@ -84,13 +80,13 @@ def test_rest_02():
                 condition=[
                     Condition[C](
                         field="at_home_base",
-                        comparison=FalseComparison(),
+                        comparison=TruthComparison(),
                     )
                 ],
-                value=DurationValue(phrase="Outstation", duration=timedelta(hours=12)),
+                value=DurationValue(phrase="Home", duration=timedelta(hours=14)),
             )
         ],
-        default=DurationValue(phrase="Default", duration=timedelta(hours=14)),
+        default=DurationValue(phrase="Outstation", duration=timedelta(hours=12)),
     )
     requirement_update_table1 = Update[C, NullableCalculationValue](
         name="Long prior FDP",
@@ -147,7 +143,8 @@ def test_rest_02():
     parsed_rule = AnyRule.validate_json(json_data)
 
     assert isinstance(parsed_rule, EmployeeRestTimeRule)
-    assert parsed_rule.requirement.default.get_calculated_value(None) == 14.0
+    assert parsed_rule.requirement.default.get_calculated_value(None) == 12.0
+    assert parsed_rule.requirement.items[0].value.get_calculated_value(None) == 14.0
 
     # check mermaid diagram
     diagram = rule_to_mermaid(parsed_rule)

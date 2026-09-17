@@ -30,10 +30,10 @@ graph LR
 
     subgraph Requirement ["Initial Requirement"]
         direction TB
-        N6{"Entity's at home base is false?"}
-        N7["PT12H"]:::reqNode
+        N6{"Entity's at home base is true?"}
+        N7["PT14H"]:::reqNode
         N6 -->|Yes| N7
-        N8["PT14H"]:::reqNode
+        N8["PT12H"]:::reqNode
         N6 -->|No| N8
     end
 

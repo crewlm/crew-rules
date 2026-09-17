@@ -44,9 +44,9 @@
     "value_updates": [],
     "requirement": {
         "default": {
-            "phrase": "Default",
+            "phrase": "Outstation",
             "kind": "duration_value",
-            "duration": "PT14H"
+            "duration": "PT12H"
         },
         "items": [
             {
@@ -54,15 +54,15 @@
                     {
                         "field": "at_home_base",
                         "comparison": {
-                            "kind": "false_comparison"
+                            "kind": "truth_comparison"
                         },
                         "reverse_match": false
                     }
                 ],
                 "value": {
-                    "phrase": "Outstation",
+                    "phrase": "Home",
                     "kind": "duration_value",
-                    "duration": "PT12H"
+                    "duration": "PT14H"
                 }
             }
         ]
