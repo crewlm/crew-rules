@@ -2,7 +2,7 @@ from pydantic import Field
 
 from utilities.pydantic import CustomBaseModel
 from models.decision_table.condition import Condition
-from models.decision_table.value import ProjectionValue
+from models.decision_table.value import NullableProjectionValue
 
 
 class ConditionValue[C, V](CustomBaseModel):
@@ -25,7 +25,7 @@ class ProjectionConditionValue[C](CustomBaseModel):
     condition: list[Condition[C]] = Field(
         description="All conditions must be met together (AND)."
     )
-    value: ProjectionValue
+    value: NullableProjectionValue
 
     def matches(self, obj):
         return all(c.matches(obj) for c in self.condition)
@@ -38,7 +38,7 @@ class ProjectionConditionValue[C](CustomBaseModel):
 
 
 class ProjectionDecisionTable[C](CustomBaseModel):
-    default: ProjectionValue
+    default: NullableProjectionValue
     items: list[ProjectionConditionValue[C]] = Field(default_factory=list)
 
     def get_matching_value(self, obj):
