@@ -4,6 +4,7 @@ from functools import cached_property
 from operator import attrgetter
 from pydantic import Field
 
+from models.entity import TimedEntity
 from utilities.pydantic import CustomBaseModel
 from utilities.formatters import timedelta_to_iso8601, format_field
 
@@ -245,6 +246,49 @@ class TableLookupValue(Value):
         if lookups:
             text += f" using {lookups}"
         return text
+
+
+class ProjectionValue(Value):
+    kind: Literal["projection_value"] = "projection_value"
+    start_anchor: Literal["start", "end"] = "start"
+    start_offset: timedelta = timedelta()
+    end_anchor: Literal["start", "end"] = "end"
+    end_offset: timedelta = timedelta()
+    rate: float = Field(1.0, description="Per-minute aggregation rate")
+
+    def get_calculated_duration(self, obj: TimedEntity):
+        match self.start_anchor:
+            case "start":
+                start = obj.start_date()
+            case "end":
+                start = obj.end_date()
+            case _:
+                raise NotImplementedError(
+                    f"Unsupported start anchor: {self.start_anchor}"
+                )
+
+        match self.end_anchor:
+            case "start":
+                end = obj.start_date()
+            case "end":
+                end = obj.end_date()
+            case _:
+                raise NotImplementedError(
+                    f"Unsupported end anchor: {self.start_anchor}"
+                )
+
+        start += self.start_offset
+        end += self.end_offset
+        duration = ((end - start).total_seconds() / 60.0) * self.rate
+        return start, end, duration
+
+    def get_calculated_value(self, obj: TimedEntity) -> float:
+        """Returns duration from start to end"""
+        _, _, duration = self.get_calculated_duration(obj)
+        return duration
+
+    def __str__(self):
+        return f"From entity {self.start_anchor}, offset by {self.start_offset}, to entity {self.end_anchor}, offset by {self.end_offset}"
 
 
 CalculationValue = Annotated[

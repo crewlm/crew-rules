@@ -15,6 +15,14 @@ class Entity(CustomBaseModel):
     """Use this as a general thing where we introspect class"""
 
 
+class TimedEntity(Entity):
+    def start_date(self) -> datetime:
+        raise NotImplementedError()
+
+    def end_date(self) -> datetime:
+        raise NotImplementedError()
+
+
 class Port(CustomBaseModel):
     code: str
     code_iata: str = ""
@@ -22,11 +30,11 @@ class Port(CustomBaseModel):
     country: str = ""
 
 
-class Activity(CustomBaseModel):
+class Activity(TimedEntity):
     category: Literal["flight", "deadhead", "ground_transport", "other"]
 
 
-class Duty(CustomBaseModel):
+class Duty(TimedEntity):
     activities: GettableList[Activity] = Field(default_factory=GettableList)
     category: Literal[
         "flying",
@@ -57,45 +65,45 @@ class Pairing(CustomBaseModel):
     pass
 
 
-class Employee(CustomBaseModel):
+class Employee(Entity):
     pass
 
 
-class Aircraft(CustomBaseModel):
+class Aircraft(Entity):
     pass
 
 
-class EmployeeTimePeriod(CustomBaseModel):
+class EmployeeTimePeriod(TimedEntity):
     employee: Employee
     start: datetime
     end: datetime
 
 
-class AircraftTimePeriod(CustomBaseModel):
+class AircraftTimePeriod(TimedEntity):
     aircraft: Aircraft
     start: datetime
     end: datetime
 
 
-class PortTimePeriod(CustomBaseModel):
+class PortTimePeriod(TimedEntity):
     port: Port
     start: datetime
     end: datetime
 
 
-class EmployeeRestTime(CustomBaseModel):
+class EmployeeRestTime(TimedEntity):
     preceding_duty: Duty
     succeeding_duty: Duty
     employee: Employee
 
 
-class EmployeeGroundTime(CustomBaseModel):
+class EmployeeGroundTime(TimedEntity):
     inbound_activity: Activity
     outbound_activity: Activity
     employee: Employee
 
 
-class AircraftGroundTime(CustomBaseModel):
+class AircraftGroundTime(TimedEntity):
     inbound_activity: Activity
     outbound_activity: Activity
     aircraft: Aircraft
