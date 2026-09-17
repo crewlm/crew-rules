@@ -248,6 +248,19 @@ class TableLookupValue(Value):
         return text
 
 
+class ProjectedValue(Value):
+    kind: Literal["projected_value"] = "projected_value"
+    code: str = Field(description="Reference code of the projection")
+    element: Literal["start", "end", "aggregate"] = "aggregate"
+
+    def get_calculated_value(self, obj) -> float:
+        """TODO: Get projected value of object"""
+        raise NotImplementedError
+
+    def __str__(self):
+        return f"Get this entity's projected {self.code} {self.element}"
+
+
 class ProjectionValue(Value):
     kind: Literal["projection_value"] = "projection_value"
     start_anchor: Literal["start", "end", "field"] = "start"
@@ -375,7 +388,7 @@ CalculationValue = Annotated[
     | NumberRangeValue
     | DurationRangeValue
     | TableLookupValue
-    | ProjectionValue,
+    | ProjectedValue,
     Field(discriminator="kind"),
 ]
 NullableCalculationValue = Annotated[

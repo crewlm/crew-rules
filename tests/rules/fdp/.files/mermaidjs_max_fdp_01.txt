@@ -25,7 +25,7 @@ graph LR
 
     subgraph SubjectValue ["Initial Value"]
         direction TB
-        N5["From Entity's fdp's start to Entity's fdp's end"]:::valNode
+        N5["Get this entity's projected FDP aggregate"]:::valNode
     end
 
     subgraph Limit ["Initial Limit"]
