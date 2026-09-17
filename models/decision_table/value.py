@@ -257,11 +257,11 @@ class ProjectionValue(Value):
     rate: float = Field(1.0, description="Per-minute aggregation rate")
     clamp_lower: timedelta | None = Field(
         None,
-        description="End will be set to max(end, start + clamp_lower), if provided",
+        description="If provided and window from start to end is shorter than this, sets the window duration to this",
     )
     clamp_upper: timedelta | None = Field(
         None,
-        description="End will be set to min(end, start + clamp_upper), if provided",
+        description="If provided and window from start to end is longer than this, sets the window duration to this",
     )
     clamp_direction: Literal["forwards", "backwards"] = Field(
         "forwards",
@@ -317,7 +317,28 @@ class ProjectionValue(Value):
         return duration
 
     def __str__(self):
-        return f"From entity {self.start_anchor}, offset by {self.start_offset}, to entity {self.end_anchor}, offset by {self.end_offset}"
+        start_def = f"Start is entity {self.start_anchor}"
+        if self.start_offset:
+            pm = "plus" if self.start_offset > timedelta() else "minus"
+            start_def += f" {pm} {timedelta_to_iso8601(abs(self.start_offset))}"
+        if self.clamp_direction == "backwards":
+            if self.clamp_lower:
+                start_def += f"; if end minus {timedelta_to_iso8601(self.clamp_lower)} is before start, set start to end minus {timedelta_to_iso8601(self.clamp_lower)}"
+            if self.clamp_upper:
+                start_def += f"; if end minus {timedelta_to_iso8601(self.clamp_upper)} is after start, set start to end minus {timedelta_to_iso8601(self.clamp_upper)}"
+
+        end_def = f"End is entity {self.end_anchor}"
+        if self.end_offset:
+            pm = "plus" if self.end_offset > timedelta() else "minus"
+            end_def += f" {pm} {timedelta_to_iso8601(abs(self.end_offset))}"
+        if self.clamp_direction == "forwards":
+            if self.clamp_lower:
+                end_def += f"; if start plus {timedelta_to_iso8601(self.clamp_lower)} is after end, set end to start plus {timedelta_to_iso8601(self.clamp_lower)}"
+            if self.clamp_upper:
+                end_def += f"; if start plus {timedelta_to_iso8601(self.clamp_upper)} is before end, set end to start plus {timedelta_to_iso8601(self.clamp_upper)}"
+
+        text = f"Accumulate at a rate of {self.rate} per minute from start to end, where:\n-{start_def}\n-{end_def}"
+        return text
 
 
 CalculationValue = Annotated[
