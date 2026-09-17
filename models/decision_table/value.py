@@ -363,7 +363,7 @@ class ProjectionValue(Value):
             if self.clamp_upper:
                 end_def += f"; if start plus {timedelta_to_iso8601(self.clamp_upper)} is before end, set end to start plus {timedelta_to_iso8601(self.clamp_upper)}"
 
-        text = f"Accumulate at a rate of {self.rate} per minute from start to end, where:\n-{start_def}\n-{end_def}"
+        text = f"Accumulate at a rate of {self.rate} per minute from Start to End, where:\n- {start_def}\n- {end_def}"
         return text
 
 

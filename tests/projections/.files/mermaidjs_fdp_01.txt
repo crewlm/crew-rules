@@ -6,7 +6,7 @@ graph LR
     subgraph ActivityProj_1 ["Activity Projection: Split duty reduction"]
         direction TB
         N1{"Entity's type is 'mid_duty_rest'?"}
-        N2["Accumulate at a rate of 0.5 per minute from start to end, where:<br/>-Start is entity start<br/>-End is entity end"]:::projNode
+        N2["Accumulate at a rate of 0.5 per minute from Start to End, where:<br/>- Start is entity start<br/>- End is entity end"]:::projNode
         N1 -->|Yes| N2
         N3["Do nothing"]:::projNode
         N1 -->|No| N3
@@ -15,16 +15,16 @@ graph LR
     subgraph DutyProj_1 ["Duty Projection: Basic"]
         direction TB
         N4{"Entity's type is 'flying'?"}
-        N5["Accumulate at a rate of 1.0 per minute from start to end, where:<br/>-Start is entity start<br/>-End is Entity's operating flights' last's blocks on"]:::projNode
+        N5["Accumulate at a rate of 1.0 per minute from Start to End, where:<br/>- Start is entity start<br/>- End is Entity's operating flights' last's blocks on"]:::projNode
         N4 -->|Yes| N5
-        N6["Accumulate at a rate of 1.0 per minute from start to end, where:<br/>-Start is entity start<br/>-End is entity start"]:::projNode
+        N6["Accumulate at a rate of 1.0 per minute from Start to End, where:<br/>- Start is entity start<br/>- End is entity start"]:::projNode
         N4 -->|No| N6
     end
 
     subgraph DutyProj_2 ["Duty Projection: Standby callout"]
         direction TB
         N7{"Entity's called out standby is true?"}
-        N8["Accumulate at a rate of 0.5 per minute from start to end, where:<br/>-Start is Entity's called out standby's report<br/>-End is entity start; if start plus PT2H is before end, set end to start plus PT2H"]:::projNode
+        N8["Accumulate at a rate of 0.5 per minute from Start to End, where:<br/>- Start is Entity's called out standby's report<br/>- End is entity start; if start plus PT2H is before end, set end to start plus PT2H"]:::projNode
         N7 -->|Yes| N8
         N9["Do nothing"]:::projNode
         N7 -->|No| N9
