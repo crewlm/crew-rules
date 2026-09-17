@@ -381,5 +381,8 @@ CalculationValue = Annotated[
 NullableCalculationValue = Annotated[
     CalculationValue | NoneValue, Field(discriminator="kind")
 ]
+NullableProjectionValue = Annotated[
+    ProjectionValue | NoneValue, Field(discriminator="kind")
+]
 
 V = TypeVar("V", bound=NullableCalculationValue)
