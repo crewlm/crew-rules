@@ -263,6 +263,10 @@ class ProjectionValue(Value):
         None,
         description="End will be set to min(end, start + clamp_upper), if provided",
     )
+    clamp_direction: Literal["forwards", "backwards"] = Field(
+        "forwards",
+        description="Clamping forwards constrains end, while clamping backwards constrains start",
+    )
 
     def get_calculated_duration(self, obj: TimedEntity):
         match self.start_anchor:
@@ -288,10 +292,21 @@ class ProjectionValue(Value):
         start += self.start_offset
         end += self.end_offset
 
-        if self.clamp_lower is not None:
-            end = max(end, start + self.clamp_lower)
-        if self.clamp_upper is not None:
-            end = min(end, start + self.clamp_upper)
+        match self.clamp_direction:
+            case "forwards":
+                if self.clamp_lower is not None:
+                    end = max(end, start + self.clamp_lower)
+                if self.clamp_upper is not None:
+                    end = min(end, start + self.clamp_upper)
+            case "backwards":
+                if self.clamp_lower is not None:
+                    start = min(end - self.clamp_lower, start)
+                if self.clamp_upper is not None:
+                    start = max(end - self.clamp_upper, start)
+            case _:
+                raise NotImplementedError(
+                    f"Unsupported clamp direction {self.clamp_direction}"
+                )
 
         duration = ((end - start).total_seconds() / 60.0) * self.rate
         return start, end, duration
