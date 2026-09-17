@@ -24,11 +24,11 @@
                     "title": "Applicability"
                 },
                 "value": {
-                    "$ref": "#/$defs/DecisionTable_Activity_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                    "$ref": "#/$defs/DecisionTable_Activity_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                 },
                 "value_updates": {
                     "items": {
-                        "$ref": "#/$defs/Update_Activity_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/Update_Activity_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Value Updates",
                     "type": "array"
@@ -36,7 +36,7 @@
                 "requirement": {
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/DecisionTable_Activity_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                            "$ref": "#/$defs/DecisionTable_Activity_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                         },
                         {
                             "type": "null"
@@ -47,7 +47,7 @@
                 },
                 "requirement_updates": {
                     "items": {
-                        "$ref": "#/$defs/Update_Activity_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/Update_Activity_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Requirement Updates",
                     "type": "array"
@@ -55,7 +55,7 @@
                 "limit": {
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/DecisionTable_Activity_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                            "$ref": "#/$defs/DecisionTable_Activity_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                         },
                         {
                             "type": "null"
@@ -65,7 +65,7 @@
                 },
                 "limit_updates": {
                     "items": {
-                        "$ref": "#/$defs/Update_Activity_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/Update_Activity_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Limit Updates",
                     "type": "array"
@@ -103,11 +103,11 @@
                     "title": "Applicability"
                 },
                 "value": {
-                    "$ref": "#/$defs/DecisionTable_AircraftGroundTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                    "$ref": "#/$defs/DecisionTable_AircraftGroundTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                 },
                 "value_updates": {
                     "items": {
-                        "$ref": "#/$defs/Update_AircraftGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/Update_AircraftGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Value Updates",
                     "type": "array"
@@ -115,7 +115,7 @@
                 "requirement": {
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/DecisionTable_AircraftGroundTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                            "$ref": "#/$defs/DecisionTable_AircraftGroundTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                         },
                         {
                             "type": "null"
@@ -126,7 +126,7 @@
                 },
                 "requirement_updates": {
                     "items": {
-                        "$ref": "#/$defs/Update_AircraftGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/Update_AircraftGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Requirement Updates",
                     "type": "array"
@@ -134,7 +134,7 @@
                 "limit": {
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/DecisionTable_AircraftGroundTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                            "$ref": "#/$defs/DecisionTable_AircraftGroundTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                         },
                         {
                             "type": "null"
@@ -144,7 +144,7 @@
                 },
                 "limit_updates": {
                     "items": {
-                        "$ref": "#/$defs/Update_AircraftGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/Update_AircraftGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Limit Updates",
                     "type": "array"
@@ -182,11 +182,11 @@
                     "title": "Applicability"
                 },
                 "value": {
-                    "$ref": "#/$defs/DecisionTable_AircraftTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                    "$ref": "#/$defs/DecisionTable_AircraftTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                 },
                 "value_updates": {
                     "items": {
-                        "$ref": "#/$defs/Update_AircraftTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/Update_AircraftTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Value Updates",
                     "type": "array"
@@ -194,7 +194,7 @@
                 "requirement": {
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/DecisionTable_AircraftTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                            "$ref": "#/$defs/DecisionTable_AircraftTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                         },
                         {
                             "type": "null"
@@ -205,7 +205,7 @@
                 },
                 "requirement_updates": {
                     "items": {
-                        "$ref": "#/$defs/Update_AircraftTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/Update_AircraftTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Requirement Updates",
                     "type": "array"
@@ -213,7 +213,7 @@
                 "limit": {
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/DecisionTable_AircraftTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                            "$ref": "#/$defs/DecisionTable_AircraftTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                         },
                         {
                             "type": "null"
@@ -223,7 +223,7 @@
                 },
                 "limit_updates": {
                     "items": {
-                        "$ref": "#/$defs/Update_AircraftTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/Update_AircraftTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Limit Updates",
                     "type": "array"
@@ -265,7 +265,7 @@
             "title": "ApplicableValue",
             "type": "object"
         },
-        "ConditionValue_Activity_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "ConditionValue_Activity_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "condition": {
                     "description": "All conditions must be met together (AND).",
@@ -285,6 +285,7 @@
                             "none_value": "#/$defs/NoneValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -312,6 +313,9 @@
                             "$ref": "#/$defs/TableLookupValue"
                         },
                         {
+                            "$ref": "#/$defs/ProjectionValue"
+                        },
+                        {
                             "$ref": "#/$defs/NoneValue"
                         }
                     ],
@@ -322,10 +326,10 @@
                 "condition",
                 "value"
             ],
-            "title": "ConditionValue[Activity, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "ConditionValue[Activity, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
-        "ConditionValue_Activity_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "ConditionValue_Activity_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "condition": {
                     "description": "All conditions must be met together (AND).",
@@ -344,6 +348,7 @@
                             "field_value": "#/$defs/FieldValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -369,6 +374,9 @@
                         },
                         {
                             "$ref": "#/$defs/TableLookupValue"
+                        },
+                        {
+                            "$ref": "#/$defs/ProjectionValue"
                         }
                     ],
                     "title": "Value"
@@ -378,7 +386,7 @@
                 "condition",
                 "value"
             ],
-            "title": "ConditionValue[Activity, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "ConditionValue[Activity, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
         "ConditionValue_Activity_ApplicableValue_": {
@@ -402,7 +410,7 @@
             "title": "ConditionValue[Activity, ApplicableValue]",
             "type": "object"
         },
-        "ConditionValue_AircraftGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "ConditionValue_AircraftGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "condition": {
                     "description": "All conditions must be met together (AND).",
@@ -422,6 +430,7 @@
                             "none_value": "#/$defs/NoneValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -449,6 +458,9 @@
                             "$ref": "#/$defs/TableLookupValue"
                         },
                         {
+                            "$ref": "#/$defs/ProjectionValue"
+                        },
+                        {
                             "$ref": "#/$defs/NoneValue"
                         }
                     ],
@@ -459,10 +471,10 @@
                 "condition",
                 "value"
             ],
-            "title": "ConditionValue[AircraftGroundTime, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "ConditionValue[AircraftGroundTime, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
-        "ConditionValue_AircraftGroundTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "ConditionValue_AircraftGroundTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "condition": {
                     "description": "All conditions must be met together (AND).",
@@ -481,6 +493,7 @@
                             "field_value": "#/$defs/FieldValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -506,6 +519,9 @@
                         },
                         {
                             "$ref": "#/$defs/TableLookupValue"
+                        },
+                        {
+                            "$ref": "#/$defs/ProjectionValue"
                         }
                     ],
                     "title": "Value"
@@ -515,7 +531,7 @@
                 "condition",
                 "value"
             ],
-            "title": "ConditionValue[AircraftGroundTime, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "ConditionValue[AircraftGroundTime, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
         "ConditionValue_AircraftGroundTime_ApplicableValue_": {
@@ -539,7 +555,7 @@
             "title": "ConditionValue[AircraftGroundTime, ApplicableValue]",
             "type": "object"
         },
-        "ConditionValue_AircraftTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "ConditionValue_AircraftTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "condition": {
                     "description": "All conditions must be met together (AND).",
@@ -559,6 +575,7 @@
                             "none_value": "#/$defs/NoneValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -586,6 +603,9 @@
                             "$ref": "#/$defs/TableLookupValue"
                         },
                         {
+                            "$ref": "#/$defs/ProjectionValue"
+                        },
+                        {
                             "$ref": "#/$defs/NoneValue"
                         }
                     ],
@@ -596,10 +616,10 @@
                 "condition",
                 "value"
             ],
-            "title": "ConditionValue[AircraftTimePeriod, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "ConditionValue[AircraftTimePeriod, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
-        "ConditionValue_AircraftTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "ConditionValue_AircraftTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "condition": {
                     "description": "All conditions must be met together (AND).",
@@ -618,6 +638,7 @@
                             "field_value": "#/$defs/FieldValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -643,6 +664,9 @@
                         },
                         {
                             "$ref": "#/$defs/TableLookupValue"
+                        },
+                        {
+                            "$ref": "#/$defs/ProjectionValue"
                         }
                     ],
                     "title": "Value"
@@ -652,7 +676,7 @@
                 "condition",
                 "value"
             ],
-            "title": "ConditionValue[AircraftTimePeriod, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "ConditionValue[AircraftTimePeriod, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
         "ConditionValue_AircraftTimePeriod_ApplicableValue_": {
@@ -676,7 +700,7 @@
             "title": "ConditionValue[AircraftTimePeriod, ApplicableValue]",
             "type": "object"
         },
-        "ConditionValue_Duty_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "ConditionValue_Duty_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "condition": {
                     "description": "All conditions must be met together (AND).",
@@ -696,6 +720,7 @@
                             "none_value": "#/$defs/NoneValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -723,6 +748,9 @@
                             "$ref": "#/$defs/TableLookupValue"
                         },
                         {
+                            "$ref": "#/$defs/ProjectionValue"
+                        },
+                        {
                             "$ref": "#/$defs/NoneValue"
                         }
                     ],
@@ -733,10 +761,10 @@
                 "condition",
                 "value"
             ],
-            "title": "ConditionValue[Duty, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "ConditionValue[Duty, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
-        "ConditionValue_Duty_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "ConditionValue_Duty_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "condition": {
                     "description": "All conditions must be met together (AND).",
@@ -755,6 +783,7 @@
                             "field_value": "#/$defs/FieldValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -780,6 +809,9 @@
                         },
                         {
                             "$ref": "#/$defs/TableLookupValue"
+                        },
+                        {
+                            "$ref": "#/$defs/ProjectionValue"
                         }
                     ],
                     "title": "Value"
@@ -789,7 +821,7 @@
                 "condition",
                 "value"
             ],
-            "title": "ConditionValue[Duty, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "ConditionValue[Duty, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
         "ConditionValue_Duty_ApplicableValue_": {
@@ -813,7 +845,7 @@
             "title": "ConditionValue[Duty, ApplicableValue]",
             "type": "object"
         },
-        "ConditionValue_EmployeeGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "ConditionValue_EmployeeGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "condition": {
                     "description": "All conditions must be met together (AND).",
@@ -833,6 +865,7 @@
                             "none_value": "#/$defs/NoneValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -860,6 +893,9 @@
                             "$ref": "#/$defs/TableLookupValue"
                         },
                         {
+                            "$ref": "#/$defs/ProjectionValue"
+                        },
+                        {
                             "$ref": "#/$defs/NoneValue"
                         }
                     ],
@@ -870,10 +906,10 @@
                 "condition",
                 "value"
             ],
-            "title": "ConditionValue[EmployeeGroundTime, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "ConditionValue[EmployeeGroundTime, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
-        "ConditionValue_EmployeeGroundTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "ConditionValue_EmployeeGroundTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "condition": {
                     "description": "All conditions must be met together (AND).",
@@ -892,6 +928,7 @@
                             "field_value": "#/$defs/FieldValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -917,6 +954,9 @@
                         },
                         {
                             "$ref": "#/$defs/TableLookupValue"
+                        },
+                        {
+                            "$ref": "#/$defs/ProjectionValue"
                         }
                     ],
                     "title": "Value"
@@ -926,7 +966,7 @@
                 "condition",
                 "value"
             ],
-            "title": "ConditionValue[EmployeeGroundTime, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "ConditionValue[EmployeeGroundTime, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
         "ConditionValue_EmployeeGroundTime_ApplicableValue_": {
@@ -950,7 +990,7 @@
             "title": "ConditionValue[EmployeeGroundTime, ApplicableValue]",
             "type": "object"
         },
-        "ConditionValue_EmployeeRestTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "ConditionValue_EmployeeRestTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "condition": {
                     "description": "All conditions must be met together (AND).",
@@ -970,6 +1010,7 @@
                             "none_value": "#/$defs/NoneValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -997,6 +1038,9 @@
                             "$ref": "#/$defs/TableLookupValue"
                         },
                         {
+                            "$ref": "#/$defs/ProjectionValue"
+                        },
+                        {
                             "$ref": "#/$defs/NoneValue"
                         }
                     ],
@@ -1007,10 +1051,10 @@
                 "condition",
                 "value"
             ],
-            "title": "ConditionValue[EmployeeRestTime, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "ConditionValue[EmployeeRestTime, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
-        "ConditionValue_EmployeeRestTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "ConditionValue_EmployeeRestTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "condition": {
                     "description": "All conditions must be met together (AND).",
@@ -1029,6 +1073,7 @@
                             "field_value": "#/$defs/FieldValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -1054,6 +1099,9 @@
                         },
                         {
                             "$ref": "#/$defs/TableLookupValue"
+                        },
+                        {
+                            "$ref": "#/$defs/ProjectionValue"
                         }
                     ],
                     "title": "Value"
@@ -1063,7 +1111,7 @@
                 "condition",
                 "value"
             ],
-            "title": "ConditionValue[EmployeeRestTime, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "ConditionValue[EmployeeRestTime, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
         "ConditionValue_EmployeeRestTime_ApplicableValue_": {
@@ -1087,7 +1135,7 @@
             "title": "ConditionValue[EmployeeRestTime, ApplicableValue]",
             "type": "object"
         },
-        "ConditionValue_EmployeeTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "ConditionValue_EmployeeTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "condition": {
                     "description": "All conditions must be met together (AND).",
@@ -1107,6 +1155,7 @@
                             "none_value": "#/$defs/NoneValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -1134,6 +1183,9 @@
                             "$ref": "#/$defs/TableLookupValue"
                         },
                         {
+                            "$ref": "#/$defs/ProjectionValue"
+                        },
+                        {
                             "$ref": "#/$defs/NoneValue"
                         }
                     ],
@@ -1144,10 +1196,10 @@
                 "condition",
                 "value"
             ],
-            "title": "ConditionValue[EmployeeTimePeriod, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "ConditionValue[EmployeeTimePeriod, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
-        "ConditionValue_EmployeeTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "ConditionValue_EmployeeTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "condition": {
                     "description": "All conditions must be met together (AND).",
@@ -1166,6 +1218,7 @@
                             "field_value": "#/$defs/FieldValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -1191,6 +1244,9 @@
                         },
                         {
                             "$ref": "#/$defs/TableLookupValue"
+                        },
+                        {
+                            "$ref": "#/$defs/ProjectionValue"
                         }
                     ],
                     "title": "Value"
@@ -1200,7 +1256,7 @@
                 "condition",
                 "value"
             ],
-            "title": "ConditionValue[EmployeeTimePeriod, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "ConditionValue[EmployeeTimePeriod, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
         "ConditionValue_EmployeeTimePeriod_ApplicableValue_": {
@@ -1224,7 +1280,7 @@
             "title": "ConditionValue[EmployeeTimePeriod, ApplicableValue]",
             "type": "object"
         },
-        "ConditionValue_Pairing_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "ConditionValue_Pairing_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "condition": {
                     "description": "All conditions must be met together (AND).",
@@ -1244,6 +1300,7 @@
                             "none_value": "#/$defs/NoneValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -1271,6 +1328,9 @@
                             "$ref": "#/$defs/TableLookupValue"
                         },
                         {
+                            "$ref": "#/$defs/ProjectionValue"
+                        },
+                        {
                             "$ref": "#/$defs/NoneValue"
                         }
                     ],
@@ -1281,10 +1341,10 @@
                 "condition",
                 "value"
             ],
-            "title": "ConditionValue[Pairing, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "ConditionValue[Pairing, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
-        "ConditionValue_Pairing_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "ConditionValue_Pairing_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "condition": {
                     "description": "All conditions must be met together (AND).",
@@ -1303,6 +1363,7 @@
                             "field_value": "#/$defs/FieldValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -1328,6 +1389,9 @@
                         },
                         {
                             "$ref": "#/$defs/TableLookupValue"
+                        },
+                        {
+                            "$ref": "#/$defs/ProjectionValue"
                         }
                     ],
                     "title": "Value"
@@ -1337,7 +1401,7 @@
                 "condition",
                 "value"
             ],
-            "title": "ConditionValue[Pairing, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "ConditionValue[Pairing, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
         "ConditionValue_Pairing_ApplicableValue_": {
@@ -1361,7 +1425,7 @@
             "title": "ConditionValue[Pairing, ApplicableValue]",
             "type": "object"
         },
-        "ConditionValue_PortTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "ConditionValue_PortTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "condition": {
                     "description": "All conditions must be met together (AND).",
@@ -1381,6 +1445,7 @@
                             "none_value": "#/$defs/NoneValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -1408,6 +1473,9 @@
                             "$ref": "#/$defs/TableLookupValue"
                         },
                         {
+                            "$ref": "#/$defs/ProjectionValue"
+                        },
+                        {
                             "$ref": "#/$defs/NoneValue"
                         }
                     ],
@@ -1418,10 +1486,10 @@
                 "condition",
                 "value"
             ],
-            "title": "ConditionValue[PortTimePeriod, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "ConditionValue[PortTimePeriod, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
-        "ConditionValue_PortTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "ConditionValue_PortTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "condition": {
                     "description": "All conditions must be met together (AND).",
@@ -1440,6 +1508,7 @@
                             "field_value": "#/$defs/FieldValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -1465,6 +1534,9 @@
                         },
                         {
                             "$ref": "#/$defs/TableLookupValue"
+                        },
+                        {
+                            "$ref": "#/$defs/ProjectionValue"
                         }
                     ],
                     "title": "Value"
@@ -1474,7 +1546,7 @@
                 "condition",
                 "value"
             ],
-            "title": "ConditionValue[PortTimePeriod, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "ConditionValue[PortTimePeriod, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
         "ConditionValue_PortTimePeriod_ApplicableValue_": {
@@ -2563,7 +2635,7 @@
             "title": "ContainSetComparison",
             "type": "object"
         },
-        "DecisionTable_Activity_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "DecisionTable_Activity_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "default": {
                     "oneOf": [
@@ -2587,6 +2659,9 @@
                         },
                         {
                             "$ref": "#/$defs/TableLookupValue"
+                        },
+                        {
+                            "$ref": "#/$defs/ProjectionValue"
                         },
                         {
                             "$ref": "#/$defs/NoneValue"
@@ -2601,6 +2676,7 @@
                             "none_value": "#/$defs/NoneValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -2609,7 +2685,7 @@
                 },
                 "items": {
                     "items": {
-                        "$ref": "#/$defs/ConditionValue_Activity_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/ConditionValue_Activity_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Items",
                     "type": "array"
@@ -2618,10 +2694,10 @@
             "required": [
                 "default"
             ],
-            "title": "DecisionTable[Activity, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "DecisionTable[Activity, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
-        "DecisionTable_Activity_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "DecisionTable_Activity_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "default": {
                     "oneOf": [
@@ -2645,6 +2721,9 @@
                         },
                         {
                             "$ref": "#/$defs/TableLookupValue"
+                        },
+                        {
+                            "$ref": "#/$defs/ProjectionValue"
                         }
                     ],
                     "discriminator": {
@@ -2655,6 +2734,7 @@
                             "field_value": "#/$defs/FieldValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -2663,7 +2743,7 @@
                 },
                 "items": {
                     "items": {
-                        "$ref": "#/$defs/ConditionValue_Activity_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/ConditionValue_Activity_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Items",
                     "type": "array"
@@ -2672,7 +2752,7 @@
             "required": [
                 "default"
             ],
-            "title": "DecisionTable[Activity, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "DecisionTable[Activity, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
         "DecisionTable_Activity_ApplicableValue_": {
@@ -2694,7 +2774,7 @@
             "title": "DecisionTable[Activity, ApplicableValue]",
             "type": "object"
         },
-        "DecisionTable_AircraftGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "DecisionTable_AircraftGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "default": {
                     "oneOf": [
@@ -2718,6 +2798,9 @@
                         },
                         {
                             "$ref": "#/$defs/TableLookupValue"
+                        },
+                        {
+                            "$ref": "#/$defs/ProjectionValue"
                         },
                         {
                             "$ref": "#/$defs/NoneValue"
@@ -2732,6 +2815,7 @@
                             "none_value": "#/$defs/NoneValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -2740,7 +2824,7 @@
                 },
                 "items": {
                     "items": {
-                        "$ref": "#/$defs/ConditionValue_AircraftGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/ConditionValue_AircraftGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Items",
                     "type": "array"
@@ -2749,10 +2833,10 @@
             "required": [
                 "default"
             ],
-            "title": "DecisionTable[AircraftGroundTime, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "DecisionTable[AircraftGroundTime, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
-        "DecisionTable_AircraftGroundTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "DecisionTable_AircraftGroundTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "default": {
                     "oneOf": [
@@ -2776,6 +2860,9 @@
                         },
                         {
                             "$ref": "#/$defs/TableLookupValue"
+                        },
+                        {
+                            "$ref": "#/$defs/ProjectionValue"
                         }
                     ],
                     "discriminator": {
@@ -2786,6 +2873,7 @@
                             "field_value": "#/$defs/FieldValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -2794,7 +2882,7 @@
                 },
                 "items": {
                     "items": {
-                        "$ref": "#/$defs/ConditionValue_AircraftGroundTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/ConditionValue_AircraftGroundTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Items",
                     "type": "array"
@@ -2803,7 +2891,7 @@
             "required": [
                 "default"
             ],
-            "title": "DecisionTable[AircraftGroundTime, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "DecisionTable[AircraftGroundTime, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
         "DecisionTable_AircraftGroundTime_ApplicableValue_": {
@@ -2825,7 +2913,7 @@
             "title": "DecisionTable[AircraftGroundTime, ApplicableValue]",
             "type": "object"
         },
-        "DecisionTable_AircraftTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "DecisionTable_AircraftTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "default": {
                     "oneOf": [
@@ -2849,6 +2937,9 @@
                         },
                         {
                             "$ref": "#/$defs/TableLookupValue"
+                        },
+                        {
+                            "$ref": "#/$defs/ProjectionValue"
                         },
                         {
                             "$ref": "#/$defs/NoneValue"
@@ -2863,6 +2954,7 @@
                             "none_value": "#/$defs/NoneValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -2871,7 +2963,7 @@
                 },
                 "items": {
                     "items": {
-                        "$ref": "#/$defs/ConditionValue_AircraftTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/ConditionValue_AircraftTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Items",
                     "type": "array"
@@ -2880,10 +2972,10 @@
             "required": [
                 "default"
             ],
-            "title": "DecisionTable[AircraftTimePeriod, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "DecisionTable[AircraftTimePeriod, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
-        "DecisionTable_AircraftTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "DecisionTable_AircraftTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "default": {
                     "oneOf": [
@@ -2907,6 +2999,9 @@
                         },
                         {
                             "$ref": "#/$defs/TableLookupValue"
+                        },
+                        {
+                            "$ref": "#/$defs/ProjectionValue"
                         }
                     ],
                     "discriminator": {
@@ -2917,6 +3012,7 @@
                             "field_value": "#/$defs/FieldValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -2925,7 +3021,7 @@
                 },
                 "items": {
                     "items": {
-                        "$ref": "#/$defs/ConditionValue_AircraftTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/ConditionValue_AircraftTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Items",
                     "type": "array"
@@ -2934,7 +3030,7 @@
             "required": [
                 "default"
             ],
-            "title": "DecisionTable[AircraftTimePeriod, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "DecisionTable[AircraftTimePeriod, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
         "DecisionTable_AircraftTimePeriod_ApplicableValue_": {
@@ -2956,7 +3052,7 @@
             "title": "DecisionTable[AircraftTimePeriod, ApplicableValue]",
             "type": "object"
         },
-        "DecisionTable_Duty_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "DecisionTable_Duty_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "default": {
                     "oneOf": [
@@ -2980,6 +3076,9 @@
                         },
                         {
                             "$ref": "#/$defs/TableLookupValue"
+                        },
+                        {
+                            "$ref": "#/$defs/ProjectionValue"
                         },
                         {
                             "$ref": "#/$defs/NoneValue"
@@ -2994,6 +3093,7 @@
                             "none_value": "#/$defs/NoneValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -3002,7 +3102,7 @@
                 },
                 "items": {
                     "items": {
-                        "$ref": "#/$defs/ConditionValue_Duty_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/ConditionValue_Duty_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Items",
                     "type": "array"
@@ -3011,10 +3111,10 @@
             "required": [
                 "default"
             ],
-            "title": "DecisionTable[Duty, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "DecisionTable[Duty, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
-        "DecisionTable_Duty_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "DecisionTable_Duty_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "default": {
                     "oneOf": [
@@ -3038,6 +3138,9 @@
                         },
                         {
                             "$ref": "#/$defs/TableLookupValue"
+                        },
+                        {
+                            "$ref": "#/$defs/ProjectionValue"
                         }
                     ],
                     "discriminator": {
@@ -3048,6 +3151,7 @@
                             "field_value": "#/$defs/FieldValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -3056,7 +3160,7 @@
                 },
                 "items": {
                     "items": {
-                        "$ref": "#/$defs/ConditionValue_Duty_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/ConditionValue_Duty_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Items",
                     "type": "array"
@@ -3065,7 +3169,7 @@
             "required": [
                 "default"
             ],
-            "title": "DecisionTable[Duty, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "DecisionTable[Duty, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
         "DecisionTable_Duty_ApplicableValue_": {
@@ -3087,7 +3191,7 @@
             "title": "DecisionTable[Duty, ApplicableValue]",
             "type": "object"
         },
-        "DecisionTable_EmployeeGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "DecisionTable_EmployeeGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "default": {
                     "oneOf": [
@@ -3111,6 +3215,9 @@
                         },
                         {
                             "$ref": "#/$defs/TableLookupValue"
+                        },
+                        {
+                            "$ref": "#/$defs/ProjectionValue"
                         },
                         {
                             "$ref": "#/$defs/NoneValue"
@@ -3125,6 +3232,7 @@
                             "none_value": "#/$defs/NoneValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -3133,7 +3241,7 @@
                 },
                 "items": {
                     "items": {
-                        "$ref": "#/$defs/ConditionValue_EmployeeGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/ConditionValue_EmployeeGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Items",
                     "type": "array"
@@ -3142,10 +3250,10 @@
             "required": [
                 "default"
             ],
-            "title": "DecisionTable[EmployeeGroundTime, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "DecisionTable[EmployeeGroundTime, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
-        "DecisionTable_EmployeeGroundTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "DecisionTable_EmployeeGroundTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "default": {
                     "oneOf": [
@@ -3169,6 +3277,9 @@
                         },
                         {
                             "$ref": "#/$defs/TableLookupValue"
+                        },
+                        {
+                            "$ref": "#/$defs/ProjectionValue"
                         }
                     ],
                     "discriminator": {
@@ -3179,6 +3290,7 @@
                             "field_value": "#/$defs/FieldValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -3187,7 +3299,7 @@
                 },
                 "items": {
                     "items": {
-                        "$ref": "#/$defs/ConditionValue_EmployeeGroundTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/ConditionValue_EmployeeGroundTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Items",
                     "type": "array"
@@ -3196,7 +3308,7 @@
             "required": [
                 "default"
             ],
-            "title": "DecisionTable[EmployeeGroundTime, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "DecisionTable[EmployeeGroundTime, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
         "DecisionTable_EmployeeGroundTime_ApplicableValue_": {
@@ -3218,7 +3330,7 @@
             "title": "DecisionTable[EmployeeGroundTime, ApplicableValue]",
             "type": "object"
         },
-        "DecisionTable_EmployeeRestTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "DecisionTable_EmployeeRestTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "default": {
                     "oneOf": [
@@ -3242,6 +3354,9 @@
                         },
                         {
                             "$ref": "#/$defs/TableLookupValue"
+                        },
+                        {
+                            "$ref": "#/$defs/ProjectionValue"
                         },
                         {
                             "$ref": "#/$defs/NoneValue"
@@ -3256,6 +3371,7 @@
                             "none_value": "#/$defs/NoneValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -3264,7 +3380,7 @@
                 },
                 "items": {
                     "items": {
-                        "$ref": "#/$defs/ConditionValue_EmployeeRestTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/ConditionValue_EmployeeRestTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Items",
                     "type": "array"
@@ -3273,10 +3389,10 @@
             "required": [
                 "default"
             ],
-            "title": "DecisionTable[EmployeeRestTime, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "DecisionTable[EmployeeRestTime, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
-        "DecisionTable_EmployeeRestTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "DecisionTable_EmployeeRestTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "default": {
                     "oneOf": [
@@ -3300,6 +3416,9 @@
                         },
                         {
                             "$ref": "#/$defs/TableLookupValue"
+                        },
+                        {
+                            "$ref": "#/$defs/ProjectionValue"
                         }
                     ],
                     "discriminator": {
@@ -3310,6 +3429,7 @@
                             "field_value": "#/$defs/FieldValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -3318,7 +3438,7 @@
                 },
                 "items": {
                     "items": {
-                        "$ref": "#/$defs/ConditionValue_EmployeeRestTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/ConditionValue_EmployeeRestTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Items",
                     "type": "array"
@@ -3327,7 +3447,7 @@
             "required": [
                 "default"
             ],
-            "title": "DecisionTable[EmployeeRestTime, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "DecisionTable[EmployeeRestTime, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
         "DecisionTable_EmployeeRestTime_ApplicableValue_": {
@@ -3349,7 +3469,7 @@
             "title": "DecisionTable[EmployeeRestTime, ApplicableValue]",
             "type": "object"
         },
-        "DecisionTable_EmployeeTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "DecisionTable_EmployeeTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "default": {
                     "oneOf": [
@@ -3373,6 +3493,9 @@
                         },
                         {
                             "$ref": "#/$defs/TableLookupValue"
+                        },
+                        {
+                            "$ref": "#/$defs/ProjectionValue"
                         },
                         {
                             "$ref": "#/$defs/NoneValue"
@@ -3387,6 +3510,7 @@
                             "none_value": "#/$defs/NoneValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -3395,7 +3519,7 @@
                 },
                 "items": {
                     "items": {
-                        "$ref": "#/$defs/ConditionValue_EmployeeTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/ConditionValue_EmployeeTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Items",
                     "type": "array"
@@ -3404,10 +3528,10 @@
             "required": [
                 "default"
             ],
-            "title": "DecisionTable[EmployeeTimePeriod, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "DecisionTable[EmployeeTimePeriod, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
-        "DecisionTable_EmployeeTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "DecisionTable_EmployeeTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "default": {
                     "oneOf": [
@@ -3431,6 +3555,9 @@
                         },
                         {
                             "$ref": "#/$defs/TableLookupValue"
+                        },
+                        {
+                            "$ref": "#/$defs/ProjectionValue"
                         }
                     ],
                     "discriminator": {
@@ -3441,6 +3568,7 @@
                             "field_value": "#/$defs/FieldValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -3449,7 +3577,7 @@
                 },
                 "items": {
                     "items": {
-                        "$ref": "#/$defs/ConditionValue_EmployeeTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/ConditionValue_EmployeeTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Items",
                     "type": "array"
@@ -3458,7 +3586,7 @@
             "required": [
                 "default"
             ],
-            "title": "DecisionTable[EmployeeTimePeriod, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "DecisionTable[EmployeeTimePeriod, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
         "DecisionTable_EmployeeTimePeriod_ApplicableValue_": {
@@ -3480,7 +3608,7 @@
             "title": "DecisionTable[EmployeeTimePeriod, ApplicableValue]",
             "type": "object"
         },
-        "DecisionTable_Pairing_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "DecisionTable_Pairing_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "default": {
                     "oneOf": [
@@ -3504,6 +3632,9 @@
                         },
                         {
                             "$ref": "#/$defs/TableLookupValue"
+                        },
+                        {
+                            "$ref": "#/$defs/ProjectionValue"
                         },
                         {
                             "$ref": "#/$defs/NoneValue"
@@ -3518,6 +3649,7 @@
                             "none_value": "#/$defs/NoneValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -3526,7 +3658,7 @@
                 },
                 "items": {
                     "items": {
-                        "$ref": "#/$defs/ConditionValue_Pairing_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/ConditionValue_Pairing_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Items",
                     "type": "array"
@@ -3535,10 +3667,10 @@
             "required": [
                 "default"
             ],
-            "title": "DecisionTable[Pairing, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "DecisionTable[Pairing, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
-        "DecisionTable_Pairing_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "DecisionTable_Pairing_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "default": {
                     "oneOf": [
@@ -3562,6 +3694,9 @@
                         },
                         {
                             "$ref": "#/$defs/TableLookupValue"
+                        },
+                        {
+                            "$ref": "#/$defs/ProjectionValue"
                         }
                     ],
                     "discriminator": {
@@ -3572,6 +3707,7 @@
                             "field_value": "#/$defs/FieldValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -3580,7 +3716,7 @@
                 },
                 "items": {
                     "items": {
-                        "$ref": "#/$defs/ConditionValue_Pairing_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/ConditionValue_Pairing_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Items",
                     "type": "array"
@@ -3589,7 +3725,7 @@
             "required": [
                 "default"
             ],
-            "title": "DecisionTable[Pairing, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "DecisionTable[Pairing, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
         "DecisionTable_Pairing_ApplicableValue_": {
@@ -3611,7 +3747,7 @@
             "title": "DecisionTable[Pairing, ApplicableValue]",
             "type": "object"
         },
-        "DecisionTable_PortTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "DecisionTable_PortTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "default": {
                     "oneOf": [
@@ -3635,6 +3771,9 @@
                         },
                         {
                             "$ref": "#/$defs/TableLookupValue"
+                        },
+                        {
+                            "$ref": "#/$defs/ProjectionValue"
                         },
                         {
                             "$ref": "#/$defs/NoneValue"
@@ -3649,6 +3788,7 @@
                             "none_value": "#/$defs/NoneValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -3657,7 +3797,7 @@
                 },
                 "items": {
                     "items": {
-                        "$ref": "#/$defs/ConditionValue_PortTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/ConditionValue_PortTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Items",
                     "type": "array"
@@ -3666,10 +3806,10 @@
             "required": [
                 "default"
             ],
-            "title": "DecisionTable[PortTimePeriod, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "DecisionTable[PortTimePeriod, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
-        "DecisionTable_PortTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "DecisionTable_PortTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "default": {
                     "oneOf": [
@@ -3693,6 +3833,9 @@
                         },
                         {
                             "$ref": "#/$defs/TableLookupValue"
+                        },
+                        {
+                            "$ref": "#/$defs/ProjectionValue"
                         }
                     ],
                     "discriminator": {
@@ -3703,6 +3846,7 @@
                             "field_value": "#/$defs/FieldValue",
                             "number_range_value": "#/$defs/NumberRangeValue",
                             "number_value": "#/$defs/NumberValue",
+                            "projection_value": "#/$defs/ProjectionValue",
                             "table_lookup_number_value": "#/$defs/TableLookupValue"
                         },
                         "propertyName": "kind"
@@ -3711,7 +3855,7 @@
                 },
                 "items": {
                     "items": {
-                        "$ref": "#/$defs/ConditionValue_PortTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/ConditionValue_PortTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Items",
                     "type": "array"
@@ -3720,7 +3864,7 @@
             "required": [
                 "default"
             ],
-            "title": "DecisionTable[PortTimePeriod, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "DecisionTable[PortTimePeriod, Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
         "DecisionTable_PortTimePeriod_ApplicableValue_": {
@@ -3822,11 +3966,11 @@
                     "title": "Applicability"
                 },
                 "value": {
-                    "$ref": "#/$defs/DecisionTable_Duty_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                    "$ref": "#/$defs/DecisionTable_Duty_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                 },
                 "value_updates": {
                     "items": {
-                        "$ref": "#/$defs/Update_Duty_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/Update_Duty_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Value Updates",
                     "type": "array"
@@ -3834,7 +3978,7 @@
                 "requirement": {
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/DecisionTable_Duty_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                            "$ref": "#/$defs/DecisionTable_Duty_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                         },
                         {
                             "type": "null"
@@ -3845,7 +3989,7 @@
                 },
                 "requirement_updates": {
                     "items": {
-                        "$ref": "#/$defs/Update_Duty_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/Update_Duty_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Requirement Updates",
                     "type": "array"
@@ -3853,7 +3997,7 @@
                 "limit": {
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/DecisionTable_Duty_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                            "$ref": "#/$defs/DecisionTable_Duty_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                         },
                         {
                             "type": "null"
@@ -3863,7 +4007,7 @@
                 },
                 "limit_updates": {
                     "items": {
-                        "$ref": "#/$defs/Update_Duty_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/Update_Duty_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Limit Updates",
                     "type": "array"
@@ -3901,11 +4045,11 @@
                     "title": "Applicability"
                 },
                 "value": {
-                    "$ref": "#/$defs/DecisionTable_EmployeeGroundTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                    "$ref": "#/$defs/DecisionTable_EmployeeGroundTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                 },
                 "value_updates": {
                     "items": {
-                        "$ref": "#/$defs/Update_EmployeeGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/Update_EmployeeGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Value Updates",
                     "type": "array"
@@ -3913,7 +4057,7 @@
                 "requirement": {
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/DecisionTable_EmployeeGroundTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                            "$ref": "#/$defs/DecisionTable_EmployeeGroundTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                         },
                         {
                             "type": "null"
@@ -3924,7 +4068,7 @@
                 },
                 "requirement_updates": {
                     "items": {
-                        "$ref": "#/$defs/Update_EmployeeGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/Update_EmployeeGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Requirement Updates",
                     "type": "array"
@@ -3932,7 +4076,7 @@
                 "limit": {
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/DecisionTable_EmployeeGroundTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                            "$ref": "#/$defs/DecisionTable_EmployeeGroundTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                         },
                         {
                             "type": "null"
@@ -3942,7 +4086,7 @@
                 },
                 "limit_updates": {
                     "items": {
-                        "$ref": "#/$defs/Update_EmployeeGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/Update_EmployeeGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Limit Updates",
                     "type": "array"
@@ -3980,11 +4124,11 @@
                     "title": "Applicability"
                 },
                 "value": {
-                    "$ref": "#/$defs/DecisionTable_EmployeeRestTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                    "$ref": "#/$defs/DecisionTable_EmployeeRestTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                 },
                 "value_updates": {
                     "items": {
-                        "$ref": "#/$defs/Update_EmployeeRestTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/Update_EmployeeRestTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Value Updates",
                     "type": "array"
@@ -3992,7 +4136,7 @@
                 "requirement": {
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/DecisionTable_EmployeeRestTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                            "$ref": "#/$defs/DecisionTable_EmployeeRestTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                         },
                         {
                             "type": "null"
@@ -4003,7 +4147,7 @@
                 },
                 "requirement_updates": {
                     "items": {
-                        "$ref": "#/$defs/Update_EmployeeRestTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/Update_EmployeeRestTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Requirement Updates",
                     "type": "array"
@@ -4011,7 +4155,7 @@
                 "limit": {
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/DecisionTable_EmployeeRestTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                            "$ref": "#/$defs/DecisionTable_EmployeeRestTime_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                         },
                         {
                             "type": "null"
@@ -4021,7 +4165,7 @@
                 },
                 "limit_updates": {
                     "items": {
-                        "$ref": "#/$defs/Update_EmployeeRestTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/Update_EmployeeRestTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Limit Updates",
                     "type": "array"
@@ -4059,11 +4203,11 @@
                     "title": "Applicability"
                 },
                 "value": {
-                    "$ref": "#/$defs/DecisionTable_EmployeeTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                    "$ref": "#/$defs/DecisionTable_EmployeeTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                 },
                 "value_updates": {
                     "items": {
-                        "$ref": "#/$defs/Update_EmployeeTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/Update_EmployeeTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Value Updates",
                     "type": "array"
@@ -4071,7 +4215,7 @@
                 "requirement": {
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/DecisionTable_EmployeeTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                            "$ref": "#/$defs/DecisionTable_EmployeeTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                         },
                         {
                             "type": "null"
@@ -4082,7 +4226,7 @@
                 },
                 "requirement_updates": {
                     "items": {
-                        "$ref": "#/$defs/Update_EmployeeTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/Update_EmployeeTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Requirement Updates",
                     "type": "array"
@@ -4090,7 +4234,7 @@
                 "limit": {
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/DecisionTable_EmployeeTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                            "$ref": "#/$defs/DecisionTable_EmployeeTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                         },
                         {
                             "type": "null"
@@ -4100,7 +4244,7 @@
                 },
                 "limit_updates": {
                     "items": {
-                        "$ref": "#/$defs/Update_EmployeeTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/Update_EmployeeTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Limit Updates",
                     "type": "array"
@@ -4618,11 +4762,11 @@
                     "title": "Applicability"
                 },
                 "value": {
-                    "$ref": "#/$defs/DecisionTable_Pairing_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                    "$ref": "#/$defs/DecisionTable_Pairing_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                 },
                 "value_updates": {
                     "items": {
-                        "$ref": "#/$defs/Update_Pairing_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/Update_Pairing_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Value Updates",
                     "type": "array"
@@ -4630,7 +4774,7 @@
                 "requirement": {
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/DecisionTable_Pairing_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                            "$ref": "#/$defs/DecisionTable_Pairing_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                         },
                         {
                             "type": "null"
@@ -4641,7 +4785,7 @@
                 },
                 "requirement_updates": {
                     "items": {
-                        "$ref": "#/$defs/Update_Pairing_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/Update_Pairing_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Requirement Updates",
                     "type": "array"
@@ -4649,7 +4793,7 @@
                 "limit": {
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/DecisionTable_Pairing_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                            "$ref": "#/$defs/DecisionTable_Pairing_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                         },
                         {
                             "type": "null"
@@ -4659,7 +4803,7 @@
                 },
                 "limit_updates": {
                     "items": {
-                        "$ref": "#/$defs/Update_Pairing_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/Update_Pairing_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Limit Updates",
                     "type": "array"
@@ -4697,11 +4841,11 @@
                     "title": "Applicability"
                 },
                 "value": {
-                    "$ref": "#/$defs/DecisionTable_PortTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                    "$ref": "#/$defs/DecisionTable_PortTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                 },
                 "value_updates": {
                     "items": {
-                        "$ref": "#/$defs/Update_PortTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/Update_PortTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Value Updates",
                     "type": "array"
@@ -4709,7 +4853,7 @@
                 "requirement": {
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/DecisionTable_PortTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                            "$ref": "#/$defs/DecisionTable_PortTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                         },
                         {
                             "type": "null"
@@ -4720,7 +4864,7 @@
                 },
                 "requirement_updates": {
                     "items": {
-                        "$ref": "#/$defs/Update_PortTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/Update_PortTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Requirement Updates",
                     "type": "array"
@@ -4728,7 +4872,7 @@
                 "limit": {
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/DecisionTable_PortTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                            "$ref": "#/$defs/DecisionTable_PortTimePeriod_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                         },
                         {
                             "type": "null"
@@ -4738,7 +4882,7 @@
                 },
                 "limit_updates": {
                     "items": {
-                        "$ref": "#/$defs/Update_PortTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                        "$ref": "#/$defs/Update_PortTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                     },
                     "title": "Limit Updates",
                     "type": "array"
@@ -4754,6 +4898,123 @@
                 "time_period"
             ],
             "title": "PortTimePeriodRule",
+            "type": "object"
+        },
+        "ProjectionValue": {
+            "properties": {
+                "phrase": {
+                    "default": "Matched",
+                    "title": "Phrase",
+                    "type": "string"
+                },
+                "kind": {
+                    "const": "projection_value",
+                    "default": "projection_value",
+                    "title": "Kind",
+                    "type": "string"
+                },
+                "start_anchor": {
+                    "default": "start",
+                    "enum": [
+                        "start",
+                        "end",
+                        "field"
+                    ],
+                    "title": "Start Anchor",
+                    "type": "string"
+                },
+                "start_offset": {
+                    "default": "PT0S",
+                    "format": "duration",
+                    "title": "Start Offset",
+                    "type": "string"
+                },
+                "start_field": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "title": "Start Field"
+                },
+                "end_anchor": {
+                    "default": "end",
+                    "enum": [
+                        "start",
+                        "end",
+                        "field"
+                    ],
+                    "title": "End Anchor",
+                    "type": "string"
+                },
+                "end_offset": {
+                    "default": "PT0S",
+                    "format": "duration",
+                    "title": "End Offset",
+                    "type": "string"
+                },
+                "end_field": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "title": "End Field"
+                },
+                "rate": {
+                    "default": 1.0,
+                    "description": "Per-minute aggregation rate",
+                    "title": "Rate",
+                    "type": "number"
+                },
+                "clamp_lower": {
+                    "anyOf": [
+                        {
+                            "format": "duration",
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "If provided and window from start to end is shorter than this, sets the window duration to this",
+                    "title": "Clamp Lower"
+                },
+                "clamp_upper": {
+                    "anyOf": [
+                        {
+                            "format": "duration",
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "If provided and window from start to end is longer than this, sets the window duration to this",
+                    "title": "Clamp Upper"
+                },
+                "clamp_direction": {
+                    "default": "forwards",
+                    "description": "Clamping forwards constrains end, while clamping backwards constrains start",
+                    "enum": [
+                        "forwards",
+                        "backwards"
+                    ],
+                    "title": "Clamp Direction",
+                    "type": "string"
+                }
+            },
+            "title": "ProjectionValue",
             "type": "object"
         },
         "RangeDatetimeComparison": {
@@ -4966,7 +5227,7 @@
             "title": "TruthComparison",
             "type": "object"
         },
-        "Update_Activity_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "Update_Activity_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "name": {
                     "title": "Name",
@@ -4986,17 +5247,17 @@
                     "type": "string"
                 },
                 "table": {
-                    "$ref": "#/$defs/DecisionTable_Activity_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                    "$ref": "#/$defs/DecisionTable_Activity_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                 }
             },
             "required": [
                 "name",
                 "table"
             ],
-            "title": "Update[Activity, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "Update[Activity, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
-        "Update_AircraftGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "Update_AircraftGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "name": {
                     "title": "Name",
@@ -5016,17 +5277,17 @@
                     "type": "string"
                 },
                 "table": {
-                    "$ref": "#/$defs/DecisionTable_AircraftGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                    "$ref": "#/$defs/DecisionTable_AircraftGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                 }
             },
             "required": [
                 "name",
                 "table"
             ],
-            "title": "Update[AircraftGroundTime, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "Update[AircraftGroundTime, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
-        "Update_AircraftTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "Update_AircraftTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "name": {
                     "title": "Name",
@@ -5046,17 +5307,17 @@
                     "type": "string"
                 },
                 "table": {
-                    "$ref": "#/$defs/DecisionTable_AircraftTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                    "$ref": "#/$defs/DecisionTable_AircraftTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                 }
             },
             "required": [
                 "name",
                 "table"
             ],
-            "title": "Update[AircraftTimePeriod, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "Update[AircraftTimePeriod, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
-        "Update_Duty_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "Update_Duty_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "name": {
                     "title": "Name",
@@ -5076,17 +5337,17 @@
                     "type": "string"
                 },
                 "table": {
-                    "$ref": "#/$defs/DecisionTable_Duty_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                    "$ref": "#/$defs/DecisionTable_Duty_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                 }
             },
             "required": [
                 "name",
                 "table"
             ],
-            "title": "Update[Duty, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "Update[Duty, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
-        "Update_EmployeeGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "Update_EmployeeGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "name": {
                     "title": "Name",
@@ -5106,17 +5367,17 @@
                     "type": "string"
                 },
                 "table": {
-                    "$ref": "#/$defs/DecisionTable_EmployeeGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                    "$ref": "#/$defs/DecisionTable_EmployeeGroundTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                 }
             },
             "required": [
                 "name",
                 "table"
             ],
-            "title": "Update[EmployeeGroundTime, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "Update[EmployeeGroundTime, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
-        "Update_EmployeeRestTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "Update_EmployeeRestTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "name": {
                     "title": "Name",
@@ -5136,17 +5397,17 @@
                     "type": "string"
                 },
                 "table": {
-                    "$ref": "#/$defs/DecisionTable_EmployeeRestTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                    "$ref": "#/$defs/DecisionTable_EmployeeRestTime_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                 }
             },
             "required": [
                 "name",
                 "table"
             ],
-            "title": "Update[EmployeeRestTime, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "Update[EmployeeRestTime, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
-        "Update_EmployeeTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "Update_EmployeeTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "name": {
                     "title": "Name",
@@ -5166,17 +5427,17 @@
                     "type": "string"
                 },
                 "table": {
-                    "$ref": "#/$defs/DecisionTable_EmployeeTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                    "$ref": "#/$defs/DecisionTable_EmployeeTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                 }
             },
             "required": [
                 "name",
                 "table"
             ],
-            "title": "Update[EmployeeTimePeriod, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "Update[EmployeeTimePeriod, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
-        "Update_Pairing_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "Update_Pairing_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "name": {
                     "title": "Name",
@@ -5196,17 +5457,17 @@
                     "type": "string"
                 },
                 "table": {
-                    "$ref": "#/$defs/DecisionTable_Pairing_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                    "$ref": "#/$defs/DecisionTable_Pairing_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                 }
             },
             "required": [
                 "name",
                 "table"
             ],
-            "title": "Update[Pairing, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "Update[Pairing, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
-        "Update_PortTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
+        "Update_PortTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____": {
             "properties": {
                 "name": {
                     "title": "Name",
@@ -5226,14 +5487,14 @@
                     "type": "string"
                 },
                 "table": {
-                    "$ref": "#/$defs/DecisionTable_PortTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
+                    "$ref": "#/$defs/DecisionTable_PortTimePeriod_Annotated_Union_Annotated_Union_NumberValue__DurationValue__FieldValue__FieldDifferenceValue__NumberRangeValue__DurationRangeValue__TableLookupValue__ProjectionValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind_____NoneValue___FieldInfo_annotation_NoneType__required_True__discriminator__kind____"
                 }
             },
             "required": [
                 "name",
                 "table"
             ],
-            "title": "Update[PortTimePeriod, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
+            "title": "Update[PortTimePeriod, Annotated[Union[Annotated[Union[NumberValue, DurationValue, FieldValue, FieldDifferenceValue, NumberRangeValue, DurationRangeValue, TableLookupValue, ProjectionValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')], NoneValue], FieldInfo(annotation=NoneType, required=True, discriminator='kind')]]",
             "type": "object"
         },
         "WithinSetComparison": {
