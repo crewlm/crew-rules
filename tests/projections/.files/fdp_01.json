@@ -1,0 +1,137 @@
+{
+    "id": "1e6268b2-f487-42db-b769-125ca11a46dd",
+    "name": "FDP Projection",
+    "code": "FDP",
+    "activity_projections": [
+        {
+            "name": "Split duty reduction",
+            "method": "decrease",
+            "table": {
+                "default": {
+                    "phrase": "No modification",
+                    "kind": "none_value"
+                },
+                "items": [
+                    {
+                        "condition": [
+                            {
+                                "field": "type",
+                                "comparison": {
+                                    "kind": "equal_text_comparison",
+                                    "text": "mid_duty_rest",
+                                    "case_sensitive": true
+                                },
+                                "reverse_match": false
+                            }
+                        ],
+                        "value": {
+                            "phrase": "Matched",
+                            "kind": "projection_value",
+                            "start_anchor": "start",
+                            "start_offset": "PT0S",
+                            "start_field": null,
+                            "end_anchor": "end",
+                            "end_offset": "PT0S",
+                            "end_field": null,
+                            "rate": 0.5,
+                            "clamp_lower": null,
+                            "clamp_upper": null,
+                            "clamp_direction": "forwards"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "employee_ground_time_projections": [],
+    "duty_projections": [
+        {
+            "name": "Basic",
+            "method": "increase",
+            "table": {
+                "default": {
+                    "phrase": "Matched",
+                    "kind": "projection_value",
+                    "start_anchor": "start",
+                    "start_offset": "PT0S",
+                    "start_field": null,
+                    "end_anchor": "start",
+                    "end_offset": "PT0S",
+                    "end_field": null,
+                    "rate": 1.0,
+                    "clamp_lower": null,
+                    "clamp_upper": null,
+                    "clamp_direction": "forwards"
+                },
+                "items": [
+                    {
+                        "condition": [
+                            {
+                                "field": "type",
+                                "comparison": {
+                                    "kind": "equal_text_comparison",
+                                    "text": "flying",
+                                    "case_sensitive": true
+                                },
+                                "reverse_match": false
+                            }
+                        ],
+                        "value": {
+                            "phrase": "Matched",
+                            "kind": "projection_value",
+                            "start_anchor": "start",
+                            "start_offset": "PT0S",
+                            "start_field": null,
+                            "end_anchor": "field",
+                            "end_offset": "PT0S",
+                            "end_field": "operating_flights.last.blocks_on",
+                            "rate": 1.0,
+                            "clamp_lower": null,
+                            "clamp_upper": null,
+                            "clamp_direction": "forwards"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Standby callout",
+            "method": "increase",
+            "table": {
+                "default": {
+                    "phrase": "No modification",
+                    "kind": "none_value"
+                },
+                "items": [
+                    {
+                        "condition": [
+                            {
+                                "field": "called_out_standby",
+                                "comparison": {
+                                    "kind": "truth_comparison"
+                                },
+                                "reverse_match": false
+                            }
+                        ],
+                        "value": {
+                            "phrase": "Matched",
+                            "kind": "projection_value",
+                            "start_anchor": "field",
+                            "start_offset": "PT0S",
+                            "start_field": "called_out_standby.report",
+                            "end_anchor": "start",
+                            "end_offset": "PT0S",
+                            "end_field": null,
+                            "rate": 0.5,
+                            "clamp_lower": null,
+                            "clamp_upper": "PT2H",
+                            "clamp_direction": "forwards"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "employee_rest_time_projections": [],
+    "pairing_projections": []
+}
