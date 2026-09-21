@@ -31,9 +31,9 @@ graph LR
     subgraph Limit ["Initial Limit"]
         direction TB
         N6{"Entity's acclimatised state is 'acclimatised'?"}
-        N7["Look up the value in MaxFDPTableB using Entity's calculated numbers' fdp sectors as sectors, Entity's preceding rest's duration as preceding_rest"]:::limNode
+        N7["Look up the value in MaxFDPTableA using Entity's calculated numbers' fdp sectors as sectors, Entity's duty's report time of day local as start_time_of_day"]:::limNode
         N6 -->|Yes| N7
-        N8["Look up the value in MaxFDPTableA using Entity's calculated numbers' fdp sectors as sectors, Entity's duty's report time of day local as start_time_of_day"]:::limNode
+        N8["Look up the value in MaxFDPTableB using Entity's calculated numbers' fdp sectors as sectors, Entity's preceding rest's duration as preceding_rest"]:::limNode
         N6 -->|No| N8
     end
 

@@ -70,27 +70,26 @@ def test_max_fdp_01():
                     )
                 ],
                 value=TableLookupValue(
-                    phrase="Unacclimatised Max FDP Limit (Table B)",
-                    table_name="MaxFDPTableB",
+                    phrase="Standard Max FDP Limit (Table A)",
+                    table_name="MaxFDPTableA",
                     lookup_map=[
                         LookupParameter(
                             name="sectors", field="calculated_numbers.fdp_sectors"
                         ),
                         LookupParameter(
-                            name="preceding_rest", field="preceding_rest.duration"
+                            name="start_time_of_day",
+                            field="duty.report_time_of_day_local",
                         ),
                     ],
                 ),
             )
         ],
         default=TableLookupValue(
-            phrase="Standard Max FDP Limit (Table A)",
-            table_name="MaxFDPTableA",
+            phrase="Unacclimatised Max FDP Limit (Table B)",
+            table_name="MaxFDPTableB",
             lookup_map=[
                 LookupParameter(name="sectors", field="calculated_numbers.fdp_sectors"),
-                LookupParameter(
-                    name="start_time_of_day", field="duty.report_time_of_day_local"
-                ),
+                LookupParameter(name="preceding_rest", field="preceding_rest.duration"),
             ],
         ),
     )
@@ -169,7 +168,7 @@ def test_max_fdp_01():
 
     assert isinstance(parsed_rule, DutyRule)
     assert parsed_rule.scope == "duty"
-    assert parsed_rule.limit.default.table_name == "MaxFDPTableA"
+    assert parsed_rule.limit.default.table_name == "MaxFDPTableB"
 
     # check mermaid diagram
     diagram = rule_to_mermaid(parsed_rule)

@@ -52,17 +52,17 @@
     "requirement_updates": [],
     "limit": {
         "default": {
-            "phrase": "Standard Max FDP Limit (Table A)",
+            "phrase": "Unacclimatised Max FDP Limit (Table B)",
             "kind": "table_lookup_number_value",
-            "table_name": "MaxFDPTableA",
+            "table_name": "MaxFDPTableB",
             "lookup_map": [
                 {
                     "name": "sectors",
                     "field": "calculated_numbers.fdp_sectors"
                 },
                 {
-                    "name": "start_time_of_day",
-                    "field": "duty.report_time_of_day_local"
+                    "name": "preceding_rest",
+                    "field": "preceding_rest.duration"
                 }
             ]
         },
@@ -80,17 +80,17 @@
                     }
                 ],
                 "value": {
-                    "phrase": "Unacclimatised Max FDP Limit (Table B)",
+                    "phrase": "Standard Max FDP Limit (Table A)",
                     "kind": "table_lookup_number_value",
-                    "table_name": "MaxFDPTableB",
+                    "table_name": "MaxFDPTableA",
                     "lookup_map": [
                         {
                             "name": "sectors",
                             "field": "calculated_numbers.fdp_sectors"
                         },
                         {
-                            "name": "preceding_rest",
-                            "field": "preceding_rest.duration"
+                            "name": "start_time_of_day",
+                            "field": "duty.report_time_of_day_local"
                         }
                     ]
                 }
