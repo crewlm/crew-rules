@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="http://www.easa.europa.eu/erules-export" elementFormDefault="qualified"
+  xmlns="http://www.easa.europa.eu/erules-export">
+  <!--
+    EASA eRules XML Export 1.0.0 - Schema Definition
+    June 2022
+  -->
+  <xs:import namespace="http://schemas.microsoft.com/office/2006/xmlPackage"/>
+  <xs:element name="document" type="document-type"/>
+
+  <xs:complexType name="document-type">
+    <xs:sequence>
+      <xs:element name="frontmatter" type="frontback-type" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="toc" type="toc-type" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="backmatter" type="frontback-type" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="document-metadata"/>
+    <xs:attributeGroup ref="topic-metadata"/>
+  </xs:complexType>
+
+  <xs:complexType name="frontback-type">
+    <xs:attributeGroup ref="sdt"/>
+  </xs:complexType>
+
+  <xs:complexType name="toc-type">
+    <xs:choice maxOccurs="unbounded" minOccurs="0">
+      <xs:element name="toc" type="toc-type" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="heading" type="heading-type" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="topic" type="topic-type" minOccurs="0" maxOccurs="unbounded"/>      
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:complexType name="topic-type">
+    <xs:attributeGroup ref="sdt"/>
+    <xs:attributeGroup ref="title"/>
+    <xs:attributeGroup ref="topic-metadata"/>
+  </xs:complexType>
+
+  <xs:complexType name="heading-type">
+    <xs:attributeGroup ref="sdt"/>
+    <xs:attribute name="title" type="xs:string"/>
+  </xs:complexType>
+  
+  <xs:attributeGroup name="topic-metadata">
+    <xs:attribute name="ERulesId" type="xs:string"/>
+    <xs:attribute name="Domain" type="xs:string"/>
+    <xs:attribute name="ActivityType" type="xs:string"/>
+    <xs:attribute name="AircraftCategory" type="xs:string"/>
+    <xs:attribute name="AircraftUse" type="xs:string"/>
+    <xs:attribute name="AmendedBy" type="xs:string"/>
+    <xs:attribute name="ApplicabilityDate" type="xs:string"/>
+    <xs:attribute name="EntryIntoForceDate" type="xs:string"/>
+    <xs:attribute name="EquivalentForeignRegulation" type="xs:string"/>
+    <xs:attribute name="ICAOReference" type="xs:string"/>
+    <xs:attribute name="Keywords" type="xs:string"/>
+    <xs:attribute name="RegistryState" type="xs:string"/>
+    <xs:attribute name="RegulatedEntity" type="xs:string"/>
+    <xs:attribute name="RegulatorySource" type="xs:string"/>
+    <xs:attribute name="RegulatorySubject" type="xs:string"/>
+    <xs:attribute name="TechnicalSubjectMatter" type="xs:string"/>
+    <xs:attribute name="TypeOfContent" type="xs:string"/>
+    <xs:attribute name="ParentIR" type="xs:string"/>
+    <xs:attribute name="EASACategory" type="xs:string"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="sdt">
+    <xs:attribute name="sdt-id" type="xs:string"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="document-metadata">
+    <xs:attribute name="guid" type="xs:string"/>
+    <xs:attribute name="pub-time" type="xs:string"/>
+    <xs:attribute name="map-url" type="xs:string"/>
+    <xs:attribute name="pub-template-url" type="xs:string"/>
+    <xs:attribute name="xslt-url" type="xs:string"/>
+    <xs:attribute name="source-title" type="xs:string"/>
+  </xs:attributeGroup>
+
+  <xs:attributeGroup name="title">
+    <xs:attribute name="source-title" type="xs:string"/>
+  </xs:attributeGroup>
+
+</xs:schema>
