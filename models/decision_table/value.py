@@ -103,15 +103,26 @@ class ApplicableValue(Value):
         return "Applicable" if self.applicable else "Not applicable"
 
 
+class TagValue(Value):
+    kind: Literal["tag_value"] = "tag_value"
+    tag: str
+
+    def get_calculated_value(self, obj: Any):
+        return self.tag
+
+    def __str__(self):
+        return self.tag
+
+
 class NoneValue(Value):
     kind: Literal["none_value"] = "none_value"
-    phrase: str = "No modification"
+    phrase: str = "Do nothing"
 
     def get_calculated_value(self, obj: Any):
         return None
 
     def __str__(self):
-        return "Do nothing"
+        return self.phrase
 
     def __bool__(self):
         return False
