@@ -8,10 +8,10 @@ Git history.
 
 - `codex/easa-documentary-schema-20261010` (`c4c9c7b`) adds ten documentary
   EASA FTL schema families, deterministic JSON exports, source and gap
-  references, a gap analysis, and 16 schema tests.
+  references, a gap analysis, and schema tests.
 - `codex/easa-source-model-explorer-20261010` (`90394a2`) adds a React browser
   for one pinned EASA source, five smaller draft models, model-to-paragraph
-  links, a generated catalogue, and 11 catalogue tests. The catalogue has 74
+  links, a generated catalogue, and catalogue tests. The catalogue has 74
   topics, 1,137 source paragraphs, and 9 tables.
 
 The ten schema families and five browser models serve separate purposes and
@@ -55,3 +55,8 @@ npm run build
 
 Validation records should identify the exact Python and Node versions used.
 The generated `web/dist` directory is ignored by Git.
+
+For this consolidation, Python 3.14.7 ran the combined suite successfully:
+17 tests passed. Both export commands completed without changing tracked
+outputs. `npm ci` and `npm run build` completed successfully with Vite 8.3.3.
+The browser build used Node.js 24.19.0 and npm 11.9.0.
