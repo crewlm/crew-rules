@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { loadCatalogue, findParagraph, findTopicForParagraph, linksForParagraph } from './data.js';
 import { DocumentPane } from './components/DocumentPane.jsx';
 import { ModelPane } from './components/ModelPane.jsx';
+import { RuleWorkshop } from './components/RuleWorkshop.jsx';
 
 function readLocation() {
   const params = new URLSearchParams(window.location.search);
@@ -13,6 +14,7 @@ export default function App() {
   const [error, setError] = useState('');
   const [location, setLocation] = useState(readLocation);
   const [activeMobilePane, setActiveMobilePane] = useState('source');
+  const [activeView, setActiveView] = useState('explorer');
   const paragraphRefs = useRef(new Map());
   const [revealRevision, setRevealRevision] = useState(0);
   const [isMobile, setIsMobile] = useState(() => window.matchMedia('(max-width: 680px)').matches);
@@ -119,8 +121,13 @@ export default function App() {
       <header className="topbar">
         <a className="brand" href="?" onClick={(event) => { event.preventDefault(); resetLocation(); }}>Crew Rules</a>
         <div className="topbar-divider" />
-        <div className="topbar-label">Requirements <span aria-hidden="true">↔</span> Rule model</div>
+        <nav className="view-tabs" aria-label="Workspace">
+          <button className={activeView === 'explorer' ? 'active' : ''} onClick={() => setActiveView('explorer')}>Source explorer</button>
+          <button className={activeView === 'workshop' ? 'active' : ''} onClick={() => setActiveView('workshop')}>Rule workshop</button>
+        </nav>
       </header>
+      {activeView === 'workshop' && <RuleWorkshop models={models} links={links} document={currentDocument} catalogueCommit="ac94f6e092555931781c31e23848b0af5aee295b" />}
+      {activeView === 'explorer' && <>
       {invalidSelection && <div className="notice notice-error" role="alert">
         <span>The URL points to an item that is not in this catalogue.</span>
         <button className="text-button" onClick={resetLocation}>Reset to a valid selection</button>
@@ -156,6 +163,7 @@ export default function App() {
           document={currentDocument}
         />
       </div>
+      </>}
     </main>
   );
 }
