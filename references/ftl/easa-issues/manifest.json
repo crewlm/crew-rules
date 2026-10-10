@@ -1,0 +1,27 @@
+[
+  {
+    "file": "shared-definitions.body.md",
+    "slug": "shared-definitions",
+    "title": "Schema: shared typed definitions and stable references"
+  },
+  {
+    "file": "rule-relationships.body.md",
+    "slug": "rule-relationships",
+    "title": "Schema: joint rule groups, prerequisites and derogation relationships"
+  },
+  {
+    "file": "temporal-collection-definitions.body.md",
+    "slug": "temporal-collection-definitions",
+    "title": "Schema: temporal and collection definitions for qualifying intervals"
+  },
+  {
+    "file": "source-bindings.body.md",
+    "slug": "source-bindings",
+    "title": "Schema: source and interpretation bindings for model elements"
+  },
+  {
+    "file": "qualitative-obligations.body.md",
+    "slug": "qualitative-obligations",
+    "title": "Schema: qualitative and procedural obligations without numerical bounds"
+  }
+]

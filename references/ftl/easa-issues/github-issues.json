@@ -1,0 +1,220 @@
+{
+  "repository": "crewlm/crew-rules",
+  "assessment_date": "2026-10-08",
+  "purpose": "Documentary schema expressiveness; evaluation belongs to an external engine.",
+  "open_schema_issues": [
+    {
+      "slug": "shared-definitions",
+      "title": "Schema: shared typed definitions and stable references",
+      "issue_number": 11,
+      "url": "https://github.com/crewlm/crew-rules/issues/11",
+      "state": "open",
+      "families": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "slug": "rule-relationships",
+      "title": "Schema: joint rule groups, prerequisites and derogation relationships",
+      "issue_number": 12,
+      "url": "https://github.com/crewlm/crew-rules/issues/12",
+      "state": "open",
+      "families": [
+        3,
+        5,
+        6,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "slug": "temporal-collection-definitions",
+      "title": "Schema: temporal and collection definitions for qualifying intervals",
+      "issue_number": 13,
+      "url": "https://github.com/crewlm/crew-rules/issues/13",
+      "state": "open",
+      "families": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "slug": "source-bindings",
+      "title": "Schema: source and interpretation bindings for model elements",
+      "issue_number": 14,
+      "url": "https://github.com/crewlm/crew-rules/issues/14",
+      "state": "open",
+      "families": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "slug": "qualitative-obligations",
+      "title": "Schema: qualitative and procedural obligations without numerical bounds",
+      "issue_number": 15,
+      "url": "https://github.com/crewlm/crew-rules/issues/15",
+      "state": "open",
+      "families": [
+        1,
+        9
+      ]
+    }
+  ],
+  "superseded_issues": [
+    {
+      "issue_number": 1,
+      "url": "https://github.com/crewlm/crew-rules/issues/1",
+      "title": "EASA FTL 01: Complete modelling of Cumulative duty limits",
+      "state": "closed",
+      "state_reason": "not_planned",
+      "replacement_issues": [
+        11,
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "issue_number": 2,
+      "url": "https://github.com/crewlm/crew-rules/issues/2",
+      "title": "EASA FTL 02: Complete modelling of Cumulative operating flight-time limits",
+      "state": "closed",
+      "state_reason": "not_planned",
+      "replacement_issues": [
+        11,
+        13,
+        14
+      ]
+    },
+    {
+      "issue_number": 3,
+      "url": "https://github.com/crewlm/crew-rules/issues/3",
+      "title": "EASA FTL 03: Complete modelling of Basic maximum daily flight duty period",
+      "state": "closed",
+      "state_reason": "not_planned",
+      "replacement_issues": [
+        11,
+        12,
+        13,
+        14
+      ]
+    },
+    {
+      "issue_number": 4,
+      "url": "https://github.com/crewlm/crew-rules/issues/4",
+      "title": "EASA FTL 04: Complete modelling of Positioning accounting",
+      "state": "closed",
+      "state_reason": "not_planned",
+      "replacement_issues": [
+        11,
+        13,
+        14
+      ]
+    },
+    {
+      "issue_number": 5,
+      "url": "https://github.com/crewlm/crew-rules/issues/5",
+      "title": "EASA FTL 05: Complete modelling of Minimum rest at home base",
+      "state": "closed",
+      "state_reason": "not_planned",
+      "replacement_issues": [
+        11,
+        12,
+        13,
+        14
+      ]
+    },
+    {
+      "issue_number": 6,
+      "url": "https://github.com/crewlm/crew-rules/issues/6",
+      "title": "EASA FTL 06: Complete modelling of Minimum rest away from home base",
+      "state": "closed",
+      "state_reason": "not_planned",
+      "replacement_issues": [
+        11,
+        12,
+        13,
+        14
+      ]
+    },
+    {
+      "issue_number": 7,
+      "url": "https://github.com/crewlm/crew-rules/issues/7",
+      "title": "EASA FTL 07: Complete modelling of Recurrent extended recovery rest",
+      "state": "closed",
+      "state_reason": "not_planned",
+      "replacement_issues": [
+        11,
+        13,
+        14
+      ]
+    },
+    {
+      "issue_number": 8,
+      "url": "https://github.com/crewlm/crew-rules/issues/8",
+      "title": "EASA FTL 08: Complete modelling of Split duty",
+      "state": "closed",
+      "state_reason": "not_planned",
+      "replacement_issues": [
+        11,
+        12,
+        13,
+        14
+      ]
+    },
+    {
+      "issue_number": 9,
+      "url": "https://github.com/crewlm/crew-rules/issues/9",
+      "title": "EASA FTL 09: Complete modelling of Standby accounting and FDP impact",
+      "state": "closed",
+      "state_reason": "not_planned",
+      "replacement_issues": [
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "issue_number": 10,
+      "url": "https://github.com/crewlm/crew-rules/issues/10",
+      "title": "EASA FTL 10: Complete modelling of Augmentation and in-flight rest",
+      "state": "closed",
+      "state_reason": "not_planned",
+      "replacement_issues": [
+        11,
+        12,
+        13,
+        14
+      ]
+    }
+  ]
+}

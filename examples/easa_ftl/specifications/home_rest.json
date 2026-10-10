@@ -1,0 +1,145 @@
+{
+  "concepts": {
+    "preceding_duty.duration": {
+      "meaning": "Duration of the full duty preceding the rest interval.",
+      "unit": "hours"
+    },
+    "rest.accommodation_derogation_claimed": {
+      "meaning": "Whether the operator claims the home-base suitable-accommodation derogation; this claim alone does not select the shorter rest floor."
+    },
+    "rest.away_route": {
+      "meaning": "Whether rest occurs during an away-route rotation; away-route rest is outside this home-base rule family."
+    },
+    "rest.duration": {
+      "meaning": "Duration of the qualifying rest interval before the succeeding home-base FDP.",
+      "unit": "hours"
+    },
+    "rest.suitable_accommodation": {
+      "meaning": "Whether the operator provides the crew member with suitable accommodation at home base under ORO.FTL.105(4): a separate room in a quiet environment, equipped with a bed, sufficient ventilation, temperature and light controls, and access to food and drink."
+    },
+    "succeeding_duty.base_context": {
+      "meaning": "Whether the FDP following this rest starts at the crew member's home base; the represented rule applies when the value is home_base."
+    }
+  },
+  "documentation_note": "The 10-hour branch requires both an explicit operator claim and suitable accommodation provided at home base; neither fact alone is sufficient. The relationship graph connecting this branch to the complete F06 sleep/travel group is missing, including the protected-sleep opportunity and travel/physiological allowance concepts. Away-route rest remains outside this family's scope. The schema has no data-input contract or prepared-fact validator; continuity and qualifying-rest derivation require shared temporal definitions.",
+  "number": 5,
+  "projections": [],
+  "represented": [
+    "Home-base rest before an FDP",
+    "Ordinary branch requires at least max(preceding full-duty duration, 12 hours)",
+    "When the derogation is claimed and suitable accommodation is provided at home base, the duration floor is 10 hours and remains subject to the preceding-full-duty maximum",
+    "Home-base applicability guard"
+  ],
+  "rules": [
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside the declared home-base applicability"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "home_base"
+                },
+                "field": "succeeding_duty.base_context",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Succeeding FDP starts at home base"
+            }
+          }
+        ]
+      },
+      "id": "ad226802-a116-5914-a5de-cd2516e85ec0",
+      "limit": null,
+      "limit_updates": [],
+      "name": "EASA ordinary home-base minimum rest",
+      "requirement": {
+        "default": {
+          "duration": "PT12H",
+          "kind": "duration_value",
+          "phrase": "Ordinary home-base floor"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "rest.accommodation_derogation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "rest.suitable_accommodation",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H",
+              "kind": "duration_value",
+              "phrase": "Home-base suitable-accommodation derogation floor"
+            }
+          }
+        ]
+      },
+      "requirement_updates": [
+        {
+          "method": "max",
+          "name": "Raise the twelve-hour floor to preceding full-duty duration",
+          "table": {
+            "default": {
+              "clamp_lower": null,
+              "clamp_upper": null,
+              "field": "preceding_duty.duration",
+              "kind": "field_value",
+              "multiplier": 1.0,
+              "offset": 0.0,
+              "phrase": "Preceding full-duty duration"
+            },
+            "items": []
+          }
+        }
+      ],
+      "scope": "employee_rest_time",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "rest.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Qualifying rest duration before succeeding FDP"
+        },
+        "items": []
+      },
+      "value_updates": []
+    }
+  ],
+  "schema_gaps": [
+    "shared-definitions",
+    "rule-relationships",
+    "temporal-collection-definitions",
+    "source-bindings"
+  ],
+  "slug": "home_rest",
+  "sources": [
+    "ORO.FTL.235(a), EASA Easy Access Rules for Air Operations, Revision 24 (March 2026), PDF p. 871.",
+    "GM1 ORO.FTL.235(a)(2), Revision 24, PDF p. 872.",
+    "ORO.FTL.105(21), Revision 24, PDF p. 856."
+  ],
+  "title": "Minimum rest at home base"
+}
