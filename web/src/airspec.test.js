@@ -2,13 +2,33 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { diffRuleDraft, exportRuleDraft, makeRuleDraft, validateRuleDraft } from './airspec.js';
-import { clearDraftLocally, loadDraftLocally, saveDraftLocally } from './draftStorage.js';
+import { clearDraftLocally, loadDraftLocally, loadDraftRevisionLocally, saveDraftLocally } from './draftStorage.js';
 
 const catalogue = JSON.parse(await readFile(new URL('../public/catalogue.json', import.meta.url), 'utf8'));
+const parityCases = JSON.parse(await readFile(new URL('../../tests/catalogue/airspec_parity_cases.json', import.meta.url), 'utf8'));
 const source = catalogue.documents[0];
 const model = catalogue.models[0];
 const links = catalogue.links.filter((link) => link.model_id === model.id);
 const draft = makeRuleDraft(model, links, source);
+
+function parityRule(testCase) {
+  const rule = structuredClone(model.model);
+  if (testCase.kind === 'number') {
+    rule.value.default = { kind: 'number_value', number: testCase.value };
+  } else if (testCase.kind === 'duration') {
+    rule.value.default = { kind: 'duration_value', duration: testCase.value };
+  } else {
+    const comparison = testCase.kind === 'time'
+      ? { kind: 'time_window_overlap_comparison', start: '09:00', end: '10:00' }
+      : testCase.kind === 'datetime'
+        ? { kind: 'range_datetime_comparison', lower: '2026-01-01T00:00:00Z', upper: '2026-01-02T00:00:00Z' }
+        : { kind: testCase.comparisonKind, items: [] };
+    const field = testCase.field ?? (testCase.kind === 'datetime' ? 'lower' : 'items');
+    comparison[field] = testCase.value;
+    rule.value.items = [{ condition: [{ field: 'duration', comparison }], value: rule.value.default }];
+  }
+  return { ...draft, rule };
+}
 
 test('malformed drafts report structural errors separately from unsupported semantics', () => {
   const result = validateRuleDraft({ ...draft, rule: { ...draft.rule, scope: 'unknown', value: null } });
@@ -30,6 +50,18 @@ test('deep table shape, stable IDs, and period-scope requirements are checked', 
   assert.ok(result.errors.some((item) => item.path === 'rule.value'));
   assert.ok(result.errors.some((item) => item.path.includes('condition[0]')));
   assert.ok(result.errors.some((item) => item.path === 'rule.time_period'));
+});
+
+test('time period integer inputs follow Python AnyRule integer coercion', () => {
+  const integerRule = structuredClone(draft.rule);
+  integerRule.scope = 'employee_time_period';
+  integerRule.time_period = { anchor: 'day', unit: 'hour', duration: 1 };
+  for (const duration of [12, 12.0, '12', '1.0', '1_0', ' 1 ']) {
+    assert.equal(validateRuleDraft({ ...draft, rule: { ...integerRule, time_period: { ...integerRule.time_period, duration } } }).status, 'valid_non_executable', String(duration));
+  }
+  for (const duration of [1.5, '0x10', '1e3', null]) {
+    assert.equal(validateRuleDraft({ ...draft, rule: { ...integerRule, time_period: { ...integerRule.time_period, duration } } }).status, 'invalid', String(duration));
+  }
 });
 
 test('AnyRule structural errors stay invalid and separate from engine support', () => {
@@ -54,6 +86,15 @@ test('AnyRule structural errors stay invalid and separate from engine support', 
   throwingUpdate.rule.value_updates = [{ name: 'x', table: {} }];
   assert.doesNotThrow(() => validateRuleDraft(throwingUpdate));
   assert.equal(validateRuleDraft(throwingUpdate).status, 'invalid');
+});
+
+test('67 canonical numeric, duration, time, datetime, and set cases match Python AnyRule', () => {
+  assert.equal(parityCases.length, 67);
+  for (const testCase of parityCases) {
+    const result = validateRuleDraft(parityRule(testCase));
+    assert.equal(result.status !== 'invalid', testCase.valid, testCase.name);
+    assert.equal(result.unsupported.length > 0, testCase.valid, `${testCase.name}: unsupported status tracks structural validity`);
+  }
 });
 
 test('updates require their matching base requirement or limit', () => {
@@ -132,4 +173,7 @@ test('cancel restores a saved revision and a fresh session reloads it from local
   assert.equal(unsaved.rule.name, 'Unsaved change');
   clearDraftLocally(storage, draft.definitionId);
   assert.equal(loadDraftLocally(storage, draft.definitionId), null);
+  assert.equal(loadDraftRevisionLocally(storage, draft.definitionId), 3, 'clearing source-backed draft state must preserve its revision high-water mark');
+  saveDraftLocally(storage, { ...draft, revision: 1 });
+  assert.equal(loadDraftRevisionLocally(storage, draft.definitionId), 3, 'storing a reset revision must not lower the high-water mark');
 });

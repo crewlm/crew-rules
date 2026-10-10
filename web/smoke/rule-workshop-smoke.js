@@ -78,6 +78,16 @@ try {
   await page.getByRole('button', { name: 'Cancel edits' }).click();
   assert.deepEqual(JSON.parse(await editor.inputValue()), originalRule);
   assert.equal(await page.getByText(/obsolete-draft/).count(), 0);
+  assert.equal(await page.evaluate((id) => localStorage.getItem(`airspec.rule-draft:${id}`), firstModel.id), null, 'invalid stored data should be discarded before it can block or poison a new revision');
+
+  // Open a second tab against the same empty local state before the first tab saves.
+  const stalePage = await context.newPage();
+  const stalePageErrors = [];
+  stalePage.on('pageerror', (error) => stalePageErrors.push(error.message));
+  await stalePage.goto(baseUrl, { waitUntil: 'networkidle' });
+  await stalePage.getByRole('button', { name: 'Rule workshop', exact: true }).click();
+  const staleEditor = stalePage.getByRole('textbox', { name: 'AnyRule JSON draft' });
+  assert.equal(JSON.parse(await staleEditor.inputValue()).name, firstModel.name);
 
   // Invalid JSON is a parse failure, distinct from a valid but unsupported draft.
   await editor.fill('{');
@@ -114,6 +124,10 @@ try {
     ['missing update default', (rule) => { rule.value_updates = [{ name: 'x', table: { items: [] } }]; }],
     ['requirement update without requirement', (rule) => { rule.limit = structuredClone(rule.requirement); rule.requirement = null; rule.requirement_updates = [{ name: 'x', table: { default: { kind: 'none_value' } } }]; }],
     ['limit update without limit', (rule) => { rule.limit_updates = [{ name: 'x', table: { default: { kind: 'none_value' } } }]; }],
+    ['invalid time and datetime strings', (rule) => { rule.value.items = [{ condition: [{ field: 'start', comparison: { kind: 'time_window_overlap_comparison', start: '25:99', end: 'garbage' } }], value: rule.value.default }]; }],
+    ['unhashable set item', (rule) => { rule.value.items = [{ condition: [{ field: 'status', comparison: { kind: 'equal_set_comparison', items: [{}] } }], value: rule.value.default }]; }],
+    ['hex numeric string', (rule) => { rule.value.default = { kind: 'number_value', number: '0x10' }; }],
+    ['invalid duration string', (rule) => { rule.value.default = { kind: 'duration_value', duration: 'pt12h' }; }],
   ]) {
     const malformedRule = structuredClone(originalRule);
     mutate(malformedRule);
@@ -160,6 +174,19 @@ try {
   assert.deepEqual(exported.provenance, provenance, 'export must preserve the source provenance');
   assert.equal(exported.validation.status, 'valid_non_executable');
 
+  // Invalid time values cannot be exported or persisted over the saved valid revision.
+  const invalidTime = structuredClone(originalRule);
+  invalidTime.value.items = [{ condition: [{ field: 'start', comparison: { kind: 'time_window_overlap_comparison', start: '25:99', end: 'garbage' } }], value: originalRule.value.default }];
+  await editor.fill(JSON.stringify(invalidTime, null, 2));
+  await page.getByText('Needs correction', { exact: true }).waitFor();
+  assert.equal(await page.getByRole('button', { name: 'Save locally' }).isDisabled(), true);
+  assert.equal(await page.getByRole('button', { name: 'Export versioned JSON' }).isDisabled(), true);
+  assert.equal(await page.getByText(/ENGINE_DISCONNECTED/).count(), 0);
+  const persistedDuringInvalid = await page.evaluate((id) => JSON.parse(localStorage.getItem(`airspec.rule-draft:${id}`)), firstModel.id);
+  assert.equal(persistedDuringInvalid.revision, 1);
+  assert.deepEqual(persistedDuringInvalid.rule, originalRule);
+  await editor.fill(JSON.stringify(originalRule, null, 2));
+
   // Dirty edits survive definition and workspace navigation.
   const changed = structuredClone(originalRule);
   changed.name = `${originalRule.name} — unsaved smoke edit`;
@@ -189,14 +216,76 @@ try {
   assert.equal(secondDownload.suggestedFilename(), firstDownload.suggestedFilename());
   assert.deepEqual(secondExport, firstExport, 'repeated export of the same saved revision must keep identity and contents coherent');
 
-  const unsaved = { ...changed, name: 'Unsaved smoke edit' };
+  // A stale tab must not overwrite a newer revision, then can explicitly restore and edit it.
+  const staleEdit = structuredClone(JSON.parse(await staleEditor.inputValue()));
+  staleEdit.name = 'Stale-tab edit';
+  await staleEditor.fill(JSON.stringify(staleEdit, null, 2));
+  await stalePage.getByRole('button', { name: 'Save locally' }).click();
+  await stalePage.getByText(/changed in another tab/).waitFor();
+  const persistedAfterStaleSave = await page.evaluate((id) => JSON.parse(localStorage.getItem(`airspec.rule-draft:${id}`)), firstModel.id);
+  assert.equal(persistedAfterStaleSave.revision, 2);
+  assert.equal(persistedAfterStaleSave.rule.name, changed.name);
+  const unexpectedDownload = stalePage.waitForEvent('download', { timeout: 300 }).then(() => true, () => false);
+  await stalePage.getByRole('button', { name: 'Export versioned JSON' }).click();
+  assert.equal(await unexpectedDownload, false, 'stale export must be blocked instead of generating a colliding revision');
+  const persistedAfterStaleExport = await page.evaluate((id) => JSON.parse(localStorage.getItem(`airspec.rule-draft:${id}`)), firstModel.id);
+  assert.equal(persistedAfterStaleExport.revision, 2);
+  assert.equal(persistedAfterStaleExport.rule.name, changed.name);
+
+  // The reported A -> Reload source -> B flow must allocate the next revision.
+  await page.getByRole('button', { name: 'Reload source' }).click();
+  assert.equal(JSON.parse(await editor.inputValue()).name, firstModel.name);
+  const afterReset = structuredClone(JSON.parse(await editor.inputValue()));
+  afterReset.name = 'Edited after source reset';
+  await editor.fill(JSON.stringify(afterReset, null, 2));
+  const resetDownloadPromise = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Export versioned JSON' }).click();
+  const resetDownload = await resetDownloadPromise;
+  const resetExport = JSON.parse(await readFile(await resetDownload.path(), 'utf8'));
+  assert.equal(resetExport.revision, 3, 'reload source must preserve revision 2 as the high-water mark');
+  assert.equal(resetExport.rule.name, afterReset.name);
+
+  // The stale tab can restore the reset edit, then create the next revision.
+  await stalePage.getByRole('button', { name: 'Restore saved' }).click();
+  assert.equal(JSON.parse(await staleEditor.inputValue()).name, afterReset.name);
+  const concurrentEdit = structuredClone(JSON.parse(await staleEditor.inputValue()));
+  concurrentEdit.name = 'Concurrent-tab edit';
+  await staleEditor.fill(JSON.stringify(concurrentEdit, null, 2));
+  const concurrentDownloadPromise = stalePage.waitForEvent('download');
+  await stalePage.getByRole('button', { name: 'Export versioned JSON' }).click();
+  const concurrentDownload = await concurrentDownloadPromise;
+  const concurrentExport = JSON.parse(await readFile(await concurrentDownload.path(), 'utf8'));
+  assert.equal(concurrentExport.revision, 4);
+  assert.equal(concurrentExport.rule.name, concurrentEdit.name);
+
+  // A stale source reset must not erase a newer other-tab revision.
+  await page.getByRole('button', { name: 'Reload source' }).click();
+  await page.getByText(/changed in another tab/).waitFor();
+  const persistedAfterStaleReset = await page.evaluate((id) => JSON.parse(localStorage.getItem(`airspec.rule-draft:${id}`)), firstModel.id);
+  assert.equal(persistedAfterStaleReset.revision, 4);
+  assert.equal(persistedAfterStaleReset.rule.name, concurrentEdit.name);
+  await page.getByRole('button', { name: 'Restore saved' }).click();
+  assert.equal(JSON.parse(await editor.inputValue()).name, concurrentEdit.name);
+  await page.getByRole('button', { name: 'Reload source' }).click();
+  assert.equal(JSON.parse(await editor.inputValue()).name, firstModel.name);
+  const afterSecondReset = structuredClone(JSON.parse(await editor.inputValue()));
+  afterSecondReset.name = 'Edited after second source reset';
+  await editor.fill(JSON.stringify(afterSecondReset, null, 2));
+  const secondResetDownloadPromise = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Export versioned JSON' }).click();
+  const secondResetDownload = await secondResetDownloadPromise;
+  const secondResetExport = JSON.parse(await readFile(await secondResetDownload.path(), 'utf8'));
+  assert.equal(secondResetExport.revision, 5, 'source resets must preserve the maximum issued revision');
+  assert.equal(secondResetExport.rule.name, afterSecondReset.name);
+
+  const unsaved = { ...afterSecondReset, name: 'Unsaved smoke edit' };
   await editor.fill(JSON.stringify(unsaved, null, 2));
   await page.getByRole('button', { name: 'Cancel edits' }).click();
-  assert.equal(JSON.parse(await editor.inputValue()).name, changed.name, 'cancel should restore the persisted export revision');
+  assert.equal(JSON.parse(await editor.inputValue()).name, afterSecondReset.name, 'cancel should restore the persisted export revision');
   await page.reload({ waitUntil: 'networkidle' });
   await page.getByRole('button', { name: 'Rule workshop', exact: true }).click();
   await page.getByText('Restored the locally saved revision.', { exact: true }).waitFor();
-  assert.equal(JSON.parse(await editor.inputValue()).name, changed.name, 'saved revision should survive a page reload');
+  assert.equal(JSON.parse(await editor.inputValue()).name, afterSecondReset.name, 'saved revision should survive a page reload');
   await page.setViewportSize({ width: 390, height: 844 });
   await page.waitForTimeout(100);
   const mobileGeometry = await getWorkshopGeometry(page);
@@ -205,7 +294,7 @@ try {
   assert.ok(mobileGeometry.workshop.height > 500 && mobileGeometry.workshop.bottom <= mobileGeometry.app.bottom + 1, 'mobile workshop should fill the available vertical panel');
   assert.ok(mobileGeometry.bodyScrollHeight > mobileGeometry.bodyClientHeight, 'mobile workshop body should scroll its content instead of pushing the panel off screen');
   assert.ok(mobileGeometry.viewport.bodyWidth <= mobileGeometry.viewport.width, 'mobile layout should not overflow horizontally');
-  assert.ok(pageErrors.length === 0, `page had uncaught errors: ${pageErrors.join('; ')}`);
+  assert.ok(pageErrors.length === 0 && stalePageErrors.length === 0, `page had uncaught errors: ${[...pageErrors, ...stalePageErrors].join('; ')}`);
   console.log('Rule Workshop browser smoke checks passed.');
 } finally {
   await browser?.close();

@@ -13,12 +13,30 @@ from models.rule import AnyRule
 CATALOGUE = json.loads(
     (Path(__file__).parents[2] / "web/public/catalogue.json").read_text()
 )
+PARITY_CASES = json.loads(Path(__file__).with_name("airspec_parity_cases.json").read_text())
 BASE_RULE = CATALOGUE["models"][0]["model"]
 
 
 def test_python_anyrule_accepts_every_catalogue_model():
     for model in CATALOGUE["models"]:
         assert AnyRule.validate_python(model["model"])
+
+
+@pytest.mark.parametrize("duration", [12, 12.0, "12", "1.0", "1_0", " 1 "])
+def test_python_anyrule_accepts_integer_time_period_coercions(duration):
+    rule = deepcopy(BASE_RULE)
+    rule["scope"] = "employee_time_period"
+    rule["time_period"] = {"anchor": "day", "unit": "hour", "duration": duration}
+    assert AnyRule.validate_python(rule)
+
+
+@pytest.mark.parametrize("duration", [1.5, "0x10", "1e3", None])
+def test_python_anyrule_rejects_invalid_integer_time_period_values(duration):
+    rule = deepcopy(BASE_RULE)
+    rule["scope"] = "employee_time_period"
+    rule["time_period"] = {"anchor": "day", "unit": "hour", "duration": duration}
+    with pytest.raises(ValidationError):
+        AnyRule.validate_python(rule)
 
 
 def test_python_anyrule_defaults_allow_omitted_table_items_and_updates():
@@ -36,6 +54,44 @@ def invalid_rule(mutator):
     rule = deepcopy(BASE_RULE)
     mutator(rule)
     return rule
+
+
+def parity_rule(case):
+    rule = deepcopy(BASE_RULE)
+    if case["kind"] == "number":
+        rule["value"]["default"] = {"kind": "number_value", "number": case["value"]}
+    elif case["kind"] == "duration":
+        rule["value"]["default"] = {
+            "kind": "duration_value",
+            "duration": case["value"],
+        }
+    else:
+        comparison = (
+            {"kind": "time_window_overlap_comparison", "start": "09:00", "end": "10:00"}
+            if case["kind"] == "time"
+            else {"kind": "range_datetime_comparison", "lower": "2026-01-01T00:00:00Z", "upper": "2026-01-02T00:00:00Z"}
+            if case["kind"] == "datetime"
+            else {"kind": case["comparisonKind"], "items": []}
+        )
+        field = case.get("field", "lower" if case["kind"] == "datetime" else "items")
+        comparison[field] = case["value"]
+        rule["value"]["items"] = [
+            {
+                "condition": [{"field": "duration", "comparison": comparison}],
+                "value": rule["value"]["default"],
+            }
+        ]
+    return rule
+
+
+@pytest.mark.parametrize("case", PARITY_CASES, ids=lambda case: case["name"])
+def test_js_anyrule_validator_cases_match_python_parser(case):
+    try:
+        AnyRule.validate_python(parity_rule(case))
+        python_accepts = True
+    except ValidationError:
+        python_accepts = False
+    assert python_accepts is case["valid"]
 
 
 @pytest.mark.parametrize(

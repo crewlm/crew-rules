@@ -33,7 +33,10 @@ from structurally invalid data and valid non-executable drafts, confirms invalid
 drafts cannot be saved or exported, verifies malformed update tables do not
 crash the React root, and checks stale-storage rejection. It also checks
 per-definition and workspace-tab edit retention, automatic revision persistence
-before export, stable identity across repeated exports, source provenance, and
-page reload restoration.
+before export, the revision high-water mark across source resets, stale writes
+and resets from a second tab, stable identity across repeated exports, source
+provenance, and page reload restoration. The AirSpec unit and catalogue Python
+tests also share 67 numeric, duration, time, datetime, and hashable-set cases;
+Python's `AnyRule` parser is the acceptance oracle for the browser validator.
 
 The existing fast AirSpec unit checks remain available with `npm test`.

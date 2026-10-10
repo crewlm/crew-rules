@@ -1,12 +1,21 @@
 import { useMemo, useState } from 'react';
 import { findParagraph, findTopicForParagraph, linksForModel } from '../data.js';
 import { diffRuleDraft, exportRuleDraft, makeRuleDraft, validateRuleDraft } from '../airspec.js';
-import { clearDraftLocally, loadDraftLocally, saveDraftLocally } from '../draftStorage.js';
+import { clearDraftLocally, loadDraftLocally, loadDraftRevisionLocally, rememberDraftRevisionLocally, saveDraftLocally } from '../draftStorage.js';
 
 function isValidStoredDraft(value, baseline) {
   return value && value.definitionId === baseline.definitionId
     && value.basedOn?.sourceHash === baseline.basedOn.sourceHash
     && validateRuleDraft(value).status === 'valid_non_executable';
+}
+
+function readCurrentStoredDraft(storage, definitionId, baseline) {
+  const stored = loadDraftLocally(storage, definitionId);
+  if (stored !== null && !isValidStoredDraft(stored, baseline)) {
+    clearDraftLocally(storage, definitionId);
+    return null;
+  }
+  return stored;
 }
 
 function initialDraftState(models, links, document, catalogueCommit) {
@@ -18,6 +27,8 @@ function initialDraftState(models, links, document, catalogueCommit) {
     const baseline = makeRuleDraft(model, links, document, catalogueCommit);
     const stored = loadDraftLocally(localStorage, model.id);
     const validStored = isValidStoredDraft(stored, baseline) ? stored : null;
+    if (validStored) rememberDraftRevisionLocally(localStorage, model.id, validStored.revision);
+    else clearDraftLocally(localStorage, model.id);
     const draft = validStored ?? baseline;
     drafts[model.id] = draft;
     savedDrafts[model.id] = validStored;
@@ -29,6 +40,16 @@ function initialDraftState(models, links, document, catalogueCommit) {
 
 function setForId(setter, id, value) {
   setter((current) => ({ ...current, [id]: typeof value === 'function' ? value(current[id]) : value }));
+}
+
+function stableJson(value) {
+  if (Array.isArray(value)) return value.map(stableJson);
+  if (value && typeof value === 'object') return Object.fromEntries(Object.keys(value).sort().map((key) => [key, stableJson(value[key])]));
+  return value;
+}
+
+function sameStoredDraft(left, right) {
+  return JSON.stringify(stableJson(left)) === JSON.stringify(stableJson(right));
 }
 
 export function RuleWorkshop({ models, links, document, catalogueCommit }) {
@@ -67,10 +88,20 @@ export function RuleWorkshop({ models, links, document, catalogueCommit }) {
   };
   const commitDraft = (sourceDraft, announce = false) => {
     const currentSaved = savedDrafts[selectedId] ?? null;
+    const latestSaved = readCurrentStoredDraft(localStorage, selectedId, baseline);
+    if (!sameStoredDraft(latestSaved, currentSaved)) {
+      setForId(setNotices, selectedId, 'This draft changed in another tab. Restore the latest saved revision before saving or exporting.');
+      return null;
+    }
     const reference = currentSaved ?? baseline;
     const referenceRule = reference?.rule;
     const changed = referenceRule ? diffRuleDraft(referenceRule, sourceDraft.rule).length > 0 : false;
-    const next = { ...sourceDraft, revision: (reference?.revision ?? sourceDraft.revision ?? 1) + (changed ? 1 : 0) };
+    const highWater = loadDraftRevisionLocally(localStorage, selectedId);
+    const baselineRevision = baseline?.revision ?? sourceDraft.revision ?? 1;
+    const revision = currentSaved
+      ? changed ? Math.max(highWater, currentSaved.revision) + 1 : currentSaved.revision
+      : changed || highWater >= baselineRevision ? Math.max(highWater, baselineRevision) + 1 : baselineRevision;
+    const next = { ...sourceDraft, revision };
     saveDraftLocally(localStorage, next);
     setForId(setSavedDrafts, selectedId, next);
     writeDraft(next, announce ? `Saved locally as revision ${next.revision}.` : '');
@@ -81,7 +112,7 @@ export function RuleWorkshop({ models, links, document, catalogueCommit }) {
     commitDraft(draft, true);
   };
   const restore = () => {
-    const local = loadDraftLocally(localStorage, selectedId);
+    const local = readCurrentStoredDraft(localStorage, selectedId, baseline);
     if (!isValidStoredDraft(local, baseline)) {
       setForId(setSavedDrafts, selectedId, null);
       setForId(setNotices, selectedId, 'No valid saved local revision for this definition.');
@@ -91,12 +122,18 @@ export function RuleWorkshop({ models, links, document, catalogueCommit }) {
     writeDraft(local, `Restored local revision ${local.revision}.`);
   };
   const cancel = () => {
-    const local = loadDraftLocally(localStorage, selectedId);
+    const local = readCurrentStoredDraft(localStorage, selectedId, baseline);
     const validSaved = isValidStoredDraft(local, baseline) ? local : null;
     setForId(setSavedDrafts, selectedId, validSaved);
     writeDraft(validSaved ?? baseline, validSaved ? 'Unsaved edits cancelled; restored the saved revision.' : 'Unsaved edits cancelled; restored the catalogue definition.');
   };
   const reloadSource = () => {
+    const currentSaved = savedDrafts[selectedId] ?? null;
+    const latestSaved = readCurrentStoredDraft(localStorage, selectedId, baseline);
+    if (!sameStoredDraft(latestSaved, currentSaved)) {
+      setForId(setNotices, selectedId, 'This draft changed in another tab. Restore the latest saved revision before reloading the source.');
+      return;
+    }
     clearDraftLocally(localStorage, selectedId);
     setForId(setSavedDrafts, selectedId, null);
     writeDraft(baseline, 'Reloaded the source-backed catalogue definition.');
@@ -104,6 +141,7 @@ export function RuleWorkshop({ models, links, document, catalogueCommit }) {
   const exportDraft = () => {
     if (validation.status !== 'valid_non_executable' || parseError || !draft) return;
     const persisted = commitDraft(draft);
+    if (!persisted) return;
     const blob = new Blob([`${JSON.stringify(exportRuleDraft(persisted), null, 2)}\n`], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const anchor = Object.assign(window.document.createElement('a'), { href: url, download: `${persisted.definitionId}-r${persisted.revision}.airspec.json` });

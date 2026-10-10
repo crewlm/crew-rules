@@ -27,9 +27,9 @@ const COMPARISON_TYPES = {
   gt_number_comparison: { number: 'number' }, lt_number_comparison: { number: 'number' }, range_number_comparison: { lower: 'number', upper: 'number' },
   equal_duration_comparison: { duration: 'duration', tolerance: 'duration?' }, ge_duration_comparison: { duration: 'duration' }, le_duration_comparison: { duration: 'duration' },
   gt_duration_comparison: { duration: 'duration' }, lt_duration_comparison: { duration: 'duration' }, range_duration_comparison: { lower: 'duration', upper: 'duration' },
-  equal_text_comparison: { text: 'string', case_sensitive: 'boolean?' }, regex_text_comparison: { expression: 'string' }, range_datetime_comparison: { lower: 'string', upper: 'string' },
-  time_window_overlap_comparison: { start: 'string', end: 'string', overlap: 'duration?' }, equal_set_comparison: { items: 'array' }, within_set_comparison: { items: 'array' },
-  contain_set_comparison: { items: 'array' }, truth_comparison: {}, false_comparison: {},
+  equal_text_comparison: { text: 'string', case_sensitive: 'boolean?' }, regex_text_comparison: { expression: 'string' }, range_datetime_comparison: { lower: 'datetime', upper: 'datetime' },
+  time_window_overlap_comparison: { start: 'time', end: 'time', overlap: 'duration?' }, equal_set_comparison: { items: 'hashable_array' }, within_set_comparison: { items: 'hashable_array' },
+  contain_set_comparison: { items: 'hashable_array' }, truth_comparison: {}, false_comparison: {},
 };
 const VALUE_TYPES = {
   applicable_value: { applicable: 'boolean' }, number_value: { number: 'number' }, duration_value: { duration: 'duration' },
@@ -119,7 +119,7 @@ export function validateRuleDraft(draft) {
     if (['employee_time_period', 'aircraft_time_period', 'port_time_period'].includes(rule.scope)) {
       const period = rule.time_period;
       if (!period || !['day', 'duty_end', 'duty_start', 'week', 'month', 'year'].includes(period.anchor)
-        || !['minute', 'hour', 'day', 'month', 'year'].includes(period.unit) || !Number.isInteger(period.duration)) {
+        || !['minute', 'hour', 'day', 'month', 'year'].includes(period.unit) || !isPythonInteger(period.duration)) {
         errors.push(issue('rule.time_period', 'TIME_PERIOD_INVALID', 'This scope requires a time_period with a valid anchor, unit, and integer duration.'));
       }
     }
@@ -193,17 +193,126 @@ function validateFieldType(value, expected, path, errors) {
   const kind = expected.replace(/[?]/g, '').replace('|null', '');
   if (optional && value === undefined) return;
   if (nullable && value === null) return;
-  const numeric = (candidate) => typeof candidate === 'number' && Number.isFinite(candidate)
-    || typeof candidate === 'string' && candidate.trim() !== '' && Number.isFinite(Number(candidate));
-  const valid = kind === 'number' ? numeric(value)
+  const valid = kind === 'number' ? isPythonFloat(value)
     : kind === 'string' ? typeof value === 'string'
       : kind === 'boolean' ? typeof value === 'boolean'
-        : kind === 'duration' ? typeof value === 'number' && Number.isFinite(value) || typeof value === 'string' && (numeric(value) || /^-?P(?=.*\d)(?:\d+(?:[.,]\d+)?Y)?(?:\d+(?:[.,]\d+)?M)?(?:\d+(?:[.,]\d+)?W)?(?:\d+(?:[.,]\d+)?D)?(?:T(?:\d+(?:[.,]\d+)?H)?(?:\d+(?:[.,]\d+)?M)?(?:\d+(?:[.,]\d+)?S)?)?$/i.test(value))
+        : kind === 'duration' ? isPythonDuration(value)
+          : kind === 'time' ? isPythonTime(value)
+            : kind === 'datetime' ? isPythonDateTime(value)
           : kind === 'array' ? Array.isArray(value)
-            : kind === 'lookup_array' ? Array.isArray(value) && value.every((item) => isObject(item) && typeof item.name === 'string' && typeof item.field === 'string')
-              : kind === 'projected_element' ? ['start', 'end', 'aggregate'].includes(value)
-                : true;
+            : kind === 'hashable_array' ? Array.isArray(value) && value.every(isPythonHashableJsonValue)
+              : kind === 'lookup_array' ? Array.isArray(value) && value.every((item) => isObject(item) && typeof item.name === 'string' && typeof item.field === 'string')
+                : kind === 'projected_element' ? ['start', 'end', 'aggregate'].includes(value)
+                  : false;
   if (!valid) errors.push(issue(path, 'VALUE_FIELD_TYPE_INVALID', `${path.split('.').at(-1)} must have the AnyRule ${kind} type.`));
+}
+
+const FLOAT_STRING = /^\s*[+-]?(?:(?:\d(?:_?\d)*(?:\.(?:\d(?:_?\d)*)?)?|\.\d(?:_?\d)*)(?:[eE][+-]?\d(?:_?\d)*)?|inf(?:inity)?|nan)\s*$/i;
+const DATETIME_NUMBER_STRING = /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)$/;
+
+function isPythonFloat(value) {
+  if (typeof value === 'boolean') return true;
+  if (typeof value === 'number') return true;
+  return typeof value === 'string' && FLOAT_STRING.test(value);
+}
+
+function isPythonHashableJsonValue(value) {
+  return value === null || typeof value === 'string' || typeof value === 'boolean'
+    || typeof value === 'number' && Number.isFinite(value);
+}
+
+function validTimestamp(value) {
+  if (!Number.isFinite(value)) return false;
+  const seconds = Math.abs(value) > 2e10 ? value / 1000 : value;
+  return seconds >= -62135596800 && seconds <= 253402300799.999999;
+}
+
+function isValidCalendarDate(year, month, day) {
+  if (year < 1 || year > 9999 || month < 1 || month > 12 || day < 1) return false;
+  const leap = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+  const daysInMonth = [31, leap ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  return day <= daysInMonth[month - 1];
+}
+
+function validTimeComponents(hour, minute, second) {
+  return hour <= 23 && minute <= 59 && second <= 59;
+}
+
+function validTimezoneOffset(sign, hour, minute) {
+  return !sign || (hour <= 23 && minute <= 59);
+}
+
+function isPythonDateTime(value) {
+  if (typeof value === 'number') return validTimestamp(value);
+  if (typeof value !== 'string') return false;
+  if (DATETIME_NUMBER_STRING.test(value)) return validTimestamp(Number(value));
+
+  const dateMatch = /^(\d{4})-(\d{2})-(\d{2})$|^(\d{4})(\d{2})(\d{2})$/.exec(value);
+  if (dateMatch) return isValidCalendarDate(Number(dateMatch[1] ?? dateMatch[4]), Number(dateMatch[2] ?? dateMatch[5]), Number(dateMatch[3] ?? dateMatch[6]));
+
+  const match = /^(\d{4}-\d{2}-\d{2}|\d{8})[Tt ](\d{2}):(\d{2})(?::(\d{2})(?:[.,]\d+)?)?(?:[Zz]|([+-])(\d{2}):?(\d{2}))?$/.exec(value);
+  if (!match) return false;
+  const [, datePart, hour, minute, second = '0', offsetSign, offsetHour = '0', offsetMinute = '0'] = match;
+  const year = datePart.slice(0, 4);
+  const month = datePart.length === 8 ? datePart.slice(4, 6) : datePart.slice(5, 7);
+  const day = datePart.length === 8 ? datePart.slice(6, 8) : datePart.slice(8, 10);
+  return isValidCalendarDate(Number(year), Number(month), Number(day))
+    && validTimeComponents(Number(hour), Number(minute), Number(second))
+    && validTimezoneOffset(offsetSign, Number(offsetHour), Number(offsetMinute));
+}
+
+function isPythonTime(value) {
+  if (typeof value === 'number') return Number.isFinite(value) && value >= 0 && value < 86400;
+  if (typeof value !== 'string') return false;
+  const match = /^(\d{2}):(\d{2})(?::(\d{2})(?:[.,]\d+)?)?(?:[Zz]|([+-])(\d{2}):?(\d{2}))?$/.exec(value);
+  if (!match) return false;
+  const [, hour, minute, second = '0', offsetSign, offsetHour = '0', offsetMinute = '0'] = match;
+  return validTimeComponents(Number(hour), Number(minute), Number(second))
+    && validTimezoneOffset(offsetSign, Number(offsetHour), Number(offsetMinute));
+}
+
+function isPythonDuration(value) {
+  if (typeof value === 'boolean') return true;
+  if (typeof value === 'number') return Number.isFinite(value) && Math.abs(value) < 86400000000000;
+  if (typeof value !== 'string') return false;
+
+  const withinRange = (seconds) => Number.isFinite(seconds) && Math.abs(seconds) < 86400000000000;
+  const dayOnly = /^([+-]?\d+) days?$/.exec(value);
+  if (dayOnly) return withinRange(Number(dayOnly[1]) * 86400);
+
+  const dayClock = /^([+-]?\d+) days?, (\d{1,2}):(\d{2})(?::(\d{2})(?:[.,](\d+))?)?$/.exec(value);
+  if (dayClock) {
+    const [, days, hours, minutes, seconds = '0', fraction = '0'] = dayClock;
+    if (!dayClock[4] && hours.length !== 2) return false;
+    if (Number(hours) > 23 || Number(minutes) > 59 || Number(seconds) > 59) return false;
+    return withinRange(Number(days) * 86400 + Number(hours) * 3600 + Number(minutes) * 60 + Number(`${seconds}.${fraction}`));
+  }
+
+  const clock = /^([+-]?\d+):(\d{2}):(\d{2})(?:[.,](\d+))?$/.exec(value);
+  if (clock) {
+    const [, hours, minutes, seconds, fraction = '0'] = clock;
+    if (Number(minutes) > 59 || Number(seconds) > 59) return false;
+    return withinRange(Number(hours) * 3600 + Number(minutes) * 60 + Number(`${seconds}.${fraction}`));
+  }
+
+  const hourMinute = /^([+-]?\d{2,}):(\d{2})$/.exec(value);
+  if (hourMinute) return Number(hourMinute[2]) <= 59 && withinRange(Number(hourMinute[1]) * 3600 + Number(hourMinute[2]) * 60);
+
+  const component = '(\\d+(?:[.,]\\d*)?)';
+  const iso = new RegExp(`^([+-]?)P(?:${component}Y)?(?:${component}M)?(?:${component}W)?(?:${component}D)?(?:T(?:${component}H)?(?:${component}M)?(?:${component}S)?)?$`).exec(value);
+  if (!iso || !iso.slice(2).some(Boolean)) return false;
+  const factors = [365.25 * 86400, 30 * 86400, 7 * 86400, 86400, 3600, 60, 1];
+  const seconds = iso.slice(2).reduce((total, amount, index) => total + (amount ? Number(amount.replace(',', '.')) * factors[index] : 0), 0);
+  return withinRange(seconds);
+}
+
+function isPythonInteger(value) {
+  if (typeof value === 'boolean') return true;
+  if (typeof value === 'number') return Number.isInteger(value);
+  if (typeof value !== 'string') return false;
+  if (/^\s*[+-]?\d(?:_?\d)*\s*$/.test(value)) return true;
+  if (!/^\s*[+-]?\d(?:_?\d)*\.\d(?:_?\d)*\s*$/.test(value)) return false;
+  return Number.isInteger(Number(value.replaceAll('_', '').trim()));
 }
 
 function stableJson(value) {
