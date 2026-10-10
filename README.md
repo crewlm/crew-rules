@@ -1,6 +1,23 @@
 # rules
 Rules management framework
 
+## Browser explorer
+
+The React interface browses the pinned EASA FTL source and its five draft model examples. It includes 74 topics, 1,137 source paragraphs, and 9 tables. Passages without a linked model are shown as unlinked. The models are declarative drafts with visible limitations; they do not evaluate operational compliance.
+
+From the repository root, regenerate the static catalogue and start the interface:
+
+```bash
+.venv/bin/python -m catalogue.export
+cd web
+npm ci
+npm run dev
+```
+
+Vite serves the app at `http://localhost:5173`. Build a static production bundle with `npm run build`. The catalogue exporter reads the checked EASA XML and writes `web/public/catalogue.json`; edit `catalogue/seeds.py` to change the draft models and source links.
+
+Run the focused catalogue checks from the repository root with `.venv/bin/python -m pytest -q tests/catalogue`.
+
 # Hierarchy
 
 The hierarchy for setting up rules is:
