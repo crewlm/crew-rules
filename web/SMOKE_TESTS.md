@@ -30,7 +30,10 @@ npm run test:browser
 The script starts its own Vite server on port 5178 and shuts it down when done.
 Set `SMOKE_PORT` if that port is occupied. It checks malformed JSON separately
 from structurally invalid data and valid non-executable drafts, confirms invalid
-drafts cannot be saved or exported, verifies exported source provenance, and
-checks local save, cancel, and page reload persistence.
+drafts cannot be saved or exported, verifies malformed update tables do not
+crash the React root, and checks stale-storage rejection. It also checks
+per-definition and workspace-tab edit retention, automatic revision persistence
+before export, stable identity across repeated exports, source provenance, and
+page reload restoration.
 
 The existing fast AirSpec unit checks remain available with `npm test`.

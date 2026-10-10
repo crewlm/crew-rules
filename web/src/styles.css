@@ -231,6 +231,8 @@ mark { padding: 0 1px; background: #fff1b8; color: inherit; border-radius: 2px; 
 .view-tabs button { padding: 0 14px; border: 0; border-bottom: 2px solid transparent; background: transparent; color: #61748b; font-size: 13px; font-weight: 600; cursor: pointer; }
 .view-tabs button:hover { color: var(--navy); }
 .view-tabs button.active { border-bottom-color: var(--teal); color: var(--navy); }
+.view-panel { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.view-panel[hidden] { display: none; }
 .workshop { flex: 1; min-height: 0; display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: #fff; }
 .workshop-header { flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 16px 21px; border-bottom: 1px solid var(--line-soft); }
 .workshop-header h1 { margin: 0; color: var(--navy); font: 800 25px/1.2 ui-sans-serif, system-ui, sans-serif; letter-spacing: -.5px; }

@@ -7,6 +7,40 @@ const SUPPORTED_SCOPES = new Set([
   'activity', 'duty', 'pairing', 'employee_time_period', 'aircraft_time_period',
   'employee_rest_time', 'employee_ground_time', 'aircraft_ground_time', 'port_time_period',
 ]);
+const COMPARISON_FIELDS = {
+  equal_number_comparison: ['number'], ge_number_comparison: ['number'], le_number_comparison: ['number'],
+  gt_number_comparison: ['number'], lt_number_comparison: ['number'], range_number_comparison: ['lower', 'upper'],
+  equal_duration_comparison: ['duration'], ge_duration_comparison: ['duration'], le_duration_comparison: ['duration'],
+  gt_duration_comparison: ['duration'], lt_duration_comparison: ['duration'], range_duration_comparison: ['lower', 'upper'],
+  equal_text_comparison: ['text'], regex_text_comparison: ['expression'], range_datetime_comparison: ['lower', 'upper'],
+  time_window_overlap_comparison: ['start', 'end'], equal_set_comparison: ['items'], within_set_comparison: ['items'],
+  contain_set_comparison: ['items'], truth_comparison: [], false_comparison: [],
+};
+const VALUE_FIELDS = {
+  applicable_value: ['applicable'], number_value: ['number'], duration_value: ['duration'],
+  number_range_value: ['lower', 'upper'], duration_range_value: ['lower', 'upper'],
+  field_value: ['field'], field_difference_value: ['start_field', 'end_field'],
+  table_lookup_number_value: ['table_name', 'lookup_map'], projected_value: ['code'], none_value: [],
+};
+const COMPARISON_TYPES = {
+  equal_number_comparison: { number: 'number', tolerance: 'number?' }, ge_number_comparison: { number: 'number' }, le_number_comparison: { number: 'number' },
+  gt_number_comparison: { number: 'number' }, lt_number_comparison: { number: 'number' }, range_number_comparison: { lower: 'number', upper: 'number' },
+  equal_duration_comparison: { duration: 'duration', tolerance: 'duration?' }, ge_duration_comparison: { duration: 'duration' }, le_duration_comparison: { duration: 'duration' },
+  gt_duration_comparison: { duration: 'duration' }, lt_duration_comparison: { duration: 'duration' }, range_duration_comparison: { lower: 'duration', upper: 'duration' },
+  equal_text_comparison: { text: 'string', case_sensitive: 'boolean?' }, regex_text_comparison: { expression: 'string' }, range_datetime_comparison: { lower: 'string', upper: 'string' },
+  time_window_overlap_comparison: { start: 'string', end: 'string', overlap: 'duration?' }, equal_set_comparison: { items: 'array' }, within_set_comparison: { items: 'array' },
+  contain_set_comparison: { items: 'array' }, truth_comparison: {}, false_comparison: {},
+};
+const VALUE_TYPES = {
+  applicable_value: { applicable: 'boolean' }, number_value: { number: 'number' }, duration_value: { duration: 'duration' },
+  number_range_value: { lower: 'number', upper: 'number' }, duration_range_value: { lower: 'duration', upper: 'duration' },
+  field_value: { field: 'string', multiplier: 'number?', offset: 'number?', clamp_lower: 'number|null?', clamp_upper: 'number|null?' },
+  field_difference_value: { start_field: 'string', end_field: 'string', multiplier: 'number?', offset: 'number?', clamp_lower: 'number|null?', clamp_upper: 'number|null?' },
+  table_lookup_number_value: { table_name: 'string', lookup_map: 'lookup_array' }, projected_value: { code: 'string', element: 'projected_element?' },
+  none_value: {},
+};
+const COMPARISON_KINDS = new Set(Object.keys(COMPARISON_FIELDS));
+const UPDATE_METHODS = new Set(['set', 'increase', 'decrease', 'max', 'min', 'scale']);
 
 const issue = (path, code, message) => ({ path, code, message });
 
@@ -37,31 +71,48 @@ export function validateRuleDraft(draft) {
     errors.push(issue('rule', 'RULE_NOT_OBJECT', 'rule must be an AnyRule JSON object.'));
   } else {
     if (rule.id !== draft.definitionId) errors.push(issue('rule.id', 'DEFINITION_ID_MISMATCH', 'rule.id must match the stable definitionId.'));
-    if (typeof rule.id !== 'string' || !rule.id) errors.push(issue('rule.id', 'REQUIRED', 'Rule id is required.'));
+    if (typeof rule.id !== 'string' || !isUuid(rule.id)) errors.push(issue('rule.id', 'RULE_ID_INVALID', 'Rule id must be a UUID accepted by AnyRule.'));
     if (typeof rule.name !== 'string' || !rule.name.trim()) errors.push(issue('rule.name', 'REQUIRED', 'Rule name is required.'));
     if (!SUPPORTED_SCOPES.has(rule.scope)) errors.push(issue('rule.scope', 'SCOPE_INVALID', 'rule.scope must be one of the declared AnyRule scopes.'));
     for (const field of ['applicability', 'value']) {
       const table = rule[field];
       if (!table || typeof table !== 'object' || Array.isArray(table)) errors.push(issue(`rule.${field}`, 'DECISION_TABLE_INVALID', `${field} must be a decision table with default and items.`));
       else {
-        if (!Array.isArray(table.items) || !Object.hasOwn(table, 'default')) errors.push(issue(`rule.${field}`, 'DECISION_TABLE_INVALID', `${field} must be a decision table with default and items.`));
-        if (Array.isArray(table.items)) validateTable(table, `rule.${field}`, errors);
+        if ((Object.hasOwn(table, 'items') && !Array.isArray(table.items)) || !Object.hasOwn(table, 'default')) errors.push(issue(`rule.${field}`, 'DECISION_TABLE_INVALID', `${field} must be a decision table with a default and optional items array.`));
+        if (!Object.hasOwn(table, 'items') || Array.isArray(table.items)) validateTable(table, `rule.${field}`, errors, field === 'applicability' ? 'applicable' : 'calculation');
       }
     }
     for (const field of ['value_updates', 'requirement_updates', 'limit_updates']) {
+      if (!Object.hasOwn(rule, field)) continue; // AnyRule supplies an empty-list default.
       if (!Array.isArray(rule[field])) errors.push(issue(`rule.${field}`, 'ARRAY_REQUIRED', `${field} must be an array.`));
       else rule[field].forEach((update, index) => {
-        if (!update || typeof update !== 'object' || typeof update.name !== 'string' || !update.table || typeof update.table !== 'object') errors.push(issue(`rule.${field}[${index}]`, 'UPDATE_INVALID', 'Each update requires a name and decision table.'));
-        else validateTable(update.table, `rule.${field}[${index}].table`, errors);
+        const updatePath = `rule.${field}[${index}]`;
+        if (!isObject(update)) {
+          errors.push(issue(updatePath, 'UPDATE_INVALID', 'Each update requires a name and decision table.'));
+          return;
+        }
+        if (typeof update.name !== 'string') errors.push(issue(`${updatePath}.name`, 'UPDATE_INVALID', 'Each update requires a string name.'));
+        if (Object.hasOwn(update, 'method') && !UPDATE_METHODS.has(update.method)) errors.push(issue(`${updatePath}.method`, 'UPDATE_METHOD_INVALID', 'Update method must be one of the declared AnyRule methods.'));
+        if (!isObject(update.table) || (Object.hasOwn(update.table, 'items') && !Array.isArray(update.table.items)) || !Object.hasOwn(update.table, 'default')) {
+          errors.push(issue(`${updatePath}.table`, 'DECISION_TABLE_INVALID', 'Update table must be a decision table with a default and optional items array.'));
+          return;
+        }
+        validateTable(update.table, `${updatePath}.table`, errors, 'nullable_calculation');
       });
+    }
+    if (rule.requirement == null && Array.isArray(rule.requirement_updates) && rule.requirement_updates.length > 0) {
+      errors.push(issue('rule.requirement_updates', 'UPDATE_BASE_REQUIRED', 'A base requirement is required when requirement updates are present.'));
+    }
+    if (rule.limit == null && Array.isArray(rule.limit_updates) && rule.limit_updates.length > 0) {
+      errors.push(issue('rule.limit_updates', 'UPDATE_BASE_REQUIRED', 'A base limit is required when limit updates are present.'));
     }
     if (rule.requirement == null && rule.limit == null) errors.push(issue('rule.requirement', 'REQUIREMENT_OR_LIMIT_REQUIRED', 'At least one of requirement or limit is required.'));
     for (const field of ['requirement', 'limit']) {
       if (rule[field] != null) {
         if (typeof rule[field] !== 'object' || Array.isArray(rule[field])) errors.push(issue(`rule.${field}`, 'DECISION_TABLE_INVALID', `${field} must be null or a decision table with default and items.`));
         else {
-          if (!Array.isArray(rule[field].items) || !Object.hasOwn(rule[field], 'default')) errors.push(issue(`rule.${field}`, 'DECISION_TABLE_INVALID', `${field} must be null or a decision table with default and items.`));
-          if (Array.isArray(rule[field].items)) validateTable(rule[field], `rule.${field}`, errors);
+          if ((Object.hasOwn(rule[field], 'items') && !Array.isArray(rule[field].items)) || !Object.hasOwn(rule[field], 'default')) errors.push(issue(`rule.${field}`, 'DECISION_TABLE_INVALID', `${field} must be null or a decision table with a default and optional items array.`));
+          if (!Object.hasOwn(rule[field], 'items') || Array.isArray(rule[field].items)) validateTable(rule[field], `rule.${field}`, errors, 'calculation');
         }
       }
     }
@@ -79,20 +130,80 @@ export function validateRuleDraft(draft) {
   return { status: errors.length ? 'invalid' : 'valid_non_executable', errors, unsupported };
 }
 
-function validateTable(table, path, errors) {
-  table.items.forEach((item, index) => {
+function isObject(value) {
+  return !!value && typeof value === 'object' && !Array.isArray(value);
+}
+
+function validateTable(table, path, errors, valueType) {
+  if (!isObject(table) || (Object.hasOwn(table, 'items') && !Array.isArray(table.items))) return;
+  if (Object.hasOwn(table, 'default')) validateValue(table.default, `${path}.default`, errors, valueType);
+  (table.items ?? []).forEach((item, index) => {
     const itemPath = `${path}.items[${index}]`;
     if (!item || typeof item !== 'object' || !Array.isArray(item.condition) || !Object.hasOwn(item, 'value')) {
       errors.push(issue(itemPath, 'TABLE_ITEM_INVALID', 'Each table item requires a condition array and value.'));
+      if (isObject(item) && Object.hasOwn(item, 'value')) validateValue(item.value, `${itemPath}.value`, errors, valueType);
       return;
     }
     item.condition.forEach((condition, conditionIndex) => {
       if (!condition || typeof condition !== 'object' || typeof condition.field !== 'string' || !condition.field
-        || !condition.comparison || typeof condition.comparison !== 'object' || typeof condition.comparison.kind !== 'string') {
+        || !isObject(condition.comparison) || !COMPARISON_KINDS.has(condition.comparison.kind)) {
         errors.push(issue(`${itemPath}.condition[${conditionIndex}]`, 'CONDITION_INVALID', 'Each condition requires a field and comparison kind.'));
+      } else {
+        if (Object.hasOwn(condition, 'reverse_match') && typeof condition.reverse_match !== 'boolean') errors.push(issue(`${itemPath}.condition[${conditionIndex}].reverse_match`, 'CONDITION_FIELD_TYPE_INVALID', 'reverse_match must be a boolean.'));
+        for (const field of COMPARISON_FIELDS[condition.comparison.kind]) {
+          if (!Object.hasOwn(condition.comparison, field)) errors.push(issue(`${itemPath}.condition[${conditionIndex}].comparison.${field}`, 'COMPARISON_FIELD_REQUIRED', `${field} is required for ${condition.comparison.kind}.`));
+        }
+        for (const [field, expected] of Object.entries(COMPARISON_TYPES[condition.comparison.kind])) {
+          validateFieldType(condition.comparison[field], expected, `${itemPath}.condition[${conditionIndex}].comparison.${field}`, errors);
+        }
       }
     });
+    validateValue(item.value, `${itemPath}.value`, errors, valueType);
   });
+}
+
+function validateValue(value, path, errors, valueType) {
+  if (!isObject(value) || typeof value.kind !== 'string') {
+    errors.push(issue(path, 'VALUE_INVALID', 'Value must be a tagged AnyRule value object.'));
+    return;
+  }
+  const allowed = valueType === 'applicable'
+    ? new Set(['applicable_value'])
+    : valueType === 'nullable_calculation'
+      ? new Set([...Object.keys(VALUE_FIELDS).filter((kind) => kind !== 'applicable_value')])
+      : new Set(Object.keys(VALUE_FIELDS).filter((kind) => kind !== 'applicable_value' && kind !== 'none_value'));
+  if (!allowed.has(value.kind)) {
+    errors.push(issue(`${path}.kind`, 'VALUE_KIND_INVALID', `Value kind ${value.kind} is not valid for this decision table.`));
+    return;
+  }
+  for (const field of VALUE_FIELDS[value.kind]) {
+    if (!Object.hasOwn(value, field)) errors.push(issue(`${path}.${field}`, 'VALUE_FIELD_REQUIRED', `${field} is required for ${value.kind}.`));
+  }
+  if (Object.hasOwn(value, 'phrase') && typeof value.phrase !== 'string') errors.push(issue(`${path}.phrase`, 'VALUE_FIELD_TYPE_INVALID', 'phrase must be a string.'));
+  for (const [field, expected] of Object.entries(VALUE_TYPES[value.kind])) validateFieldType(value[field], expected, `${path}.${field}`, errors);
+}
+
+function isUuid(value) {
+  return typeof value === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value);
+}
+
+function validateFieldType(value, expected, path, errors) {
+  const optional = expected.endsWith('?');
+  const nullable = expected.includes('null');
+  const kind = expected.replace(/[?]/g, '').replace('|null', '');
+  if (optional && value === undefined) return;
+  if (nullable && value === null) return;
+  const numeric = (candidate) => typeof candidate === 'number' && Number.isFinite(candidate)
+    || typeof candidate === 'string' && candidate.trim() !== '' && Number.isFinite(Number(candidate));
+  const valid = kind === 'number' ? numeric(value)
+    : kind === 'string' ? typeof value === 'string'
+      : kind === 'boolean' ? typeof value === 'boolean'
+        : kind === 'duration' ? typeof value === 'number' && Number.isFinite(value) || typeof value === 'string' && (numeric(value) || /^-?P(?=.*\d)(?:\d+(?:[.,]\d+)?Y)?(?:\d+(?:[.,]\d+)?M)?(?:\d+(?:[.,]\d+)?W)?(?:\d+(?:[.,]\d+)?D)?(?:T(?:\d+(?:[.,]\d+)?H)?(?:\d+(?:[.,]\d+)?M)?(?:\d+(?:[.,]\d+)?S)?)?$/i.test(value))
+          : kind === 'array' ? Array.isArray(value)
+            : kind === 'lookup_array' ? Array.isArray(value) && value.every((item) => isObject(item) && typeof item.name === 'string' && typeof item.field === 'string')
+              : kind === 'projected_element' ? ['start', 'end', 'aggregate'].includes(value)
+                : true;
+  if (!valid) errors.push(issue(path, 'VALUE_FIELD_TYPE_INVALID', `${path.split('.').at(-1)} must have the AnyRule ${kind} type.`));
 }
 
 function stableJson(value) {

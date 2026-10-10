@@ -126,8 +126,8 @@ export default function App() {
           <button className={activeView === 'workshop' ? 'active' : ''} onClick={() => setActiveView('workshop')}>Rule workshop</button>
         </nav>
       </header>
-      {activeView === 'workshop' && <RuleWorkshop models={models} links={links} document={currentDocument} catalogueCommit="ac94f6e092555931781c31e23848b0af5aee295b" />}
-      {activeView === 'explorer' && <>
+      <div className="view-panel" hidden={activeView !== 'workshop'}><RuleWorkshop models={models} links={links} document={currentDocument} catalogueCommit="ac94f6e092555931781c31e23848b0af5aee295b" /></div>
+      <div className="view-panel" hidden={activeView !== 'explorer'}>
       {invalidSelection && <div className="notice notice-error" role="alert">
         <span>The URL points to an item that is not in this catalogue.</span>
         <button className="text-button" onClick={resetLocation}>Reset to a valid selection</button>
@@ -163,7 +163,7 @@ export default function App() {
           document={currentDocument}
         />
       </div>
-      </>}
+      </div>
     </main>
   );
 }

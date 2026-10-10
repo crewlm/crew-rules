@@ -32,11 +32,66 @@ test('deep table shape, stable IDs, and period-scope requirements are checked', 
   assert.ok(result.errors.some((item) => item.path === 'rule.time_period'));
 });
 
+test('AnyRule structural errors stay invalid and separate from engine support', () => {
+  const cases = [
+    ['missing field on calculation default', (rule) => { delete rule.value.default.field; }],
+    ['unknown comparison kind', (rule) => { rule.value.items = [{ condition: [{ field: 'duration', comparison: { kind: 'unknown_comparison' } }], value: rule.value.default }]; }],
+    ['comparison field type', (rule) => { rule.value.items = [{ condition: [{ field: 'duration', comparison: { kind: 'ge_number_comparison', number: 'not a number' } }], value: rule.value.default }]; }],
+    ['scalar calculation default', (rule) => { rule.value.default = 7; }],
+    ['calculation field type', (rule) => { rule.value.default = { kind: 'number_value', number: 'not a number' }; }],
+    ['missing update table default', (rule) => { rule.value_updates = [{ name: 'x', table: { items: [] } }]; }],
+    ['null update method', (rule) => { rule.value_updates = [{ name: 'x', method: null, table: { default: { kind: 'none_value' } } }]; }],
+  ];
+  for (const [label, mutate] of cases) {
+    const malformed = structuredClone(draft);
+    mutate(malformed.rule);
+    const result = validateRuleDraft(malformed);
+    assert.equal(result.status, 'invalid', label);
+    assert.ok(result.errors.length > 0, label);
+    assert.deepEqual(result.unsupported, [], label);
+  }
+  const throwingUpdate = structuredClone(draft);
+  throwingUpdate.rule.value_updates = [{ name: 'x', table: {} }];
+  assert.doesNotThrow(() => validateRuleDraft(throwingUpdate));
+  assert.equal(validateRuleDraft(throwingUpdate).status, 'invalid');
+});
+
+test('updates require their matching base requirement or limit', () => {
+  const missingRequirement = structuredClone(draft);
+  missingRequirement.rule.limit = structuredClone(missingRequirement.rule.requirement);
+  missingRequirement.rule.requirement = null;
+  missingRequirement.rule.requirement_updates = [{ name: 'x', table: { default: { kind: 'none_value' } } }];
+  const requirementResult = validateRuleDraft(missingRequirement);
+  assert.ok(requirementResult.errors.some((item) => item.path === 'rule.requirement_updates' && item.code === 'UPDATE_BASE_REQUIRED'));
+  assert.deepEqual(requirementResult.unsupported, []);
+
+  const missingLimit = structuredClone(draft);
+  missingLimit.rule.limit_updates = [{ name: 'x', table: { default: { kind: 'none_value' } } }];
+  const limitResult = validateRuleDraft(missingLimit);
+  assert.ok(limitResult.errors.some((item) => item.path === 'rule.limit_updates' && item.code === 'UPDATE_BASE_REQUIRED'));
+  assert.deepEqual(limitResult.unsupported, []);
+});
+
 test('structurally valid drafts remain explicitly non-executable', () => {
   const result = validateRuleDraft(draft);
   assert.equal(result.status, 'valid_non_executable');
   assert.equal(result.errors.length, 0);
   assert.ok(result.unsupported.some((item) => item.code === 'ENGINE_DISCONNECTED'));
+});
+
+test('catalogue rule fixtures remain structurally valid', () => {
+  for (const model of catalogue.models) {
+    const sourceLinks = catalogue.links.filter((link) => link.model_id === model.id);
+    assert.equal(validateRuleDraft(makeRuleDraft(model, sourceLinks, source)).status, 'valid_non_executable', model.name);
+  }
+});
+
+test('Python AnyRule defaults remain accepted when optional arrays are omitted', () => {
+  const partial = structuredClone(draft.rule);
+  for (const field of ['applicability', 'value', 'requirement']) if (partial[field]) delete partial[field].items;
+  partial.value_updates = [{ name: 'x', table: { default: { kind: 'none_value' } } }];
+  for (const field of ['requirement_updates', 'limit_updates']) delete partial[field];
+  assert.equal(validateRuleDraft({ ...draft, rule: partial }).status, 'valid_non_executable');
 });
 
 test('draft and export preserve revision and source provenance', () => {
