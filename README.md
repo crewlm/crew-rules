@@ -8,7 +8,30 @@ Evaluation and compliance checks are delegated to a separate external engine.
 
 For the motivation and intended scope, see the [concept note](concept-note.md).
 For the current EASA assessment, see the [model gap analysis](references/ftl/easa-model-gap-analysis.md)
-and [documentary schema catalog](examples/easa_ftl/README.md).
+and [documentary schema catalog](examples/easa_ftl/README.md). The catalog
+contains ten documentary schema families. The browser explorer contains five
+smaller draft models chosen to demonstrate source navigation; these are
+different inventories with different purposes.
+
+## Browser explorer
+
+The React interface browses the pinned EASA FTL source and its five draft model examples. It includes 74 topics, 1,137 source paragraphs, and 9 tables. Links associate a whole draft model with cited source paragraphs; they do not locate individual model fields or clauses within paragraphs. Passages without a linked model are shown as unlinked. The models are declarative drafts with visible limitations; they do not evaluate operational compliance.
+
+From the repository root, regenerate the static catalogue and start the interface:
+
+```bash
+.venv/bin/python -m catalogue.export
+cd web
+npm ci
+npm run dev
+```
+
+Vite serves the app at `http://localhost:5173`. Build a static production bundle with `npm run build`. The catalogue exporter reads the checked EASA XML and writes `web/public/catalogue.json`; edit `catalogue/seeds.py` to change the draft models and source links.
+
+Run the focused catalogue checks from the repository root with `.venv/bin/python -m pytest -q tests/catalogue`.
+
+The schema and explorer handoffs, their validation commands, and their known
+scope boundaries are recorded in the [consolidation provenance note](docs/airspec-consolidation.md).
 
 # Hierarchy
 
