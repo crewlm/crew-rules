@@ -1,0 +1,5811 @@
+{
+  "concepts": {
+    "acclimatisation.state": {
+      "meaning": "Crew acclimatisation state used to select the basic maximum FDP table; the represented states are acclimatised and unknown."
+    },
+    "fdp.duration": {
+      "meaning": "Flight duty period from crew report to the end of the last operating sector, including qualifying pre-operating positioning.",
+      "unit": "hours"
+    },
+    "frm_eligibility.safety_performance_maintained": {
+      "meaning": "Whether the Table 4 FRM criterion is met: an implemented FRM continuously monitors whether required safety performance is maintained."
+    },
+    "operating_sector_count": {
+      "meaning": "Count of operating sectors for the FDP; positioning sectors are excluded.",
+      "unit": "sectors"
+    },
+    "reference_time.minute_of_day": {
+      "meaning": "FDP start expressed as minute of day at the crew member's reference time; time-zone conversion and reference-time history are not derived here.",
+      "unit": "minute_of_day"
+    }
+  },
+  "documentation_note": "Table values and guards are represented directly. The concepts describe symbolic facts; this module establishes no data-input contract or prepared-fact validator. Derivation and provenance of acclimatisation, reference time, FRM status, and person-specific FDP remain shared-domain concerns. The default limit records the source's nine-hour floor; the represented table guards identify the source-supported combinations.",
+  "number": 3,
+  "projections": [],
+  "represented": [
+    "Table 2 start-time bands for acclimatised crew, including all sector counts 1–10",
+    "Table 3 limits for unknown acclimatisation state",
+    "Table 4 limits for unknown state when FRM safety performance is maintained",
+    "Thirty-minute reduction per operating sector above two, subject to the nine-hour floor"
+  ],
+  "rules": [
+    {
+      "applicability": {
+        "default": {
+          "applicable": true,
+          "kind": "applicable_value",
+          "phrase": "Basic-FDP table rule"
+        },
+        "items": []
+      },
+      "id": "6c858eee-0696-595d-9810-e09646b3912d",
+      "limit": {
+        "default": {
+          "duration": "PT9H",
+          "kind": "duration_value",
+          "phrase": "Nine-hour floor appearing in Tables 2–4"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 360.0,
+                  "upper": 809.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 1.0,
+                  "upper": 1.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT13H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 13 hours for 1 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 360.0,
+                  "upper": 809.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 2.0,
+                  "upper": 2.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT13H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 13 hours for 2 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 360.0,
+                  "upper": 809.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 3.0,
+                  "upper": 3.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT12H30M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 12.5 hours for 3 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 360.0,
+                  "upper": 809.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 4.0,
+                  "upper": 4.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT12H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 12 hours for 4 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 360.0,
+                  "upper": 809.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 5.0,
+                  "upper": 5.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H30M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 11.5 hours for 5 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 360.0,
+                  "upper": 809.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 6.0,
+                  "upper": 6.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 11 hours for 6 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 360.0,
+                  "upper": 809.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 7.0,
+                  "upper": 7.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H30M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 10.5 hours for 7 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 360.0,
+                  "upper": 809.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 8.0,
+                  "upper": 8.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 10 hours for 8 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 360.0,
+                  "upper": 809.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 9.0,
+                  "upper": 9.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H30M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9.5 hours for 9 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 360.0,
+                  "upper": 809.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 10.0,
+                  "upper": 10.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 10 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 810.0,
+                  "upper": 839.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 1.0,
+                  "upper": 1.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT12H45M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 12.75 hours for 1 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 810.0,
+                  "upper": 839.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 2.0,
+                  "upper": 2.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT12H45M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 12.75 hours for 2 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 810.0,
+                  "upper": 839.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 3.0,
+                  "upper": 3.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT12H15M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 12.25 hours for 3 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 810.0,
+                  "upper": 839.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 4.0,
+                  "upper": 4.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H45M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 11.75 hours for 4 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 810.0,
+                  "upper": 839.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 5.0,
+                  "upper": 5.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H15M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 11.25 hours for 5 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 810.0,
+                  "upper": 839.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 6.0,
+                  "upper": 6.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H45M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 10.75 hours for 6 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 810.0,
+                  "upper": 839.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 7.0,
+                  "upper": 7.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H15M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 10.25 hours for 7 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 810.0,
+                  "upper": 839.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 8.0,
+                  "upper": 8.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H45M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9.75 hours for 8 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 810.0,
+                  "upper": 839.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 9.0,
+                  "upper": 9.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H15M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9.25 hours for 9 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 810.0,
+                  "upper": 839.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 10.0,
+                  "upper": 10.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 10 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 840.0,
+                  "upper": 869.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 1.0,
+                  "upper": 1.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT12H30M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 12.5 hours for 1 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 840.0,
+                  "upper": 869.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 2.0,
+                  "upper": 2.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT12H30M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 12.5 hours for 2 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 840.0,
+                  "upper": 869.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 3.0,
+                  "upper": 3.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT12H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 12 hours for 3 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 840.0,
+                  "upper": 869.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 4.0,
+                  "upper": 4.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H30M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 11.5 hours for 4 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 840.0,
+                  "upper": 869.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 5.0,
+                  "upper": 5.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 11 hours for 5 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 840.0,
+                  "upper": 869.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 6.0,
+                  "upper": 6.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H30M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 10.5 hours for 6 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 840.0,
+                  "upper": 869.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 7.0,
+                  "upper": 7.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 10 hours for 7 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 840.0,
+                  "upper": 869.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 8.0,
+                  "upper": 8.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H30M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9.5 hours for 8 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 840.0,
+                  "upper": 869.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 9.0,
+                  "upper": 9.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 9 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 840.0,
+                  "upper": 869.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 10.0,
+                  "upper": 10.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 10 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 870.0,
+                  "upper": 899.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 1.0,
+                  "upper": 1.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT12H15M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 12.25 hours for 1 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 870.0,
+                  "upper": 899.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 2.0,
+                  "upper": 2.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT12H15M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 12.25 hours for 2 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 870.0,
+                  "upper": 899.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 3.0,
+                  "upper": 3.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H45M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 11.75 hours for 3 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 870.0,
+                  "upper": 899.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 4.0,
+                  "upper": 4.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H15M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 11.25 hours for 4 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 870.0,
+                  "upper": 899.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 5.0,
+                  "upper": 5.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H45M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 10.75 hours for 5 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 870.0,
+                  "upper": 899.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 6.0,
+                  "upper": 6.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H15M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 10.25 hours for 6 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 870.0,
+                  "upper": 899.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 7.0,
+                  "upper": 7.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H45M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9.75 hours for 7 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 870.0,
+                  "upper": 899.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 8.0,
+                  "upper": 8.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H15M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9.25 hours for 8 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 870.0,
+                  "upper": 899.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 9.0,
+                  "upper": 9.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 9 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 870.0,
+                  "upper": 899.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 10.0,
+                  "upper": 10.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 10 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 900.0,
+                  "upper": 929.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 1.0,
+                  "upper": 1.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT12H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 12 hours for 1 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 900.0,
+                  "upper": 929.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 2.0,
+                  "upper": 2.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT12H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 12 hours for 2 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 900.0,
+                  "upper": 929.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 3.0,
+                  "upper": 3.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H30M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 11.5 hours for 3 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 900.0,
+                  "upper": 929.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 4.0,
+                  "upper": 4.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 11 hours for 4 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 900.0,
+                  "upper": 929.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 5.0,
+                  "upper": 5.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H30M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 10.5 hours for 5 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 900.0,
+                  "upper": 929.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 6.0,
+                  "upper": 6.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 10 hours for 6 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 900.0,
+                  "upper": 929.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 7.0,
+                  "upper": 7.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H30M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9.5 hours for 7 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 900.0,
+                  "upper": 929.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 8.0,
+                  "upper": 8.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 8 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 900.0,
+                  "upper": 929.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 9.0,
+                  "upper": 9.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 9 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 900.0,
+                  "upper": 929.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 10.0,
+                  "upper": 10.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 10 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 930.0,
+                  "upper": 959.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 1.0,
+                  "upper": 1.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H45M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 11.75 hours for 1 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 930.0,
+                  "upper": 959.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 2.0,
+                  "upper": 2.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H45M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 11.75 hours for 2 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 930.0,
+                  "upper": 959.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 3.0,
+                  "upper": 3.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H15M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 11.25 hours for 3 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 930.0,
+                  "upper": 959.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 4.0,
+                  "upper": 4.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H45M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 10.75 hours for 4 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 930.0,
+                  "upper": 959.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 5.0,
+                  "upper": 5.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H15M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 10.25 hours for 5 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 930.0,
+                  "upper": 959.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 6.0,
+                  "upper": 6.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H45M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9.75 hours for 6 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 930.0,
+                  "upper": 959.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 7.0,
+                  "upper": 7.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H15M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9.25 hours for 7 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 930.0,
+                  "upper": 959.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 8.0,
+                  "upper": 8.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 8 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 930.0,
+                  "upper": 959.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 9.0,
+                  "upper": 9.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 9 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 930.0,
+                  "upper": 959.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 10.0,
+                  "upper": 10.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 10 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 960.0,
+                  "upper": 989.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 1.0,
+                  "upper": 1.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H30M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 11.5 hours for 1 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 960.0,
+                  "upper": 989.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 2.0,
+                  "upper": 2.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H30M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 11.5 hours for 2 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 960.0,
+                  "upper": 989.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 3.0,
+                  "upper": 3.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 11 hours for 3 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 960.0,
+                  "upper": 989.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 4.0,
+                  "upper": 4.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H30M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 10.5 hours for 4 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 960.0,
+                  "upper": 989.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 5.0,
+                  "upper": 5.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 10 hours for 5 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 960.0,
+                  "upper": 989.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 6.0,
+                  "upper": 6.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H30M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9.5 hours for 6 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 960.0,
+                  "upper": 989.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 7.0,
+                  "upper": 7.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 7 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 960.0,
+                  "upper": 989.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 8.0,
+                  "upper": 8.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 8 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 960.0,
+                  "upper": 989.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 9.0,
+                  "upper": 9.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 9 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 960.0,
+                  "upper": 989.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 10.0,
+                  "upper": 10.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 10 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 990.0,
+                  "upper": 1019.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 1.0,
+                  "upper": 1.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H15M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 11.25 hours for 1 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 990.0,
+                  "upper": 1019.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 2.0,
+                  "upper": 2.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H15M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 11.25 hours for 2 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 990.0,
+                  "upper": 1019.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 3.0,
+                  "upper": 3.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H45M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 10.75 hours for 3 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 990.0,
+                  "upper": 1019.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 4.0,
+                  "upper": 4.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H15M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 10.25 hours for 4 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 990.0,
+                  "upper": 1019.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 5.0,
+                  "upper": 5.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H45M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9.75 hours for 5 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 990.0,
+                  "upper": 1019.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 6.0,
+                  "upper": 6.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H15M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9.25 hours for 6 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 990.0,
+                  "upper": 1019.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 7.0,
+                  "upper": 7.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 7 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 990.0,
+                  "upper": 1019.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 8.0,
+                  "upper": 8.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 8 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 990.0,
+                  "upper": 1019.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 9.0,
+                  "upper": 9.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 9 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 990.0,
+                  "upper": 1019.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 10.0,
+                  "upper": 10.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 10 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 1020.0,
+                  "upper": 1439.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 1.0,
+                  "upper": 1.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 11 hours for 1 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 1020.0,
+                  "upper": 1439.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 2.0,
+                  "upper": 2.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 11 hours for 2 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 1020.0,
+                  "upper": 1439.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 3.0,
+                  "upper": 3.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H30M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 10.5 hours for 3 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 1020.0,
+                  "upper": 1439.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 4.0,
+                  "upper": 4.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 10 hours for 4 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 1020.0,
+                  "upper": 1439.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 5.0,
+                  "upper": 5.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H30M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9.5 hours for 5 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 1020.0,
+                  "upper": 1439.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 6.0,
+                  "upper": 6.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 6 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 1020.0,
+                  "upper": 1439.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 7.0,
+                  "upper": 7.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 7 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 1020.0,
+                  "upper": 1439.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 8.0,
+                  "upper": 8.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 8 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 1020.0,
+                  "upper": 1439.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 9.0,
+                  "upper": 9.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 9 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 1020.0,
+                  "upper": 1439.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 10.0,
+                  "upper": 10.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 10 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 0.0,
+                  "upper": 299.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 1.0,
+                  "upper": 1.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 11 hours for 1 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 0.0,
+                  "upper": 299.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 2.0,
+                  "upper": 2.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 11 hours for 2 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 0.0,
+                  "upper": 299.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 3.0,
+                  "upper": 3.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H30M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 10.5 hours for 3 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 0.0,
+                  "upper": 299.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 4.0,
+                  "upper": 4.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 10 hours for 4 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 0.0,
+                  "upper": 299.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 5.0,
+                  "upper": 5.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H30M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9.5 hours for 5 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 0.0,
+                  "upper": 299.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 6.0,
+                  "upper": 6.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 6 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 0.0,
+                  "upper": 299.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 7.0,
+                  "upper": 7.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 7 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 0.0,
+                  "upper": 299.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 8.0,
+                  "upper": 8.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 8 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 0.0,
+                  "upper": 299.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 9.0,
+                  "upper": 9.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 9 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 0.0,
+                  "upper": 299.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 10.0,
+                  "upper": 10.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 10 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 300.0,
+                  "upper": 314.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 1.0,
+                  "upper": 1.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT12H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 12 hours for 1 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 300.0,
+                  "upper": 314.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 2.0,
+                  "upper": 2.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT12H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 12 hours for 2 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 300.0,
+                  "upper": 314.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 3.0,
+                  "upper": 3.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H30M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 11.5 hours for 3 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 300.0,
+                  "upper": 314.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 4.0,
+                  "upper": 4.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 11 hours for 4 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 300.0,
+                  "upper": 314.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 5.0,
+                  "upper": 5.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H30M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 10.5 hours for 5 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 300.0,
+                  "upper": 314.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 6.0,
+                  "upper": 6.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 10 hours for 6 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 300.0,
+                  "upper": 314.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 7.0,
+                  "upper": 7.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H30M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9.5 hours for 7 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 300.0,
+                  "upper": 314.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 8.0,
+                  "upper": 8.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 8 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 300.0,
+                  "upper": 314.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 9.0,
+                  "upper": 9.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 9 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 300.0,
+                  "upper": 314.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 10.0,
+                  "upper": 10.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 10 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 315.0,
+                  "upper": 329.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 1.0,
+                  "upper": 1.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT12H15M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 12.25 hours for 1 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 315.0,
+                  "upper": 329.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 2.0,
+                  "upper": 2.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT12H15M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 12.25 hours for 2 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 315.0,
+                  "upper": 329.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 3.0,
+                  "upper": 3.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H45M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 11.75 hours for 3 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 315.0,
+                  "upper": 329.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 4.0,
+                  "upper": 4.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H15M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 11.25 hours for 4 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 315.0,
+                  "upper": 329.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 5.0,
+                  "upper": 5.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H45M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 10.75 hours for 5 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 315.0,
+                  "upper": 329.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 6.0,
+                  "upper": 6.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H15M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 10.25 hours for 6 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 315.0,
+                  "upper": 329.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 7.0,
+                  "upper": 7.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H45M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9.75 hours for 7 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 315.0,
+                  "upper": 329.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 8.0,
+                  "upper": 8.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H15M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9.25 hours for 8 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 315.0,
+                  "upper": 329.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 9.0,
+                  "upper": 9.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 9 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 315.0,
+                  "upper": 329.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 10.0,
+                  "upper": 10.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 10 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 330.0,
+                  "upper": 344.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 1.0,
+                  "upper": 1.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT12H30M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 12.5 hours for 1 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 330.0,
+                  "upper": 344.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 2.0,
+                  "upper": 2.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT12H30M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 12.5 hours for 2 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 330.0,
+                  "upper": 344.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 3.0,
+                  "upper": 3.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT12H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 12 hours for 3 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 330.0,
+                  "upper": 344.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 4.0,
+                  "upper": 4.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H30M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 11.5 hours for 4 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 330.0,
+                  "upper": 344.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 5.0,
+                  "upper": 5.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 11 hours for 5 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 330.0,
+                  "upper": 344.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 6.0,
+                  "upper": 6.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H30M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 10.5 hours for 6 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 330.0,
+                  "upper": 344.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 7.0,
+                  "upper": 7.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 10 hours for 7 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 330.0,
+                  "upper": 344.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 8.0,
+                  "upper": 8.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H30M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9.5 hours for 8 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 330.0,
+                  "upper": 344.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 9.0,
+                  "upper": 9.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 9 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 330.0,
+                  "upper": 344.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 10.0,
+                  "upper": 10.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 10 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 345.0,
+                  "upper": 359.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 1.0,
+                  "upper": 1.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT12H45M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 12.75 hours for 1 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 345.0,
+                  "upper": 359.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 2.0,
+                  "upper": 2.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT12H45M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 12.75 hours for 2 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 345.0,
+                  "upper": 359.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 3.0,
+                  "upper": 3.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT12H15M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 12.25 hours for 3 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 345.0,
+                  "upper": 359.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 4.0,
+                  "upper": 4.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H45M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 11.75 hours for 4 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 345.0,
+                  "upper": 359.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 5.0,
+                  "upper": 5.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H15M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 11.25 hours for 5 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 345.0,
+                  "upper": 359.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 6.0,
+                  "upper": 6.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H45M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 10.75 hours for 6 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 345.0,
+                  "upper": 359.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 7.0,
+                  "upper": 7.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H15M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 10.25 hours for 7 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 345.0,
+                  "upper": 359.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 8.0,
+                  "upper": 8.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H45M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9.75 hours for 8 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 345.0,
+                  "upper": 359.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 9.0,
+                  "upper": 9.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H15M",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9.25 hours for 9 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "acclimatised"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 345.0,
+                  "upper": 359.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 10.0,
+                  "upper": 10.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 2: 9 hours for 10 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "unknown"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 0.0,
+                  "upper": 1439.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 1.0,
+                  "upper": 1.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "false_comparison"
+                },
+                "field": "frm_eligibility.safety_performance_maintained",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H",
+              "kind": "duration_value",
+              "phrase": "Table 3: 11 hours for 1 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "unknown"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 0.0,
+                  "upper": 1439.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 2.0,
+                  "upper": 2.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "false_comparison"
+                },
+                "field": "frm_eligibility.safety_performance_maintained",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H",
+              "kind": "duration_value",
+              "phrase": "Table 3: 11 hours for 2 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "unknown"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 0.0,
+                  "upper": 1439.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 3.0,
+                  "upper": 3.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "false_comparison"
+                },
+                "field": "frm_eligibility.safety_performance_maintained",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H30M",
+              "kind": "duration_value",
+              "phrase": "Table 3: 10.5 hours for 3 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "unknown"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 0.0,
+                  "upper": 1439.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 4.0,
+                  "upper": 4.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "false_comparison"
+                },
+                "field": "frm_eligibility.safety_performance_maintained",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H",
+              "kind": "duration_value",
+              "phrase": "Table 3: 10 hours for 4 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "unknown"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 0.0,
+                  "upper": 1439.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 5.0,
+                  "upper": 5.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "false_comparison"
+                },
+                "field": "frm_eligibility.safety_performance_maintained",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H30M",
+              "kind": "duration_value",
+              "phrase": "Table 3: 9.5 hours for 5 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "unknown"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 0.0,
+                  "upper": 1439.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 6.0,
+                  "upper": 6.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "false_comparison"
+                },
+                "field": "frm_eligibility.safety_performance_maintained",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 3: 9 hours for 6 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "unknown"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 0.0,
+                  "upper": 1439.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 7.0,
+                  "upper": 7.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "false_comparison"
+                },
+                "field": "frm_eligibility.safety_performance_maintained",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 3: 9 hours for 7 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "unknown"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 0.0,
+                  "upper": 1439.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 8.0,
+                  "upper": 8.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "false_comparison"
+                },
+                "field": "frm_eligibility.safety_performance_maintained",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 3: 9 hours for 8 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "unknown"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 0.0,
+                  "upper": 1439.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 1.0,
+                  "upper": 1.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "frm_eligibility.safety_performance_maintained",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT12H",
+              "kind": "duration_value",
+              "phrase": "Table 4: 12 hours for 1 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "unknown"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 0.0,
+                  "upper": 1439.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 2.0,
+                  "upper": 2.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "frm_eligibility.safety_performance_maintained",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT12H",
+              "kind": "duration_value",
+              "phrase": "Table 4: 12 hours for 2 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "unknown"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 0.0,
+                  "upper": 1439.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 3.0,
+                  "upper": 3.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "frm_eligibility.safety_performance_maintained",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H30M",
+              "kind": "duration_value",
+              "phrase": "Table 4: 11.5 hours for 3 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "unknown"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 0.0,
+                  "upper": 1439.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 4.0,
+                  "upper": 4.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "frm_eligibility.safety_performance_maintained",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT11H",
+              "kind": "duration_value",
+              "phrase": "Table 4: 11 hours for 4 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "unknown"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 0.0,
+                  "upper": 1439.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 5.0,
+                  "upper": 5.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "frm_eligibility.safety_performance_maintained",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H30M",
+              "kind": "duration_value",
+              "phrase": "Table 4: 10.5 hours for 5 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "unknown"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 0.0,
+                  "upper": 1439.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 6.0,
+                  "upper": 6.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "frm_eligibility.safety_performance_maintained",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT10H",
+              "kind": "duration_value",
+              "phrase": "Table 4: 10 hours for 6 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "unknown"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 0.0,
+                  "upper": 1439.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 7.0,
+                  "upper": 7.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "frm_eligibility.safety_performance_maintained",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H30M",
+              "kind": "duration_value",
+              "phrase": "Table 4: 9.5 hours for 7 operating sector(s)"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "unknown"
+                },
+                "field": "acclimatisation.state",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 0.0,
+                  "upper": 1439.0
+                },
+                "field": "reference_time.minute_of_day",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 8.0,
+                  "upper": 8.0
+                },
+                "field": "operating_sector_count",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "frm_eligibility.safety_performance_maintained",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "duration": "PT9H",
+              "kind": "duration_value",
+              "phrase": "Table 4: 9 hours for 8 operating sector(s)"
+            }
+          }
+        ]
+      },
+      "limit_updates": [],
+      "name": "Basic maximum daily FDP (Tables 2, 3 and 4)",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "fdp.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Report-to-end-of-last-operating-sector FDP"
+        },
+        "items": []
+      },
+      "value_updates": []
+    }
+  ],
+  "schema_gaps": [
+    "shared-definitions",
+    "rule-relationships",
+    "temporal-collection-definitions",
+    "source-bindings"
+  ],
+  "slug": "basic-daily-fdp",
+  "sources": [
+    "ORO.FTL.205(b)(1)–(3), Easy Access Rules for Air Operations Rev 24 (March 2026), PDF pp. 865–866.",
+    "ORO.FTL.105(1), (2), (12), PDF pp. 854–855; GM1–3 ORO.FTL.105(1) and GM1 ORO.FTL.105(2), PDF pp. 856–857."
+  ],
+  "title": "Basic maximum daily flight duty period"
+}

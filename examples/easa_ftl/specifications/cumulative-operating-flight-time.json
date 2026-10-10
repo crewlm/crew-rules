@@ -1,0 +1,210 @@
+{
+  "concepts": {
+    "category": {
+      "meaning": "Activity category; only flight activities contribute operating flight time, while deadhead positioning is excluded."
+    },
+    "employee": {
+      "meaning": "Crew member whose operating-sector history contributes to the assessed period."
+    },
+    "end": {
+      "meaning": "End instant or calendar boundary of an assessment window, according to its declared TimePeriod."
+    },
+    "op_flight": {
+      "meaning": "Operating block time accumulated for the crew member over the declared assessment window.",
+      "unit": "hours"
+    },
+    "start": {
+      "meaning": "Start instant or calendar boundary of an assessment window, according to its declared TimePeriod."
+    }
+  },
+  "documentation_note": "The 900-hour calendar-year rule is directly represented by a one-year TimePeriod and a 900-hour limit. This schema defines no data-input contract or prepared-fact validator. Crew-to-sector attribution, reserve/in-flight-rest classification, complete history, calendar boundaries, and window aggregation require shared relationship and temporal collection definitions.",
+  "number": 2,
+  "projections": [
+    {
+      "activity_projections": [
+        {
+          "method": "increase",
+          "name": "Credit operating flight block time",
+          "table": {
+            "default": {
+              "kind": "none_value",
+              "phrase": "Do nothing"
+            },
+            "items": [
+              {
+                "condition": [
+                  {
+                    "comparison": {
+                      "case_sensitive": true,
+                      "kind": "equal_text_comparison",
+                      "text": "flight"
+                    },
+                    "field": "category",
+                    "reverse_match": false
+                  }
+                ],
+                "value": {
+                  "clamp_direction": "forwards",
+                  "clamp_lower": null,
+                  "clamp_upper": null,
+                  "end_anchor": "end",
+                  "end_field": null,
+                  "end_offset": "PT0S",
+                  "kind": "projection_value",
+                  "phrase": "Operating block minutes × 1/60; credited in hours",
+                  "rate": 0.016666666666666666,
+                  "start_anchor": "start",
+                  "start_field": null,
+                  "start_offset": "PT0S"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "code": "op_flight",
+      "duty_projections": [],
+      "employee_ground_time_projections": [],
+      "employee_rest_time_projections": [],
+      "id": "69b2d1e8-8614-527c-8f1b-39dbda7e7b0b",
+      "name": "Operating flight time",
+      "pairing_projections": []
+    }
+  ],
+  "represented": [
+    "ORO.FTL.210(b) limits of 100 hours in 28 consecutive days, 900 hours in a calendar year, and 1,000 hours in 12 consecutive calendar months",
+    "Operating flight block-time projection at 1/60 per minute",
+    "Rule windows retain their distinct calendar and consecutive-day anchors"
+  ],
+  "rules": [
+    {
+      "applicability": {
+        "default": {
+          "applicable": true,
+          "kind": "applicable_value",
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "id": "83f2246d-1e2c-57a5-9717-17adac5f92f2",
+      "limit": {
+        "default": {
+          "duration": "P4DT4H",
+          "kind": "duration_value",
+          "phrase": "100 hours"
+        },
+        "items": []
+      },
+      "limit_updates": [],
+      "name": "100 hours in any 28 consecutive days",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "employee_time_period",
+      "time_period": {
+        "anchor": "day",
+        "duration": 28,
+        "unit": "day"
+      },
+      "value": {
+        "default": {
+          "code": "op_flight",
+          "element": "aggregate",
+          "kind": "projected_value",
+          "phrase": "Operating flight hours in this supplied 100 hours in any 28 consecutive days window"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": true,
+          "kind": "applicable_value",
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "id": "385d704a-c7cf-5dec-be44-f8166207899a",
+      "limit": {
+        "default": {
+          "duration": "P37DT12H",
+          "kind": "duration_value",
+          "phrase": "900 hours"
+        },
+        "items": []
+      },
+      "limit_updates": [],
+      "name": "900 hours in a calendar year",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "employee_time_period",
+      "time_period": {
+        "anchor": "year",
+        "duration": 1,
+        "unit": "year"
+      },
+      "value": {
+        "default": {
+          "code": "op_flight",
+          "element": "aggregate",
+          "kind": "projected_value",
+          "phrase": "Operating flight hours in this supplied 900 hours in a calendar year window"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": true,
+          "kind": "applicable_value",
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "id": "d6fe16dd-5d88-52e0-93a8-33bf1aa4590f",
+      "limit": {
+        "default": {
+          "duration": "P41DT16H",
+          "kind": "duration_value",
+          "phrase": "1000 hours"
+        },
+        "items": []
+      },
+      "limit_updates": [],
+      "name": "1,000 hours in any 12 consecutive calendar months",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "employee_time_period",
+      "time_period": {
+        "anchor": "month",
+        "duration": 12,
+        "unit": "month"
+      },
+      "value": {
+        "default": {
+          "code": "op_flight",
+          "element": "aggregate",
+          "kind": "projected_value",
+          "phrase": "Operating flight hours in this supplied 1,000 hours in any 12 consecutive calendar months window"
+        },
+        "items": []
+      },
+      "value_updates": []
+    }
+  ],
+  "schema_gaps": [
+    "shared-definitions",
+    "rule-relationships",
+    "temporal-collection-definitions",
+    "source-bindings"
+  ],
+  "slug": "cumulative-operating-flight-time",
+  "sources": [
+    "ORO.FTL.210(b), Easy Access Rules for Air Operations Rev 24 (March 2026), PDF p. 869.",
+    "ORO.FTL.105(13), (17), PDF pp. 855–856; GM1 ORO.FTL.105(17), PDF p. 858."
+  ],
+  "title": "Cumulative operating flight-time limits"
+}

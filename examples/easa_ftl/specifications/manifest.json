@@ -1,0 +1,52 @@
+[
+  {
+    "number": 1,
+    "slug": "cumulative-duty",
+    "title": "Cumulative duty limits"
+  },
+  {
+    "number": 2,
+    "slug": "cumulative-operating-flight-time",
+    "title": "Cumulative operating flight-time limits"
+  },
+  {
+    "number": 3,
+    "slug": "basic-daily-fdp",
+    "title": "Basic maximum daily flight duty period"
+  },
+  {
+    "number": 4,
+    "slug": "positioning-accounting",
+    "title": "Positioning accounting"
+  },
+  {
+    "number": 5,
+    "slug": "home_rest",
+    "title": "Minimum rest at home base"
+  },
+  {
+    "number": 6,
+    "slug": "away_rest",
+    "title": "Minimum rest away from home base"
+  },
+  {
+    "number": 7,
+    "slug": "recovery_rest",
+    "title": "Recurrent extended recovery rest"
+  },
+  {
+    "number": 8,
+    "slug": "split_duty",
+    "title": "Split duty"
+  },
+  {
+    "number": 9,
+    "slug": "standby",
+    "title": "Standby accounting and FDP impact"
+  },
+  {
+    "number": 10,
+    "slug": "augmentation",
+    "title": "Augmentation and in-flight rest"
+  }
+]

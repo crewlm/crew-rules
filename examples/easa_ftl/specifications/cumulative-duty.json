@@ -1,0 +1,526 @@
+{
+  "concepts": {
+    "category": {
+      "meaning": "Duty category used to select cumulative-duty credit: flying, deadhead_only, airport_standby, ground, simulator, training, admin, generic_work, or home_standby."
+    },
+    "cum_duty": {
+      "meaning": "Duty credit accumulated over the declared assessment window.",
+      "unit": "hours"
+    },
+    "employee": {
+      "meaning": "Crew member whose duty intervals contribute to the assessed cumulative-duty period."
+    },
+    "end": {
+      "meaning": "End instant of a consecutive-day assessment window."
+    },
+    "start": {
+      "meaning": "Start instant of a consecutive-day assessment window."
+    }
+  },
+  "documentation_note": "The schema declares window anchors, period lengths, credit categories, and rates. It does not define a data-input contract or prepared-fact validator; assignment, history completeness, boundary attribution, overlap interpretation, and the separate 'spread as evenly as practicable' obligation require shared temporal and relationship definitions.",
+  "number": 1,
+  "projections": [
+    {
+      "activity_projections": [],
+      "code": "cum_duty",
+      "duty_projections": [
+        {
+          "method": "increase",
+          "name": "Credit flying duty time at 0.0166667",
+          "table": {
+            "default": {
+              "kind": "none_value",
+              "phrase": "Do nothing"
+            },
+            "items": [
+              {
+                "condition": [
+                  {
+                    "comparison": {
+                      "case_sensitive": true,
+                      "kind": "equal_text_comparison",
+                      "text": "flying"
+                    },
+                    "field": "category",
+                    "reverse_match": false
+                  }
+                ],
+                "value": {
+                  "clamp_direction": "forwards",
+                  "clamp_lower": null,
+                  "clamp_upper": null,
+                  "end_anchor": "end",
+                  "end_field": null,
+                  "end_offset": "PT0S",
+                  "kind": "projection_value",
+                  "phrase": "flying duty minutes × 0.0166667; credited in hours",
+                  "rate": 0.016666666666666666,
+                  "start_anchor": "start",
+                  "start_field": null,
+                  "start_offset": "PT0S"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "method": "increase",
+          "name": "Credit deadhead_only duty time at 0.0166667",
+          "table": {
+            "default": {
+              "kind": "none_value",
+              "phrase": "Do nothing"
+            },
+            "items": [
+              {
+                "condition": [
+                  {
+                    "comparison": {
+                      "case_sensitive": true,
+                      "kind": "equal_text_comparison",
+                      "text": "deadhead_only"
+                    },
+                    "field": "category",
+                    "reverse_match": false
+                  }
+                ],
+                "value": {
+                  "clamp_direction": "forwards",
+                  "clamp_lower": null,
+                  "clamp_upper": null,
+                  "end_anchor": "end",
+                  "end_field": null,
+                  "end_offset": "PT0S",
+                  "kind": "projection_value",
+                  "phrase": "deadhead_only duty minutes × 0.0166667; credited in hours",
+                  "rate": 0.016666666666666666,
+                  "start_anchor": "start",
+                  "start_field": null,
+                  "start_offset": "PT0S"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "method": "increase",
+          "name": "Credit airport_standby duty time at 0.0166667",
+          "table": {
+            "default": {
+              "kind": "none_value",
+              "phrase": "Do nothing"
+            },
+            "items": [
+              {
+                "condition": [
+                  {
+                    "comparison": {
+                      "case_sensitive": true,
+                      "kind": "equal_text_comparison",
+                      "text": "airport_standby"
+                    },
+                    "field": "category",
+                    "reverse_match": false
+                  }
+                ],
+                "value": {
+                  "clamp_direction": "forwards",
+                  "clamp_lower": null,
+                  "clamp_upper": null,
+                  "end_anchor": "end",
+                  "end_field": null,
+                  "end_offset": "PT0S",
+                  "kind": "projection_value",
+                  "phrase": "airport_standby duty minutes × 0.0166667; credited in hours",
+                  "rate": 0.016666666666666666,
+                  "start_anchor": "start",
+                  "start_field": null,
+                  "start_offset": "PT0S"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "method": "increase",
+          "name": "Credit ground duty time at 0.0166667",
+          "table": {
+            "default": {
+              "kind": "none_value",
+              "phrase": "Do nothing"
+            },
+            "items": [
+              {
+                "condition": [
+                  {
+                    "comparison": {
+                      "case_sensitive": true,
+                      "kind": "equal_text_comparison",
+                      "text": "ground"
+                    },
+                    "field": "category",
+                    "reverse_match": false
+                  }
+                ],
+                "value": {
+                  "clamp_direction": "forwards",
+                  "clamp_lower": null,
+                  "clamp_upper": null,
+                  "end_anchor": "end",
+                  "end_field": null,
+                  "end_offset": "PT0S",
+                  "kind": "projection_value",
+                  "phrase": "ground duty minutes × 0.0166667; credited in hours",
+                  "rate": 0.016666666666666666,
+                  "start_anchor": "start",
+                  "start_field": null,
+                  "start_offset": "PT0S"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "method": "increase",
+          "name": "Credit simulator duty time at 0.0166667",
+          "table": {
+            "default": {
+              "kind": "none_value",
+              "phrase": "Do nothing"
+            },
+            "items": [
+              {
+                "condition": [
+                  {
+                    "comparison": {
+                      "case_sensitive": true,
+                      "kind": "equal_text_comparison",
+                      "text": "simulator"
+                    },
+                    "field": "category",
+                    "reverse_match": false
+                  }
+                ],
+                "value": {
+                  "clamp_direction": "forwards",
+                  "clamp_lower": null,
+                  "clamp_upper": null,
+                  "end_anchor": "end",
+                  "end_field": null,
+                  "end_offset": "PT0S",
+                  "kind": "projection_value",
+                  "phrase": "simulator duty minutes × 0.0166667; credited in hours",
+                  "rate": 0.016666666666666666,
+                  "start_anchor": "start",
+                  "start_field": null,
+                  "start_offset": "PT0S"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "method": "increase",
+          "name": "Credit training duty time at 0.0166667",
+          "table": {
+            "default": {
+              "kind": "none_value",
+              "phrase": "Do nothing"
+            },
+            "items": [
+              {
+                "condition": [
+                  {
+                    "comparison": {
+                      "case_sensitive": true,
+                      "kind": "equal_text_comparison",
+                      "text": "training"
+                    },
+                    "field": "category",
+                    "reverse_match": false
+                  }
+                ],
+                "value": {
+                  "clamp_direction": "forwards",
+                  "clamp_lower": null,
+                  "clamp_upper": null,
+                  "end_anchor": "end",
+                  "end_field": null,
+                  "end_offset": "PT0S",
+                  "kind": "projection_value",
+                  "phrase": "training duty minutes × 0.0166667; credited in hours",
+                  "rate": 0.016666666666666666,
+                  "start_anchor": "start",
+                  "start_field": null,
+                  "start_offset": "PT0S"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "method": "increase",
+          "name": "Credit admin duty time at 0.0166667",
+          "table": {
+            "default": {
+              "kind": "none_value",
+              "phrase": "Do nothing"
+            },
+            "items": [
+              {
+                "condition": [
+                  {
+                    "comparison": {
+                      "case_sensitive": true,
+                      "kind": "equal_text_comparison",
+                      "text": "admin"
+                    },
+                    "field": "category",
+                    "reverse_match": false
+                  }
+                ],
+                "value": {
+                  "clamp_direction": "forwards",
+                  "clamp_lower": null,
+                  "clamp_upper": null,
+                  "end_anchor": "end",
+                  "end_field": null,
+                  "end_offset": "PT0S",
+                  "kind": "projection_value",
+                  "phrase": "admin duty minutes × 0.0166667; credited in hours",
+                  "rate": 0.016666666666666666,
+                  "start_anchor": "start",
+                  "start_field": null,
+                  "start_offset": "PT0S"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "method": "increase",
+          "name": "Credit generic_work duty time at 0.0166667",
+          "table": {
+            "default": {
+              "kind": "none_value",
+              "phrase": "Do nothing"
+            },
+            "items": [
+              {
+                "condition": [
+                  {
+                    "comparison": {
+                      "case_sensitive": true,
+                      "kind": "equal_text_comparison",
+                      "text": "generic_work"
+                    },
+                    "field": "category",
+                    "reverse_match": false
+                  }
+                ],
+                "value": {
+                  "clamp_direction": "forwards",
+                  "clamp_lower": null,
+                  "clamp_upper": null,
+                  "end_anchor": "end",
+                  "end_field": null,
+                  "end_offset": "PT0S",
+                  "kind": "projection_value",
+                  "phrase": "generic_work duty minutes × 0.0166667; credited in hours",
+                  "rate": 0.016666666666666666,
+                  "start_anchor": "start",
+                  "start_field": null,
+                  "start_offset": "PT0S"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "method": "increase",
+          "name": "Credit home_standby duty time at 0.00416667",
+          "table": {
+            "default": {
+              "kind": "none_value",
+              "phrase": "Do nothing"
+            },
+            "items": [
+              {
+                "condition": [
+                  {
+                    "comparison": {
+                      "case_sensitive": true,
+                      "kind": "equal_text_comparison",
+                      "text": "home_standby"
+                    },
+                    "field": "category",
+                    "reverse_match": false
+                  }
+                ],
+                "value": {
+                  "clamp_direction": "forwards",
+                  "clamp_lower": null,
+                  "clamp_upper": null,
+                  "end_anchor": "end",
+                  "end_field": null,
+                  "end_offset": "PT0S",
+                  "kind": "projection_value",
+                  "phrase": "home_standby duty minutes × 0.00416667; credited in hours",
+                  "rate": 0.004166666666666667,
+                  "start_anchor": "start",
+                  "start_field": null,
+                  "start_offset": "PT0S"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "employee_ground_time_projections": [],
+      "employee_rest_time_projections": [],
+      "id": "130b7ef0-30cb-5d7c-820f-4a55031ebbb3",
+      "name": "Cumulative duty credit",
+      "pairing_projections": []
+    }
+  ],
+  "represented": [
+    "ORO.FTL.210(a) cumulative limits",
+    "ORO.FTL.210(a) requirement to spread duty as evenly as practicable, retained as a qualitative source obligation without a native qualitative Rule node",
+    "ORO.FTL.210(c) duty credit rates",
+    "Seven-, fourteen- and twenty-eight-day periods",
+    "Duty projection anchors and rates"
+  ],
+  "rules": [
+    {
+      "applicability": {
+        "default": {
+          "applicable": true,
+          "kind": "applicable_value",
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "id": "5f0194b5-2ec1-50f8-b5e5-4536ce529aa9",
+      "limit": {
+        "default": {
+          "duration": "P2DT12H",
+          "kind": "duration_value",
+          "phrase": "60 hours"
+        },
+        "items": []
+      },
+      "limit_updates": [],
+      "name": "Cumulative duty in any 7 consecutive days ≤ 60 h",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "employee_time_period",
+      "time_period": {
+        "anchor": "day",
+        "duration": 7,
+        "unit": "day"
+      },
+      "value": {
+        "default": {
+          "code": "cum_duty",
+          "element": "aggregate",
+          "kind": "projected_value",
+          "phrase": "Credited duty hours in this supplied 7-day window"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": true,
+          "kind": "applicable_value",
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "id": "227e723c-1b5f-5512-bdac-0cbb3325ca18",
+      "limit": {
+        "default": {
+          "duration": "P4DT14H",
+          "kind": "duration_value",
+          "phrase": "110 hours"
+        },
+        "items": []
+      },
+      "limit_updates": [],
+      "name": "Cumulative duty in any 14 consecutive days ≤ 110 h",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "employee_time_period",
+      "time_period": {
+        "anchor": "day",
+        "duration": 14,
+        "unit": "day"
+      },
+      "value": {
+        "default": {
+          "code": "cum_duty",
+          "element": "aggregate",
+          "kind": "projected_value",
+          "phrase": "Credited duty hours in this supplied 14-day window"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": true,
+          "kind": "applicable_value",
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "id": "8552344f-71f0-5c68-81a3-d81718b2502c",
+      "limit": {
+        "default": {
+          "duration": "P7DT22H",
+          "kind": "duration_value",
+          "phrase": "190 hours"
+        },
+        "items": []
+      },
+      "limit_updates": [],
+      "name": "Cumulative duty in any 28 consecutive days ≤ 190 h",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "employee_time_period",
+      "time_period": {
+        "anchor": "day",
+        "duration": 28,
+        "unit": "day"
+      },
+      "value": {
+        "default": {
+          "code": "cum_duty",
+          "element": "aggregate",
+          "kind": "projected_value",
+          "phrase": "Credited duty hours in this supplied 28-day window"
+        },
+        "items": []
+      },
+      "value_updates": []
+    }
+  ],
+  "schema_gaps": [
+    "shared-definitions",
+    "rule-relationships",
+    "temporal-collection-definitions",
+    "source-bindings",
+    "qualitative-obligations"
+  ],
+  "slug": "cumulative-duty",
+  "sources": [
+    "ORO.FTL.210(a), (c), Easy Access Rules for Air Operations Rev 24 (March 2026), PDF p. 869. Paragraph (a)'s 'spread as evenly as practicable' duty is retained as qualitative source text; the Rule schema has no native qualitative obligation node, and no numeric fairness rule or prepared compliant flag is modeled.",
+    "ORO.FTL.105(10)–(11), PDF p. 855; ORO.FTL.225(c), PDF p. 870; CS FTL.1.225(b)(3), PDF p. 883.",
+    "CS FTL.1.230(b), PDF p. 884: reserve time does not count as duty period for ORO.FTL.210 and ORO.FTL.235."
+  ],
+  "title": "Cumulative duty limits"
+}

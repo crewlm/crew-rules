@@ -1,0 +1,2960 @@
+{
+  "concepts": {
+    "augmentation.additional_qualified_flight_crew_count": {
+      "meaning": "Number of additional appropriately qualified flight crew members beyond the minimum crew.",
+      "unit": "count"
+    },
+    "augmentation.cabin_crew.allocated_rest.duration": {
+      "meaning": "Total cabin-crew in-flight rest required by the literal FDP-band and facility-class table; the source does not separately require all of this amount to be consecutive.",
+      "unit": "hours"
+    },
+    "augmentation.cabin_crew.rest_facility_class": {
+      "meaning": "Cabin-crew rest-facility class used to select an exact CS table cell."
+    },
+    "augmentation.crew_member": {
+      "meaning": "Crew-member identity for individual rest entitlements, role at landing, and facility allocation."
+    },
+    "augmentation.crew_member.minimum_consecutive_rest.duration": {
+      "meaning": "Minimum consecutive in-flight rest allocated to each crew member.",
+      "unit": "hours"
+    },
+    "augmentation.extended_fdp.duration": {
+      "meaning": "Actual total extended FDP including all in-flight rest-facility time.",
+      "unit": "hours"
+    },
+    "augmentation.facility_capacity": {
+      "meaning": "Operator/evaluator-provided usable capacity information for allocating per-person rest. This is an inferred planning aid, not a separately quoted requirement in this source excerpt.",
+      "unit": "crew members"
+    },
+    "augmentation.flight_crew.maximum_fdp.duration": {
+      "meaning": "Maximum total FDP in the source augmentation table, not an increment to the basic FDP.",
+      "unit": "hours"
+    },
+    "augmentation.flight_crew.rest_facility_class": {
+      "meaning": "Flight-crew rest facility class, using the source text labels class_1, class_2, and class_3."
+    },
+    "augmentation.landing_control_crew.minimum_consecutive_rest.duration": {
+      "meaning": "Consecutive in-flight rest for flight crew members at control during landing.",
+      "unit": "hours"
+    },
+    "augmentation.prohibited_extension_combinations.count": {
+      "meaning": "Occurrences of prohibited combinations among basic daily, in-flight-rest, and split-duty extensions.",
+      "unit": "count"
+    },
+    "augmentation.rest_facility_time.duration": {
+      "meaning": "Time spent in an in-flight rest facility; all of it counts as FDP.",
+      "unit": "hours"
+    },
+    "augmentation.same_flight_positioning_to_operating_crew_occurrences.count": {
+      "meaning": "Occurrences of a crew member starting a positioning sector to become operating crew on the same flight.",
+      "unit": "count"
+    },
+    "augmentation.sector_count": {
+      "meaning": "Number of sectors in the augmented FDP.",
+      "unit": "count"
+    },
+    "augmentation.sector_over_9h.continuous_flight.duration": {
+      "meaning": "Continuous flight duration of a qualifying individual sector; aggregate flight time does not qualify.",
+      "unit": "hours"
+    },
+    "duty.inflight_rest_augmentation_claimed": {
+      "meaning": "Whether an extension due to in-flight rest is claimed for this duty."
+    },
+    "fdp.duration": {
+      "meaning": "Full report-to-last-operating-end FDP duration.",
+      "unit": "hours"
+    },
+    "fdp.duration_without_rest_facility": {
+      "meaning": "FDP duration with in-flight rest-facility time removed, used to express the source add-back requirement.",
+      "unit": "hours"
+    },
+    "preceding_duty.duration": {
+      "meaning": "Preceding full duty duration used in destination-rest minimum.",
+      "unit": "hours"
+    },
+    "preceding_duty.inflight_rest_augmentation_claimed": {
+      "meaning": "Whether an extension due to in-flight rest was claimed before this destination rest."
+    },
+    "rest.duration": {
+      "meaning": "Destination rest duration after the augmented FDP.",
+      "unit": "hours"
+    }
+  },
+  "number": 10,
+  "projections": [],
+  "represented": [
+    "Six total flight-crew FDP caps: with one additional crew member class 3/2/1 totals are 14/15/16 hours; with two additional crew members totals are 15/16/17 hours",
+    "Each of the six caps has a strict greater-than-nine-hours single-sector condition and a no-more-than-two-sector condition that increases its limit by one hour",
+    "Augmented FDP sector cap of three",
+    "Ninety consecutive minutes for each crew member and two consecutive hours for flight crew at control during landing",
+    "Exact minute-labelled cabin-rest table, including explicit prohibited cells; the cabin-table minimum is not stated as fully consecutive",
+    "Same-flight positioning and extension-combination prohibitions are explicit zero-occurrence constraints",
+    "A lower-bound consistency Rule adds all rest-facility time to an FDP interval with facility time removed; it documents inclusion but does not derive an exact timeline",
+    "Destination rest is max(previous full duty, 14 hours)",
+    "Subminute FDP band interpretation, individual facility allocation, crew capacity, and crew-role correlation remain external; capacity is an evaluator planning input, not a separately quoted constraint"
+  ],
+  "rules": [
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this source table cell"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "equal_number_comparison",
+                  "number": 1.0,
+                  "tolerance": 1e-06
+                },
+                "field": "augmentation.additional_qualified_flight_crew_count",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "class_3"
+                },
+                "field": "augmentation.flight_crew.rest_facility_class",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Matching source table cell"
+            }
+          }
+        ]
+      },
+      "id": "a99f22bf-59e0-5b9d-9808-a2d7bc4a3323",
+      "limit": {
+        "default": {
+          "duration": "PT14H",
+          "kind": "duration_value",
+          "phrase": "14-hour total FDP cap"
+        },
+        "items": []
+      },
+      "limit_updates": [
+        {
+          "method": "increase",
+          "name": "Add one hour when one sector exceeds nine continuous flight hours and the FDP has at most two sectors",
+          "table": {
+            "default": {
+              "kind": "none_value",
+              "phrase": "Do nothing"
+            },
+            "items": [
+              {
+                "condition": [
+                  {
+                    "comparison": {
+                      "kind": "truth_comparison"
+                    },
+                    "field": "duty.inflight_rest_augmentation_claimed",
+                    "reverse_match": false
+                  },
+                  {
+                    "comparison": {
+                      "kind": "gt_number_comparison",
+                      "number": 9.0
+                    },
+                    "field": "augmentation.sector_over_9h.continuous_flight.duration",
+                    "reverse_match": false
+                  },
+                  {
+                    "comparison": {
+                      "kind": "le_number_comparison",
+                      "number": 2.0
+                    },
+                    "field": "augmentation.sector_count",
+                    "reverse_match": false
+                  }
+                ],
+                "value": {
+                  "duration": "PT1H",
+                  "kind": "duration_value",
+                  "phrase": "One-hour additional cap"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "name": "Flight-crew maximum total FDP: 1 additional crew, class_3",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.extended_fdp.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Total extended FDP"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this source table cell"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "equal_number_comparison",
+                  "number": 1.0,
+                  "tolerance": 1e-06
+                },
+                "field": "augmentation.additional_qualified_flight_crew_count",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "class_2"
+                },
+                "field": "augmentation.flight_crew.rest_facility_class",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Matching source table cell"
+            }
+          }
+        ]
+      },
+      "id": "798939f9-9a66-5dda-963c-87b5ce2cc835",
+      "limit": {
+        "default": {
+          "duration": "PT15H",
+          "kind": "duration_value",
+          "phrase": "15-hour total FDP cap"
+        },
+        "items": []
+      },
+      "limit_updates": [
+        {
+          "method": "increase",
+          "name": "Add one hour when one sector exceeds nine continuous flight hours and the FDP has at most two sectors",
+          "table": {
+            "default": {
+              "kind": "none_value",
+              "phrase": "Do nothing"
+            },
+            "items": [
+              {
+                "condition": [
+                  {
+                    "comparison": {
+                      "kind": "truth_comparison"
+                    },
+                    "field": "duty.inflight_rest_augmentation_claimed",
+                    "reverse_match": false
+                  },
+                  {
+                    "comparison": {
+                      "kind": "gt_number_comparison",
+                      "number": 9.0
+                    },
+                    "field": "augmentation.sector_over_9h.continuous_flight.duration",
+                    "reverse_match": false
+                  },
+                  {
+                    "comparison": {
+                      "kind": "le_number_comparison",
+                      "number": 2.0
+                    },
+                    "field": "augmentation.sector_count",
+                    "reverse_match": false
+                  }
+                ],
+                "value": {
+                  "duration": "PT1H",
+                  "kind": "duration_value",
+                  "phrase": "One-hour additional cap"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "name": "Flight-crew maximum total FDP: 1 additional crew, class_2",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.extended_fdp.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Total extended FDP"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this source table cell"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "equal_number_comparison",
+                  "number": 1.0,
+                  "tolerance": 1e-06
+                },
+                "field": "augmentation.additional_qualified_flight_crew_count",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "class_1"
+                },
+                "field": "augmentation.flight_crew.rest_facility_class",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Matching source table cell"
+            }
+          }
+        ]
+      },
+      "id": "f51928af-959e-5869-847f-ad9a7213629c",
+      "limit": {
+        "default": {
+          "duration": "PT16H",
+          "kind": "duration_value",
+          "phrase": "16-hour total FDP cap"
+        },
+        "items": []
+      },
+      "limit_updates": [
+        {
+          "method": "increase",
+          "name": "Add one hour when one sector exceeds nine continuous flight hours and the FDP has at most two sectors",
+          "table": {
+            "default": {
+              "kind": "none_value",
+              "phrase": "Do nothing"
+            },
+            "items": [
+              {
+                "condition": [
+                  {
+                    "comparison": {
+                      "kind": "truth_comparison"
+                    },
+                    "field": "duty.inflight_rest_augmentation_claimed",
+                    "reverse_match": false
+                  },
+                  {
+                    "comparison": {
+                      "kind": "gt_number_comparison",
+                      "number": 9.0
+                    },
+                    "field": "augmentation.sector_over_9h.continuous_flight.duration",
+                    "reverse_match": false
+                  },
+                  {
+                    "comparison": {
+                      "kind": "le_number_comparison",
+                      "number": 2.0
+                    },
+                    "field": "augmentation.sector_count",
+                    "reverse_match": false
+                  }
+                ],
+                "value": {
+                  "duration": "PT1H",
+                  "kind": "duration_value",
+                  "phrase": "One-hour additional cap"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "name": "Flight-crew maximum total FDP: 1 additional crew, class_1",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.extended_fdp.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Total extended FDP"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this source table cell"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "equal_number_comparison",
+                  "number": 2.0,
+                  "tolerance": 1e-06
+                },
+                "field": "augmentation.additional_qualified_flight_crew_count",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "class_3"
+                },
+                "field": "augmentation.flight_crew.rest_facility_class",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Matching source table cell"
+            }
+          }
+        ]
+      },
+      "id": "4298fbbf-7c41-5c2f-82fd-25a5626d6610",
+      "limit": {
+        "default": {
+          "duration": "PT15H",
+          "kind": "duration_value",
+          "phrase": "15-hour total FDP cap"
+        },
+        "items": []
+      },
+      "limit_updates": [
+        {
+          "method": "increase",
+          "name": "Add one hour when one sector exceeds nine continuous flight hours and the FDP has at most two sectors",
+          "table": {
+            "default": {
+              "kind": "none_value",
+              "phrase": "Do nothing"
+            },
+            "items": [
+              {
+                "condition": [
+                  {
+                    "comparison": {
+                      "kind": "truth_comparison"
+                    },
+                    "field": "duty.inflight_rest_augmentation_claimed",
+                    "reverse_match": false
+                  },
+                  {
+                    "comparison": {
+                      "kind": "gt_number_comparison",
+                      "number": 9.0
+                    },
+                    "field": "augmentation.sector_over_9h.continuous_flight.duration",
+                    "reverse_match": false
+                  },
+                  {
+                    "comparison": {
+                      "kind": "le_number_comparison",
+                      "number": 2.0
+                    },
+                    "field": "augmentation.sector_count",
+                    "reverse_match": false
+                  }
+                ],
+                "value": {
+                  "duration": "PT1H",
+                  "kind": "duration_value",
+                  "phrase": "One-hour additional cap"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "name": "Flight-crew maximum total FDP: 2 additional crew, class_3",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.extended_fdp.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Total extended FDP"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this source table cell"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "equal_number_comparison",
+                  "number": 2.0,
+                  "tolerance": 1e-06
+                },
+                "field": "augmentation.additional_qualified_flight_crew_count",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "class_2"
+                },
+                "field": "augmentation.flight_crew.rest_facility_class",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Matching source table cell"
+            }
+          }
+        ]
+      },
+      "id": "012fd147-6868-5710-8ef9-e839f183cfb6",
+      "limit": {
+        "default": {
+          "duration": "PT16H",
+          "kind": "duration_value",
+          "phrase": "16-hour total FDP cap"
+        },
+        "items": []
+      },
+      "limit_updates": [
+        {
+          "method": "increase",
+          "name": "Add one hour when one sector exceeds nine continuous flight hours and the FDP has at most two sectors",
+          "table": {
+            "default": {
+              "kind": "none_value",
+              "phrase": "Do nothing"
+            },
+            "items": [
+              {
+                "condition": [
+                  {
+                    "comparison": {
+                      "kind": "truth_comparison"
+                    },
+                    "field": "duty.inflight_rest_augmentation_claimed",
+                    "reverse_match": false
+                  },
+                  {
+                    "comparison": {
+                      "kind": "gt_number_comparison",
+                      "number": 9.0
+                    },
+                    "field": "augmentation.sector_over_9h.continuous_flight.duration",
+                    "reverse_match": false
+                  },
+                  {
+                    "comparison": {
+                      "kind": "le_number_comparison",
+                      "number": 2.0
+                    },
+                    "field": "augmentation.sector_count",
+                    "reverse_match": false
+                  }
+                ],
+                "value": {
+                  "duration": "PT1H",
+                  "kind": "duration_value",
+                  "phrase": "One-hour additional cap"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "name": "Flight-crew maximum total FDP: 2 additional crew, class_2",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.extended_fdp.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Total extended FDP"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this source table cell"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "equal_number_comparison",
+                  "number": 2.0,
+                  "tolerance": 1e-06
+                },
+                "field": "augmentation.additional_qualified_flight_crew_count",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "class_1"
+                },
+                "field": "augmentation.flight_crew.rest_facility_class",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Matching source table cell"
+            }
+          }
+        ]
+      },
+      "id": "2ef3d802-5369-5709-8db0-a65977c87116",
+      "limit": {
+        "default": {
+          "duration": "PT17H",
+          "kind": "duration_value",
+          "phrase": "17-hour total FDP cap"
+        },
+        "items": []
+      },
+      "limit_updates": [
+        {
+          "method": "increase",
+          "name": "Add one hour when one sector exceeds nine continuous flight hours and the FDP has at most two sectors",
+          "table": {
+            "default": {
+              "kind": "none_value",
+              "phrase": "Do nothing"
+            },
+            "items": [
+              {
+                "condition": [
+                  {
+                    "comparison": {
+                      "kind": "truth_comparison"
+                    },
+                    "field": "duty.inflight_rest_augmentation_claimed",
+                    "reverse_match": false
+                  },
+                  {
+                    "comparison": {
+                      "kind": "gt_number_comparison",
+                      "number": 9.0
+                    },
+                    "field": "augmentation.sector_over_9h.continuous_flight.duration",
+                    "reverse_match": false
+                  },
+                  {
+                    "comparison": {
+                      "kind": "le_number_comparison",
+                      "number": 2.0
+                    },
+                    "field": "augmentation.sector_count",
+                    "reverse_match": false
+                  }
+                ],
+                "value": {
+                  "duration": "PT1H",
+                  "kind": "duration_value",
+                  "phrase": "One-hour additional cap"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "name": "Flight-crew maximum total FDP: 2 additional crew, class_1",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.extended_fdp.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Total extended FDP"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "No in-flight-rest augmentation claimed"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "In-flight-rest augmentation claimed"
+            }
+          }
+        ]
+      },
+      "id": "8153bc1c-aea4-5910-adbf-8f03094dd9f2",
+      "limit": null,
+      "limit_updates": [],
+      "name": "All in-flight rest-facility time is included in FDP",
+      "requirement": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "fdp.duration_without_rest_facility",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "requirement_updates": [
+        {
+          "method": "increase",
+          "name": "Include all rest-facility time",
+          "table": {
+            "default": {
+              "clamp_lower": null,
+              "clamp_upper": null,
+              "field": "augmentation.rest_facility_time.duration",
+              "kind": "field_value",
+              "multiplier": 1.0,
+              "offset": 0.0,
+              "phrase": "Matched"
+            },
+            "items": []
+          }
+        }
+      ],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "fdp.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "No in-flight-rest augmentation claimed"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "In-flight-rest augmentation claimed"
+            }
+          }
+        ]
+      },
+      "id": "6440af52-0253-5cea-82f7-9f4790574528",
+      "limit": {
+        "default": {
+          "kind": "number_value",
+          "number": 3.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "limit_updates": [],
+      "name": "Augmented FDP is limited to three sectors",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.sector_count",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "No in-flight-rest augmentation claimed"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "In-flight-rest augmentation claimed"
+            }
+          }
+        ]
+      },
+      "id": "585b51d7-0415-51f4-8828-4d3da502d57a",
+      "limit": null,
+      "limit_updates": [],
+      "name": "Each crew member receives at least 90 consecutive minutes of in-flight rest",
+      "requirement": {
+        "default": {
+          "duration": "PT1H30M",
+          "kind": "duration_value",
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.crew_member.minimum_consecutive_rest.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "No in-flight-rest augmentation claimed"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "In-flight-rest augmentation claimed"
+            }
+          }
+        ]
+      },
+      "id": "94feb5d0-8aa3-5e13-b5f5-5add18afaf47",
+      "limit": null,
+      "limit_updates": [],
+      "name": "Flight crew at control during landing receive two consecutive hours of in-flight rest",
+      "requirement": {
+        "default": {
+          "duration": "PT2H",
+          "kind": "duration_value",
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.landing_control_crew.minimum_consecutive_rest.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "No augmentation claimed"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Source prohibition assessed"
+            }
+          }
+        ]
+      },
+      "id": "1ccb552d-9848-5216-b166-538281dcea9c",
+      "limit": {
+        "default": {
+          "kind": "number_value",
+          "number": 0.0,
+          "phrase": "No prohibited occurrences"
+        },
+        "items": []
+      },
+      "limit_updates": [],
+      "name": "No crew member starts a positioning sector to become operating crew on the same flight",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.same_flight_positioning_to_operating_crew_occurrences.count",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "No crew member starts a positioning sector to become operating crew on the same flight"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "No augmentation claimed"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Source prohibition assessed"
+            }
+          }
+        ]
+      },
+      "id": "6dc4906a-109d-5d73-93bc-36b154628d16",
+      "limit": {
+        "default": {
+          "kind": "number_value",
+          "number": 0.0,
+          "phrase": "No prohibited occurrences"
+        },
+        "items": []
+      },
+      "limit_updates": [],
+      "name": "No prohibited combination of basic daily, in-flight-rest, and split-duty extensions occurs",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.prohibited_extension_combinations.count",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "No prohibited combination of basic daily, in-flight-rest, and split-duty extensions occurs"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "No in-flight-rest augmentation claimed"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "preceding_duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Augmented FDP destination rest"
+            }
+          }
+        ]
+      },
+      "id": "e35256b5-ae75-5130-9715-4f20945e1a43",
+      "limit": null,
+      "limit_updates": [],
+      "name": "Destination rest is at least max(previous full duty, 14 hours)",
+      "requirement": {
+        "default": {
+          "duration": "PT14H",
+          "kind": "duration_value",
+          "phrase": "14-hour destination-rest floor"
+        },
+        "items": []
+      },
+      "requirement_updates": [
+        {
+          "method": "max",
+          "name": "At least preceding full duty",
+          "table": {
+            "default": {
+              "clamp_lower": null,
+              "clamp_upper": null,
+              "field": "preceding_duty.duration",
+              "kind": "field_value",
+              "multiplier": 1.0,
+              "offset": 0.0,
+              "phrase": "Matched"
+            },
+            "items": []
+          }
+        }
+      ],
+      "scope": "employee_rest_time",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "rest.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this cabin-rest table cell"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 0.0,
+                  "upper": 14.5
+                },
+                "field": "augmentation.extended_fdp.duration",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "class_1"
+                },
+                "field": "augmentation.cabin_crew.rest_facility_class",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Exact source table cell"
+            }
+          }
+        ]
+      },
+      "id": "d4b68b04-15b8-5301-843a-0b317fd25449",
+      "limit": null,
+      "limit_updates": [],
+      "name": "Cabin crew minimum total in-flight rest: class_1, FDP 0–14.5 hours",
+      "requirement": {
+        "default": {
+          "duration": "PT1H30M",
+          "kind": "duration_value",
+          "phrase": "Source minimum 1.5 hours"
+        },
+        "items": []
+      },
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.cabin_crew.allocated_rest.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this cabin-rest table cell"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 0.0,
+                  "upper": 14.5
+                },
+                "field": "augmentation.extended_fdp.duration",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "class_2"
+                },
+                "field": "augmentation.cabin_crew.rest_facility_class",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Exact source table cell"
+            }
+          }
+        ]
+      },
+      "id": "3241514d-615e-5ec2-919f-6ec00eb39a93",
+      "limit": null,
+      "limit_updates": [],
+      "name": "Cabin crew minimum total in-flight rest: class_2, FDP 0–14.5 hours",
+      "requirement": {
+        "default": {
+          "duration": "PT1H30M",
+          "kind": "duration_value",
+          "phrase": "Source minimum 1.5 hours"
+        },
+        "items": []
+      },
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.cabin_crew.allocated_rest.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this cabin-rest table cell"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 0.0,
+                  "upper": 14.5
+                },
+                "field": "augmentation.extended_fdp.duration",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "class_3"
+                },
+                "field": "augmentation.cabin_crew.rest_facility_class",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Exact source table cell"
+            }
+          }
+        ]
+      },
+      "id": "1fa4401e-0cc6-57a1-9274-0db4c56ced97",
+      "limit": null,
+      "limit_updates": [],
+      "name": "Cabin crew minimum total in-flight rest: class_3, FDP 0–14.5 hours",
+      "requirement": {
+        "default": {
+          "duration": "PT1H30M",
+          "kind": "duration_value",
+          "phrase": "Source minimum 1.5 hours"
+        },
+        "items": []
+      },
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.cabin_crew.allocated_rest.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this cabin-rest table cell"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 14.516666666666667,
+                  "upper": 15.0
+                },
+                "field": "augmentation.extended_fdp.duration",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "class_1"
+                },
+                "field": "augmentation.cabin_crew.rest_facility_class",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Exact source table cell"
+            }
+          }
+        ]
+      },
+      "id": "d0766883-5e13-56de-805b-9db0ba2020eb",
+      "limit": null,
+      "limit_updates": [],
+      "name": "Cabin crew minimum total in-flight rest: class_1, FDP 14.5167–15 hours",
+      "requirement": {
+        "default": {
+          "duration": "PT1H45M",
+          "kind": "duration_value",
+          "phrase": "Source minimum 1.75 hours"
+        },
+        "items": []
+      },
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.cabin_crew.allocated_rest.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this cabin-rest table cell"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 14.516666666666667,
+                  "upper": 15.0
+                },
+                "field": "augmentation.extended_fdp.duration",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "class_2"
+                },
+                "field": "augmentation.cabin_crew.rest_facility_class",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Exact source table cell"
+            }
+          }
+        ]
+      },
+      "id": "e49ad5f8-4dc2-5dbf-8343-9c54b355445a",
+      "limit": null,
+      "limit_updates": [],
+      "name": "Cabin crew minimum total in-flight rest: class_2, FDP 14.5167–15 hours",
+      "requirement": {
+        "default": {
+          "duration": "PT2H",
+          "kind": "duration_value",
+          "phrase": "Source minimum 2 hours"
+        },
+        "items": []
+      },
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.cabin_crew.allocated_rest.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this cabin-rest table cell"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 14.516666666666667,
+                  "upper": 15.0
+                },
+                "field": "augmentation.extended_fdp.duration",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "class_3"
+                },
+                "field": "augmentation.cabin_crew.rest_facility_class",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Exact source table cell"
+            }
+          }
+        ]
+      },
+      "id": "0da1dcfb-1a57-580d-a152-5559514992d3",
+      "limit": null,
+      "limit_updates": [],
+      "name": "Cabin crew minimum total in-flight rest: class_3, FDP 14.5167–15 hours",
+      "requirement": {
+        "default": {
+          "duration": "PT2H20M",
+          "kind": "duration_value",
+          "phrase": "Source minimum 2.33333 hours"
+        },
+        "items": []
+      },
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.cabin_crew.allocated_rest.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this cabin-rest table cell"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 15.016666666666667,
+                  "upper": 15.5
+                },
+                "field": "augmentation.extended_fdp.duration",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "class_1"
+                },
+                "field": "augmentation.cabin_crew.rest_facility_class",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Exact source table cell"
+            }
+          }
+        ]
+      },
+      "id": "f6ee9448-ef24-52e0-ad55-10a8bd51d4dd",
+      "limit": null,
+      "limit_updates": [],
+      "name": "Cabin crew minimum total in-flight rest: class_1, FDP 15.0167–15.5 hours",
+      "requirement": {
+        "default": {
+          "duration": "PT2H",
+          "kind": "duration_value",
+          "phrase": "Source minimum 2 hours"
+        },
+        "items": []
+      },
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.cabin_crew.allocated_rest.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this cabin-rest table cell"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 15.016666666666667,
+                  "upper": 15.5
+                },
+                "field": "augmentation.extended_fdp.duration",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "class_2"
+                },
+                "field": "augmentation.cabin_crew.rest_facility_class",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Exact source table cell"
+            }
+          }
+        ]
+      },
+      "id": "f0ded920-ac58-5917-8509-c8725b7ae82e",
+      "limit": null,
+      "limit_updates": [],
+      "name": "Cabin crew minimum total in-flight rest: class_2, FDP 15.0167–15.5 hours",
+      "requirement": {
+        "default": {
+          "duration": "PT2H20M",
+          "kind": "duration_value",
+          "phrase": "Source minimum 2.33333 hours"
+        },
+        "items": []
+      },
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.cabin_crew.allocated_rest.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this cabin-rest table cell"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 15.016666666666667,
+                  "upper": 15.5
+                },
+                "field": "augmentation.extended_fdp.duration",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "class_3"
+                },
+                "field": "augmentation.cabin_crew.rest_facility_class",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Exact source table cell"
+            }
+          }
+        ]
+      },
+      "id": "6c7a178e-ad45-5c6a-a0d8-1228ecb15573",
+      "limit": null,
+      "limit_updates": [],
+      "name": "Cabin crew minimum total in-flight rest: class_3, FDP 15.0167–15.5 hours",
+      "requirement": {
+        "default": {
+          "duration": "PT2H40M",
+          "kind": "duration_value",
+          "phrase": "Source minimum 2.66667 hours"
+        },
+        "items": []
+      },
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.cabin_crew.allocated_rest.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this cabin-rest table cell"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 15.516666666666667,
+                  "upper": 16.0
+                },
+                "field": "augmentation.extended_fdp.duration",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "class_1"
+                },
+                "field": "augmentation.cabin_crew.rest_facility_class",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Exact source table cell"
+            }
+          }
+        ]
+      },
+      "id": "c5049d27-aa24-59b9-a6cd-5ed6e3774341",
+      "limit": null,
+      "limit_updates": [],
+      "name": "Cabin crew minimum total in-flight rest: class_1, FDP 15.5167–16 hours",
+      "requirement": {
+        "default": {
+          "duration": "PT2H15M",
+          "kind": "duration_value",
+          "phrase": "Source minimum 2.25 hours"
+        },
+        "items": []
+      },
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.cabin_crew.allocated_rest.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this cabin-rest table cell"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 15.516666666666667,
+                  "upper": 16.0
+                },
+                "field": "augmentation.extended_fdp.duration",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "class_2"
+                },
+                "field": "augmentation.cabin_crew.rest_facility_class",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Exact source table cell"
+            }
+          }
+        ]
+      },
+      "id": "124aadc9-44c7-56df-a225-f4652920e255",
+      "limit": null,
+      "limit_updates": [],
+      "name": "Cabin crew minimum total in-flight rest: class_2, FDP 15.5167–16 hours",
+      "requirement": {
+        "default": {
+          "duration": "PT2H40M",
+          "kind": "duration_value",
+          "phrase": "Source minimum 2.66667 hours"
+        },
+        "items": []
+      },
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.cabin_crew.allocated_rest.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this cabin-rest table cell"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 15.516666666666667,
+                  "upper": 16.0
+                },
+                "field": "augmentation.extended_fdp.duration",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "class_3"
+                },
+                "field": "augmentation.cabin_crew.rest_facility_class",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Exact source table cell"
+            }
+          }
+        ]
+      },
+      "id": "a0fcff8b-ef34-59b9-aede-88a77b979188",
+      "limit": null,
+      "limit_updates": [],
+      "name": "Cabin crew minimum total in-flight rest: class_3, FDP 15.5167–16 hours",
+      "requirement": {
+        "default": {
+          "duration": "PT3H",
+          "kind": "duration_value",
+          "phrase": "Source minimum 3 hours"
+        },
+        "items": []
+      },
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.cabin_crew.allocated_rest.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this cabin-rest table cell"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 16.016666666666666,
+                  "upper": 16.5
+                },
+                "field": "augmentation.extended_fdp.duration",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "class_1"
+                },
+                "field": "augmentation.cabin_crew.rest_facility_class",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Exact source table cell"
+            }
+          }
+        ]
+      },
+      "id": "3b7d6363-5c3e-5d85-aa09-9d23ab985d11",
+      "limit": null,
+      "limit_updates": [],
+      "name": "Cabin crew minimum total in-flight rest: class_1, FDP 16.0167–16.5 hours",
+      "requirement": {
+        "default": {
+          "duration": "PT2H35M",
+          "kind": "duration_value",
+          "phrase": "Source minimum 2.58333 hours"
+        },
+        "items": []
+      },
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.cabin_crew.allocated_rest.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this cabin-rest table cell"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 16.016666666666666,
+                  "upper": 16.5
+                },
+                "field": "augmentation.extended_fdp.duration",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "class_2"
+                },
+                "field": "augmentation.cabin_crew.rest_facility_class",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Exact source table cell"
+            }
+          }
+        ]
+      },
+      "id": "678ea184-4969-5cea-bb59-2ec62e1c58cd",
+      "limit": null,
+      "limit_updates": [],
+      "name": "Cabin crew minimum total in-flight rest: class_2, FDP 16.0167–16.5 hours",
+      "requirement": {
+        "default": {
+          "duration": "PT3H",
+          "kind": "duration_value",
+          "phrase": "Source minimum 3 hours"
+        },
+        "items": []
+      },
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.cabin_crew.allocated_rest.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this cabin-rest table cell"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 16.016666666666666,
+                  "upper": 16.5
+                },
+                "field": "augmentation.extended_fdp.duration",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "class_3"
+                },
+                "field": "augmentation.cabin_crew.rest_facility_class",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Exact source table cell"
+            }
+          }
+        ]
+      },
+      "id": "f8175042-3405-556b-b182-66c58d765ce0",
+      "limit": {
+        "default": {
+          "duration": "PT0S",
+          "kind": "duration_value",
+          "phrase": "Explicitly prohibited source table cell"
+        },
+        "items": []
+      },
+      "limit_updates": [],
+      "name": "Cabin facility class_3 prohibited for FDP band 16.0167–16.5 hours",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.extended_fdp.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this cabin-rest table cell"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 16.516666666666666,
+                  "upper": 17.0
+                },
+                "field": "augmentation.extended_fdp.duration",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "class_1"
+                },
+                "field": "augmentation.cabin_crew.rest_facility_class",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Exact source table cell"
+            }
+          }
+        ]
+      },
+      "id": "3db731ca-93fb-55fe-8fab-7124c37f9fe0",
+      "limit": null,
+      "limit_updates": [],
+      "name": "Cabin crew minimum total in-flight rest: class_1, FDP 16.5167–17 hours",
+      "requirement": {
+        "default": {
+          "duration": "PT3H",
+          "kind": "duration_value",
+          "phrase": "Source minimum 3 hours"
+        },
+        "items": []
+      },
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.cabin_crew.allocated_rest.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this cabin-rest table cell"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 16.516666666666666,
+                  "upper": 17.0
+                },
+                "field": "augmentation.extended_fdp.duration",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "class_2"
+                },
+                "field": "augmentation.cabin_crew.rest_facility_class",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Exact source table cell"
+            }
+          }
+        ]
+      },
+      "id": "89809354-a944-56ab-9bf6-d22cb62bd1ea",
+      "limit": null,
+      "limit_updates": [],
+      "name": "Cabin crew minimum total in-flight rest: class_2, FDP 16.5167–17 hours",
+      "requirement": {
+        "default": {
+          "duration": "PT3H25M",
+          "kind": "duration_value",
+          "phrase": "Source minimum 3.41667 hours"
+        },
+        "items": []
+      },
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.cabin_crew.allocated_rest.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this cabin-rest table cell"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 16.516666666666666,
+                  "upper": 17.0
+                },
+                "field": "augmentation.extended_fdp.duration",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "class_3"
+                },
+                "field": "augmentation.cabin_crew.rest_facility_class",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Exact source table cell"
+            }
+          }
+        ]
+      },
+      "id": "a816b46c-4b1f-565b-9920-e9bcee5ef111",
+      "limit": {
+        "default": {
+          "duration": "PT0S",
+          "kind": "duration_value",
+          "phrase": "Explicitly prohibited source table cell"
+        },
+        "items": []
+      },
+      "limit_updates": [],
+      "name": "Cabin facility class_3 prohibited for FDP band 16.5167–17 hours",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.extended_fdp.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this cabin-rest table cell"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 17.016666666666666,
+                  "upper": 17.5
+                },
+                "field": "augmentation.extended_fdp.duration",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "class_1"
+                },
+                "field": "augmentation.cabin_crew.rest_facility_class",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Exact source table cell"
+            }
+          }
+        ]
+      },
+      "id": "34789a20-1f6d-524b-8ad2-567cc125faf0",
+      "limit": null,
+      "limit_updates": [],
+      "name": "Cabin crew minimum total in-flight rest: class_1, FDP 17.0167–17.5 hours",
+      "requirement": {
+        "default": {
+          "duration": "PT3H25M",
+          "kind": "duration_value",
+          "phrase": "Source minimum 3.41667 hours"
+        },
+        "items": []
+      },
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.cabin_crew.allocated_rest.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this cabin-rest table cell"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 17.016666666666666,
+                  "upper": 17.5
+                },
+                "field": "augmentation.extended_fdp.duration",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "class_2"
+                },
+                "field": "augmentation.cabin_crew.rest_facility_class",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Exact source table cell"
+            }
+          }
+        ]
+      },
+      "id": "6c072881-1c0a-551e-a3ff-9b4163d9e5d6",
+      "limit": {
+        "default": {
+          "duration": "PT0S",
+          "kind": "duration_value",
+          "phrase": "Explicitly prohibited source table cell"
+        },
+        "items": []
+      },
+      "limit_updates": [],
+      "name": "Cabin facility class_2 prohibited for FDP band 17.0167–17.5 hours",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.extended_fdp.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this cabin-rest table cell"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 17.016666666666666,
+                  "upper": 17.5
+                },
+                "field": "augmentation.extended_fdp.duration",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "class_3"
+                },
+                "field": "augmentation.cabin_crew.rest_facility_class",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Exact source table cell"
+            }
+          }
+        ]
+      },
+      "id": "4c958e20-eb73-58a2-8adc-afa7f619d973",
+      "limit": {
+        "default": {
+          "duration": "PT0S",
+          "kind": "duration_value",
+          "phrase": "Explicitly prohibited source table cell"
+        },
+        "items": []
+      },
+      "limit_updates": [],
+      "name": "Cabin facility class_3 prohibited for FDP band 17.0167–17.5 hours",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.extended_fdp.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this cabin-rest table cell"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 17.516666666666666,
+                  "upper": 18.0
+                },
+                "field": "augmentation.extended_fdp.duration",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "class_1"
+                },
+                "field": "augmentation.cabin_crew.rest_facility_class",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Exact source table cell"
+            }
+          }
+        ]
+      },
+      "id": "fe5743d9-9bd4-5299-918e-cd5b1188d6ae",
+      "limit": null,
+      "limit_updates": [],
+      "name": "Cabin crew minimum total in-flight rest: class_1, FDP 17.5167–18 hours",
+      "requirement": {
+        "default": {
+          "duration": "PT3H50M",
+          "kind": "duration_value",
+          "phrase": "Source minimum 3.83333 hours"
+        },
+        "items": []
+      },
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.cabin_crew.allocated_rest.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this cabin-rest table cell"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 17.516666666666666,
+                  "upper": 18.0
+                },
+                "field": "augmentation.extended_fdp.duration",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "class_2"
+                },
+                "field": "augmentation.cabin_crew.rest_facility_class",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Exact source table cell"
+            }
+          }
+        ]
+      },
+      "id": "3c64a036-d238-5c8a-b5bf-251e58835dee",
+      "limit": {
+        "default": {
+          "duration": "PT0S",
+          "kind": "duration_value",
+          "phrase": "Explicitly prohibited source table cell"
+        },
+        "items": []
+      },
+      "limit_updates": [],
+      "name": "Cabin facility class_2 prohibited for FDP band 17.5167–18 hours",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.extended_fdp.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this cabin-rest table cell"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.inflight_rest_augmentation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "range_number_comparison",
+                  "lower": 17.516666666666666,
+                  "upper": 18.0
+                },
+                "field": "augmentation.extended_fdp.duration",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "class_3"
+                },
+                "field": "augmentation.cabin_crew.rest_facility_class",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Exact source table cell"
+            }
+          }
+        ]
+      },
+      "id": "bfa4188e-1781-55ba-a457-07983b19d3fa",
+      "limit": {
+        "default": {
+          "duration": "PT0S",
+          "kind": "duration_value",
+          "phrase": "Explicitly prohibited source table cell"
+        },
+        "items": []
+      },
+      "limit_updates": [],
+      "name": "Cabin facility class_3 prohibited for FDP band 17.5167–18 hours",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "augmentation.extended_fdp.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    }
+  ],
+  "schema_gaps": [
+    "shared-definitions",
+    "rule-relationships",
+    "temporal-collection-definitions",
+    "source-bindings"
+  ],
+  "slug": "augmentation",
+  "sources": [
+    "ORO.FTL.105(5), (19), (17), Revision 24 (March 2026), pp. 855–856.",
+    "ORO.FTL.205(e), (d)(4), Revision 24, p. 867.",
+    "CS FTL.1.205(c), Revision 24, pp. 876–877.",
+    "CS FTL.1.220(f), Revision 24, p. 882.",
+    "GM1 ORO.FTL.105(17), Revision 24, p. 858.",
+    "GM1–2 CS FTL.1.205(c)(1)(ii), Revision 24, pp. 881–882."
+  ],
+  "title": "Augmentation and in-flight rest"
+}

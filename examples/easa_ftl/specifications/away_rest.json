@@ -1,0 +1,250 @@
+{
+  "concepts": {
+    "preceding_duty.duration": {
+      "meaning": "Duration of the preceding full duty, including post-flight duty.",
+      "unit": "hours"
+    },
+    "rest.accommodation_derogation_claimed": {
+      "meaning": "Whether the home-base suitable-accommodation derogation is claimed; the ordinary home-base rule is outside this family."
+    },
+    "rest.duration": {
+      "meaning": "Continuous, uninterrupted qualifying rest duration.",
+      "unit": "hours"
+    },
+    "rest.protected_sleep_opportunity.duration": {
+      "meaning": "Protected sleep opportunity contained within qualifying rest; this is independent of total rest duration.",
+      "unit": "hours"
+    },
+    "rest.suitable_accommodation": {
+      "meaning": "Whether suitable accommodation as defined by ORO.FTL.105 is provided."
+    },
+    "rest.travel_and_physiological_allowance.duration": {
+      "meaning": "Source AMC expression: 1 hour + 2 × max(travel time to suitable accommodation − 0.5 hours, 0). This family records the symbolic expression but does not select its calculation order relative to the preceding-duty maximum.",
+      "unit": "hours"
+    },
+    "rest.travel_to_suitable_accommodation.duration": {
+      "meaning": "Travel time to suitable accommodation used by AMC1 ORO.FTL.235(b).",
+      "unit": "hours"
+    },
+    "succeeding_duty.base_context": {
+      "meaning": "Whether the FDP after this rest starts at home_base or away_base."
+    }
+  },
+  "number": 6,
+  "projections": [],
+  "represented": [
+    "10-hour rest floor raised to preceding full-duty duration",
+    "Separate eight-hour protected sleep opportunity",
+    "Applicability covers an away-base FDP and a home-base suitable-accommodation derogation when claimed and suitable accommodation is recorded",
+    "The AMC travel allowance formula is retained as a source expression; its calculation order is unresolved in the cited wording and is not a schema expressiveness gap",
+    "Travel allowance application and crew/rest/FDP temporal links remain external documentary interpretation and relationship work"
+  ],
+  "rules": [
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside away-base or claimed suitable-accommodation derogation scope"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "away_base"
+                },
+                "field": "succeeding_duty.base_context",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "FDP starts away from home base"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "home_base"
+                },
+                "field": "succeeding_duty.base_context",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "rest.accommodation_derogation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "rest.suitable_accommodation",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Home-base suitable-accommodation derogation claimed"
+            }
+          }
+        ]
+      },
+      "id": "fb006e08-59e6-567e-88ab-33f80d908d8c",
+      "limit": null,
+      "limit_updates": [],
+      "name": "Away-base or suitable-accommodation-derogation rest is at least max(10 hours, preceding full duty)",
+      "requirement": {
+        "default": {
+          "duration": "PT10H",
+          "kind": "duration_value",
+          "phrase": "10-hour minimum rest duration"
+        },
+        "items": []
+      },
+      "requirement_updates": [
+        {
+          "method": "max",
+          "name": "At least preceding full duty",
+          "table": {
+            "default": {
+              "clamp_lower": null,
+              "clamp_upper": null,
+              "field": "preceding_duty.duration",
+              "kind": "field_value",
+              "multiplier": 1.0,
+              "offset": 0.0,
+              "phrase": "Preceding full duty duration"
+            },
+            "items": []
+          }
+        }
+      ],
+      "scope": "employee_rest_time",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "rest.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Qualifying rest duration"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside away-base or claimed suitable-accommodation derogation scope"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "away_base"
+                },
+                "field": "succeeding_duty.base_context",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "FDP starts away from home base"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "home_base"
+                },
+                "field": "succeeding_duty.base_context",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "rest.accommodation_derogation_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "rest.suitable_accommodation",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Home-base suitable-accommodation derogation claimed"
+            }
+          }
+        ]
+      },
+      "id": "5b354afc-5ed8-5a62-b72c-c7d8a1d1feaf",
+      "limit": null,
+      "limit_updates": [],
+      "name": "Qualifying rest includes an eight-hour protected sleep opportunity",
+      "requirement": {
+        "default": {
+          "duration": "PT8H",
+          "kind": "duration_value",
+          "phrase": "Eight-hour sleep opportunity"
+        },
+        "items": []
+      },
+      "requirement_updates": [],
+      "scope": "employee_rest_time",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "rest.protected_sleep_opportunity.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Protected sleep opportunity"
+        },
+        "items": []
+      },
+      "value_updates": []
+    }
+  ],
+  "schema_gaps": [
+    "shared-definitions",
+    "rule-relationships",
+    "temporal-collection-definitions",
+    "source-bindings"
+  ],
+  "slug": "away_rest",
+  "sources": [
+    "ORO.FTL.235(a)–(b), EASA Easy Access Rules for Air Operations, Revision 24 (March 2026), p. 871.",
+    "ORO.FTL.105(21), (11), (4), Revision 24, pp. 855–856.",
+    "AMC1 ORO.FTL.235(b), Revision 24, p. 872."
+  ],
+  "title": "Minimum rest away from home base"
+}

@@ -1,0 +1,205 @@
+{
+  "concepts": {
+    "after_required_report": {
+      "meaning": "Whether the positioning interval occurs after the crew member's required report."
+    },
+    "before_first_operating_sector": {
+      "meaning": "Whether the positioning interval occurs before the crew member begins operating."
+    },
+    "category": {
+      "meaning": "Activity category; deadhead identifies a positioning activity."
+    },
+    "end": {
+      "meaning": "End instant of a positioning activity interval."
+    },
+    "pos_duty": {
+      "meaning": "Duty duration credited for positioning activity intervals.",
+      "unit": "hours"
+    },
+    "pos_fdp": {
+      "meaning": "FDP duration credited for positioning intervals after required report and before operating begins.",
+      "unit": "hours"
+    },
+    "positioning.operating_sector_credit": {
+      "meaning": "Operating-sector count attributable to positioning; ORO.FTL.215 gives positioning no operating-sector credit.",
+      "unit": "sectors"
+    },
+    "start": {
+      "meaning": "Start instant of a positioning activity interval."
+    }
+  },
+  "documentation_note": "The projections declare interval anchors, full-duration rates, and the symbolic ordering guards for pre-operating FDP credit. This schema defines no data-input contract or prepared-fact validator. Timeline ordering, positioning purpose versus other transport, person-to-activity links, and the relationship to the containing FDP require shared definitions. Post-operating positioning remains duty time and does not satisfy the pre-operating FDP guards.",
+  "number": 4,
+  "projections": [
+    {
+      "activity_projections": [
+        {
+          "method": "increase",
+          "name": "Count positioning as duty",
+          "table": {
+            "default": {
+              "kind": "none_value",
+              "phrase": "Do nothing"
+            },
+            "items": [
+              {
+                "condition": [
+                  {
+                    "comparison": {
+                      "case_sensitive": true,
+                      "kind": "equal_text_comparison",
+                      "text": "deadhead"
+                    },
+                    "field": "category",
+                    "reverse_match": false
+                  }
+                ],
+                "value": {
+                  "clamp_direction": "forwards",
+                  "clamp_lower": null,
+                  "clamp_upper": null,
+                  "end_anchor": "end",
+                  "end_field": null,
+                  "end_offset": "PT0S",
+                  "kind": "projection_value",
+                  "phrase": "Positioning interval credited as duty at full duration, in hours",
+                  "rate": 0.016666666666666666,
+                  "start_anchor": "start",
+                  "start_field": null,
+                  "start_offset": "PT0S"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "code": "pos_duty",
+      "duty_projections": [],
+      "employee_ground_time_projections": [],
+      "employee_rest_time_projections": [],
+      "id": "96e6d836-1059-54bd-be33-4c54e177b167",
+      "name": "Positioning duty credit",
+      "pairing_projections": []
+    },
+    {
+      "activity_projections": [
+        {
+          "method": "increase",
+          "name": "Include positioning after report and before operating begins in FDP",
+          "table": {
+            "default": {
+              "kind": "none_value",
+              "phrase": "Do nothing"
+            },
+            "items": [
+              {
+                "condition": [
+                  {
+                    "comparison": {
+                      "case_sensitive": true,
+                      "kind": "equal_text_comparison",
+                      "text": "deadhead"
+                    },
+                    "field": "category",
+                    "reverse_match": false
+                  },
+                  {
+                    "comparison": {
+                      "kind": "truth_comparison"
+                    },
+                    "field": "after_required_report",
+                    "reverse_match": false
+                  },
+                  {
+                    "comparison": {
+                      "kind": "truth_comparison"
+                    },
+                    "field": "before_first_operating_sector",
+                    "reverse_match": false
+                  }
+                ],
+                "value": {
+                  "clamp_direction": "forwards",
+                  "clamp_lower": null,
+                  "clamp_upper": null,
+                  "end_anchor": "end",
+                  "end_field": null,
+                  "end_offset": "PT0S",
+                  "kind": "projection_value",
+                  "phrase": "Pre-operating positioning interval included in FDP, in hours",
+                  "rate": 0.016666666666666666,
+                  "start_anchor": "start",
+                  "start_field": null,
+                  "start_offset": "PT0S"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "code": "pos_fdp",
+      "duty_projections": [],
+      "employee_ground_time_projections": [],
+      "employee_rest_time_projections": [],
+      "id": "e7b8c86f-389d-547f-a735-e8eb0d05bcb3",
+      "name": "Pre-operating positioning in FDP",
+      "pairing_projections": []
+    }
+  ],
+  "represented": [
+    "Positioning counts as duty",
+    "Positioning before operating begins and after report is included in FDP",
+    "Positioning contributes zero operating sectors"
+  ],
+  "rules": [
+    {
+      "applicability": {
+        "default": {
+          "applicable": true,
+          "kind": "applicable_value",
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "id": "17da5613-1d71-5f4a-b64b-4b0924fb48af",
+      "limit": {
+        "default": {
+          "kind": "number_value",
+          "number": 0.0,
+          "phrase": "Zero operating sectors"
+        },
+        "items": []
+      },
+      "limit_updates": [],
+      "name": "Positioning contributes zero operating sectors",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "positioning.operating_sector_credit",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Operating-sector credit attributable to positioning"
+        },
+        "items": []
+      },
+      "value_updates": []
+    }
+  ],
+  "schema_gaps": [
+    "shared-definitions",
+    "rule-relationships",
+    "temporal-collection-definitions",
+    "source-bindings"
+  ],
+  "slug": "positioning-accounting",
+  "sources": [
+    "ORO.FTL.215, Easy Access Rules for Air Operations Rev 24 (March 2026), PDF p. 870.",
+    "ORO.FTL.105(18), PDF p. 856."
+  ],
+  "title": "Positioning accounting"
+}

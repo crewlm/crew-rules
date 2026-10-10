@@ -1,0 +1,521 @@
+{
+  "concepts": {
+    "category": {
+      "meaning": "Activity category used by standby accounting projections; relevant values are airport_standby and other_standby."
+    },
+    "fdp.base_maximum.duration": {
+      "meaning": "Applicable maximum FDP before standby reductions.",
+      "unit": "hours"
+    },
+    "standby.accommodation": {
+      "meaning": "Accommodation provided to a crew member assigned airport standby."
+    },
+    "standby.airport.duration": {
+      "meaning": "Airport standby interval from reporting point to the end of the notified standby period.",
+      "unit": "hours"
+    },
+    "standby.airport_plus_assigned_fdp.duration": {
+      "meaning": "Airport standby duration plus the assigned FDP.",
+      "unit": "hours"
+    },
+    "standby.assigned_fdp.duration": {
+      "meaning": "Assigned FDP duration; exact start depends on airport versus other standby rules.",
+      "unit": "hours"
+    },
+    "standby.assigned_fdp_rule_scope": {
+      "meaning": "Whether the airport standby/FDP combination is in the cited ORO.FTL.205(b)/(d) scope."
+    },
+    "standby.assigned_fdp_started_during_standby": {
+      "meaning": "Whether assigned FDP starts before the notified airport-standby period ends."
+    },
+    "standby.extension_scope": {
+      "meaning": "Whether other standby precedes ordinary FDP or an FDP extended for split duty or in-flight rest."
+    },
+    "standby.first_operator_contact": {
+      "meaning": "Time of first operator contact during other standby; controls the overnight reduction exclusion."
+    },
+    "standby.operator_response_time": {
+      "meaning": "Operator-established time from call to reporting point, allowing reasonable arrival from place of rest.",
+      "unit": "minutes"
+    },
+    "standby.other.duration": {
+      "meaning": "Non-airport standby interval at home or suitable accommodation.",
+      "unit": "hours"
+    },
+    "standby.other.effective_duration": {
+      "meaning": "Other-standby duration after excluding the applicable 23:00–07:00 interval until first operator contact.",
+      "unit": "hours"
+    },
+    "standby.type": {
+      "meaning": "Standby category: airport_standby or other_standby."
+    },
+    "standby_and_fdp.awake_duration": {
+      "meaning": "Awake duration relevant to standby procedure design; this numeric duration is not checked by an individual roster Rule.",
+      "unit": "hours"
+    }
+  },
+  "number": 9,
+  "projections": [
+    {
+      "activity_projections": [
+        {
+          "method": "increase",
+          "name": "Airport standby counts fully as duty",
+          "table": {
+            "default": {
+              "kind": "none_value",
+              "phrase": "Do nothing"
+            },
+            "items": [
+              {
+                "condition": [
+                  {
+                    "comparison": {
+                      "case_sensitive": true,
+                      "kind": "equal_text_comparison",
+                      "text": "airport_standby"
+                    },
+                    "field": "category",
+                    "reverse_match": false
+                  }
+                ],
+                "value": {
+                  "clamp_direction": "forwards",
+                  "clamp_lower": null,
+                  "clamp_upper": null,
+                  "end_anchor": "end",
+                  "end_field": null,
+                  "end_offset": "PT0S",
+                  "kind": "projection_value",
+                  "phrase": "Airport standby counts fully as duty",
+                  "rate": 0.016666666666666666,
+                  "start_anchor": "start",
+                  "start_field": null,
+                  "start_offset": "PT0S"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "code": "airportDuty",
+      "duty_projections": [],
+      "employee_ground_time_projections": [],
+      "employee_rest_time_projections": [],
+      "id": "3c18d036-7409-59db-b653-de61a7602455",
+      "name": "Airport standby counts fully as duty",
+      "pairing_projections": []
+    },
+    {
+      "activity_projections": [
+        {
+          "method": "increase",
+          "name": "Other standby counts at 25 percent as duty",
+          "table": {
+            "default": {
+              "kind": "none_value",
+              "phrase": "Do nothing"
+            },
+            "items": [
+              {
+                "condition": [
+                  {
+                    "comparison": {
+                      "case_sensitive": true,
+                      "kind": "equal_text_comparison",
+                      "text": "other_standby"
+                    },
+                    "field": "category",
+                    "reverse_match": false
+                  }
+                ],
+                "value": {
+                  "clamp_direction": "forwards",
+                  "clamp_lower": null,
+                  "clamp_upper": null,
+                  "end_anchor": "end",
+                  "end_field": null,
+                  "end_offset": "PT0S",
+                  "kind": "projection_value",
+                  "phrase": "Other standby counts at 25 percent as duty",
+                  "rate": 0.004166666666666667,
+                  "start_anchor": "start",
+                  "start_field": null,
+                  "start_offset": "PT0S"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "code": "otherDuty",
+      "duty_projections": [],
+      "employee_ground_time_projections": [],
+      "employee_rest_time_projections": [],
+      "id": "abad81a7-6307-5497-857c-e4d846e9fbc7",
+      "name": "Other standby counts at 25 percent as duty",
+      "pairing_projections": []
+    }
+  ],
+  "represented": [
+    "Airport standby receives full duty projection credit",
+    "Other standby receives 25 percent duty projection credit",
+    "Airport standby reduction is explicitly computed as max(airport standby duration − 4 hours, 0)",
+    "Other standby reductions are explicitly computed as max(effective duration − 6 hours, 0), or max(effective duration − 8 hours, 0) for split-duty or in-flight-rest extension",
+    "Airport standby plus assigned FDP has a 16-hour limit only under ORO.FTL.205(b)/(d) scope",
+    "Other standby has a 16-hour maximum duration",
+    "Advance notification, accommodation, follow-on rest, contact event, and reasonable response-time clauses are retained as named documentary obligations",
+    "The 18-hour awake-time provision governs operator procedure design and is retained as text; no individual numeric Rule asserts that roster arithmetic proves awake time"
+  ],
+  "rules": [
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this standby rule's scope"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "airport_standby"
+                },
+                "field": "standby.type",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "standby.assigned_fdp_started_during_standby",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Declared standby rule scope"
+            }
+          }
+        ]
+      },
+      "id": "5f1555a0-c5fd-5f4d-8325-51a655a57929",
+      "limit": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "fdp.base_maximum.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "limit_updates": [
+        {
+          "method": "decrease",
+          "name": "Subtract max(airport standby duration − 4 hours, 0)",
+          "table": {
+            "default": {
+              "clamp_lower": 0.0,
+              "clamp_upper": null,
+              "field": "standby.airport.duration",
+              "kind": "field_value",
+              "multiplier": 1.0,
+              "offset": -4.0,
+              "phrase": "max(airport standby duration − 4 hours, 0)"
+            },
+            "items": []
+          }
+        }
+      ],
+      "name": "Airport standby beyond four hours reduces the maximum assigned FDP",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "standby.assigned_fdp.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this standby rule's scope"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "airport_standby"
+                },
+                "field": "standby.type",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "oro_ftl_205_b_or_d"
+                },
+                "field": "standby.assigned_fdp_rule_scope",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Declared standby rule scope"
+            }
+          }
+        ]
+      },
+      "id": "541ba5e3-07b4-56ea-96be-f9335d96cc47",
+      "limit": {
+        "default": {
+          "duration": "PT16H",
+          "kind": "duration_value",
+          "phrase": "16 hours"
+        },
+        "items": []
+      },
+      "limit_updates": [],
+      "name": "Airport standby plus assigned FDP is at most 16 hours within ORO.FTL.205(b)/(d) scope",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "standby.airport_plus_assigned_fdp.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this standby rule's scope"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "other_standby"
+                },
+                "field": "standby.type",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Declared standby rule scope"
+            }
+          }
+        ]
+      },
+      "id": "d972674f-9f85-5f3e-ba03-630b075af507",
+      "limit": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "fdp.base_maximum.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "limit_updates": [
+        {
+          "method": "decrease",
+          "name": "Subtract max(effective other standby − 6 hours, 0)",
+          "table": {
+            "default": {
+              "kind": "none_value",
+              "phrase": "Do nothing"
+            },
+            "items": [
+              {
+                "condition": [
+                  {
+                    "comparison": {
+                      "case_sensitive": true,
+                      "kind": "equal_text_comparison",
+                      "text": "ordinary"
+                    },
+                    "field": "standby.extension_scope",
+                    "reverse_match": false
+                  }
+                ],
+                "value": {
+                  "clamp_lower": 0.0,
+                  "clamp_upper": null,
+                  "field": "standby.other.effective_duration",
+                  "kind": "field_value",
+                  "multiplier": 1.0,
+                  "offset": -6.0,
+                  "phrase": "max(effective standby time − 6 hours, 0)"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "method": "decrease",
+          "name": "Subtract max(effective other standby − 8 hours, 0) for split-duty or in-flight-rest extension",
+          "table": {
+            "default": {
+              "kind": "none_value",
+              "phrase": "Do nothing"
+            },
+            "items": [
+              {
+                "condition": [
+                  {
+                    "comparison": {
+                      "case_sensitive": true,
+                      "kind": "equal_text_comparison",
+                      "text": "split_or_inflight_extension"
+                    },
+                    "field": "standby.extension_scope",
+                    "reverse_match": false
+                  }
+                ],
+                "value": {
+                  "clamp_lower": 0.0,
+                  "clamp_upper": null,
+                  "field": "standby.other.effective_duration",
+                  "kind": "field_value",
+                  "multiplier": 1.0,
+                  "offset": -8.0,
+                  "phrase": "max(effective standby time − 8 hours, 0)"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "name": "Other-standby FDP reduction uses the six-hour or extended eight-hour threshold",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "standby.assigned_fdp.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Outside this standby rule's scope"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "other_standby"
+                },
+                "field": "standby.type",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Declared standby rule scope"
+            }
+          }
+        ]
+      },
+      "id": "8244ca4a-cddc-5eb1-a070-cfddeba3f36f",
+      "limit": {
+        "default": {
+          "duration": "PT16H",
+          "kind": "duration_value",
+          "phrase": "16 hours"
+        },
+        "items": []
+      },
+      "limit_updates": [],
+      "name": "Other standby is at most 16 hours",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "standby.other.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    }
+  ],
+  "schema_gaps": [
+    "shared-definitions",
+    "rule-relationships",
+    "temporal-collection-definitions",
+    "source-bindings",
+    "qualitative-obligations"
+  ],
+  "slug": "standby",
+  "sources": [
+    "ORO.FTL.225, Revision 24 (March 2026), pp. 870–871.",
+    "CS FTL.1.225, Revision 24, pp. 882–883.",
+    "ORO.FTL.105(25)–(27), (3), (4), Revision 24, pp. 854–856.",
+    "GM1 CS FTL.1.225 and GM1 CS FTL.1.225(b), Revision 24, pp. 883–884."
+  ],
+  "title": "Standby accounting and FDP impact"
+}
