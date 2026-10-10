@@ -1,0 +1,273 @@
+{
+  "concepts": {
+    "crew": {
+      "meaning": "Same crew member whose rest events and intervening duties are counted."
+    },
+    "crew.monthly_recovery_rests_with_two_local_days.count": {
+      "meaning": "Number of qualifying recovery rests extended to two local days in this calendar month; a local day is 24 hours commencing at 00:00 local time.",
+      "unit": "count"
+    },
+    "rest.disruptive_duties_since_prior_rest.count": {
+      "meaning": "Night duties, early starts, or late finishes between the two qualifying recovery rests.",
+      "unit": "count"
+    },
+    "rest.duration": {
+      "meaning": "Continuous uninterrupted duration of one recurrent extended recovery rest.",
+      "unit": "hours"
+    },
+    "rest.gap_from_prior_qualifying_rest.duration": {
+      "meaning": "Elapsed interval from the preceding qualifying recovery-rest end to this rest start.",
+      "unit": "hours"
+    },
+    "rest.local_night_count": {
+      "meaning": "Count of local nights contained in this rest; each local night is 8 hours falling between 22:00 and 08:00 local time.",
+      "unit": "count"
+    },
+    "rest.sequence_position": {
+      "meaning": "Whether this candidate is the second recovery rest after the disruptive-duty interval."
+    }
+  },
+  "number": 7,
+  "projections": [],
+  "represented": [
+    "36-hour minimum and two local nights for each recurrent extended recovery rest",
+    "168-hour maximum measured from one qualifying rest end to the next qualifying rest start",
+    "Two rests extended to two local days in each calendar month, represented by an EmployeeTimePeriod month rule",
+    "60-hour minimum applies to the second rest after at least four intervening disruptive duties",
+    "Additional rest for time zones, FDP extensions, disruptive schedules, and home-base changes remains a distinct ORO.FTL.235(e) obligation",
+    "Event qualification, same-crew correlation, local-calendar construction, and roster history require temporal relationships"
+  ],
+  "rules": [
+    {
+      "applicability": {
+        "default": {
+          "applicable": true,
+          "kind": "applicable_value",
+          "phrase": "Candidate recovery rest supplied to evaluator"
+        },
+        "items": []
+      },
+      "id": "fd5c8475-76ba-5baf-97ed-429a2217388c",
+      "limit": null,
+      "limit_updates": [],
+      "name": "Each recurrent extended recovery rest is at least 36 hours",
+      "requirement": {
+        "default": {
+          "duration": "P1DT12H",
+          "kind": "duration_value",
+          "phrase": "Each recurrent extended recovery rest is at least 36 hours"
+        },
+        "items": []
+      },
+      "requirement_updates": [],
+      "scope": "employee_rest_time",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "rest.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Each recurrent extended recovery rest is at least 36 hours"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": true,
+          "kind": "applicable_value",
+          "phrase": "Candidate recovery rest supplied to evaluator"
+        },
+        "items": []
+      },
+      "id": "26db696e-cf4b-5c67-9f2e-4a18b29bcfa4",
+      "limit": null,
+      "limit_updates": [],
+      "name": "Each recurrent extended recovery rest contains two local nights",
+      "requirement": {
+        "default": {
+          "kind": "number_value",
+          "number": 2.0,
+          "phrase": "Each recurrent extended recovery rest contains two local nights"
+        },
+        "items": []
+      },
+      "requirement_updates": [],
+      "scope": "employee_rest_time",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "rest.local_night_count",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Each recurrent extended recovery rest contains two local nights"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": true,
+          "kind": "applicable_value",
+          "phrase": "Candidate recovery rest supplied to evaluator"
+        },
+        "items": []
+      },
+      "id": "ff42cdb6-1eb5-52cf-ac43-e948b662ee11",
+      "limit": {
+        "default": {
+          "duration": "P7D",
+          "kind": "duration_value",
+          "phrase": "Gap between qualifying recovery rests is at most 168 hours"
+        },
+        "items": []
+      },
+      "limit_updates": [],
+      "name": "Gap between qualifying recovery rests is at most 168 hours",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "employee_rest_time",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "rest.gap_from_prior_qualifying_rest.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Gap between qualifying recovery rests is at most 168 hours"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": true,
+          "kind": "applicable_value",
+          "phrase": "One calendar-month period"
+        },
+        "items": []
+      },
+      "id": "a11d130e-cab0-526e-9f06-226d59f37192",
+      "limit": null,
+      "limit_updates": [],
+      "name": "At least two recurrent recovery rests in each calendar month are extended to two local days",
+      "requirement": {
+        "default": {
+          "kind": "number_value",
+          "number": 2.0,
+          "phrase": "Two qualifying rests per month"
+        },
+        "items": []
+      },
+      "requirement_updates": [],
+      "scope": "employee_time_period",
+      "time_period": {
+        "anchor": "month",
+        "duration": 1,
+        "unit": "month"
+      },
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "crew.monthly_recovery_rests_with_two_local_days.count",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Qualifying rests with two local days in this month"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Not the specified disruptive interval"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "ge_number_comparison",
+                  "number": 4.0
+                },
+                "field": "rest.disruptive_duties_since_prior_rest.count",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "case_sensitive": true,
+                  "kind": "equal_text_comparison",
+                  "text": "second"
+                },
+                "field": "rest.sequence_position",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Second rest after four or more disruptive duties"
+            }
+          }
+        ]
+      },
+      "id": "0d7e9464-751c-58a5-ab02-912dd049617d",
+      "limit": null,
+      "limit_updates": [],
+      "name": "Second recovery rest is at least 60 hours after four or more disruptive duties",
+      "requirement": {
+        "default": {
+          "duration": "P2DT12H",
+          "kind": "duration_value",
+          "phrase": "60 hours"
+        },
+        "items": []
+      },
+      "requirement_updates": [],
+      "scope": "employee_rest_time",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "rest.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    }
+  ],
+  "schema_gaps": [
+    "shared-definitions",
+    "rule-relationships",
+    "temporal-collection-definitions",
+    "source-bindings"
+  ],
+  "slug": "recovery_rest",
+  "sources": [
+    "ORO.FTL.235(d)–(e), Revision 24 (March 2026), p. 872.",
+    "ORO.FTL.105(15), (16), (21), (8)–(9), Revision 24, pp. 855–856.",
+    "CS FTL.1.235(a), Revision 24, p. 885.",
+    "GM1 ORO.FTL.230(a), Revision 24, p. 871."
+  ],
+  "title": "Recurrent extended recovery rest"
+}

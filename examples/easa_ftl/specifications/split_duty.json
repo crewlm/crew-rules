@@ -1,0 +1,699 @@
+{
+  "concepts": {
+    "duty.basic_extension_with_split_or_inflight_extension_occurrences.count": {
+      "meaning": "Occurrences combining a basic daily extension with split-duty or in-flight-rest extension.",
+      "unit": "count"
+    },
+    "duty.prohibited_split_or_inflight_extension_combinations.count": {
+      "meaning": "Occurrences combining split duty with in-flight rest.",
+      "unit": "count"
+    },
+    "duty.split_duty_extension_claimed": {
+      "meaning": "Whether an extension due to split duty is claimed for this duty."
+    },
+    "fdp.basic_maximum.duration": {
+      "meaning": "Applicable basic daily maximum FDP before the split-duty extension.",
+      "unit": "hours"
+    },
+    "fdp.duration": {
+      "meaning": "Full FDP duration including every split-duty break.",
+      "unit": "hours"
+    },
+    "fdp.duration_without_split_break": {
+      "meaning": "FDP duration excluding the full break interval, used to express break inclusion.",
+      "unit": "hours"
+    },
+    "split_break.accommodation_missing.count": {
+      "meaning": "Crew members lacking accommodation in other split-duty cases.",
+      "unit": "crew members"
+    },
+    "split_break.duration": {
+      "meaning": "Full break interval within the FDP; it remains counted in full as FDP.",
+      "unit": "hours"
+    },
+    "split_break.encroaches_wocl": {
+      "meaning": "Whether the break overlaps WOCL, 02:00–05:59 in the crew member's acclimatised time zone."
+    },
+    "split_break.excluded_duty_and_travel.duration": {
+      "meaning": "Combined operator-specified time excluded from the break for pre-flight duties, post-flight duties, and travel; minimum 30 minutes.",
+      "unit": "hours"
+    },
+    "split_break.other_accommodation_extension_eligible.duration": {
+      "meaning": "For CS FTL.1.220(e) cases only, creditable actual break duration after excluding time beyond six hours and time overlapping WOCL.",
+      "unit": "hours"
+    },
+    "split_break.qualified_duration": {
+      "meaning": "Consecutive task-free break after operator-specified pre-flight, post-flight, and travel exclusions; at least three hours.",
+      "unit": "hours"
+    },
+    "split_break.suitable_accommodation": {
+      "meaning": "Whether suitable accommodation is provided for this break."
+    },
+    "split_break.suitable_accommodation_missing.count": {
+      "meaning": "Crew members lacking required suitable accommodation for a triggered break.",
+      "unit": "crew members"
+    },
+    "split_duty.following_reduced_rest_occurrences.count": {
+      "meaning": "Occurrences of split duty immediately following reduced rest.",
+      "unit": "count"
+    }
+  },
+  "number": 8,
+  "projections": [],
+  "represented": [
+    "Minimum three consecutive net break hours",
+    "Lower-bound FDP consistency constraint adds the full break to the interval without it; it does not derive exact FDP from the timeline",
+    "Maximum extension is half of the eligible break added to the applicable basic FDP maximum",
+    "Operator-specified exclusions total at least 30 minutes",
+    "Suitable accommodation is required at six hours or more or on any WOCL overlap; accommodation is required otherwise",
+    "In CS FTL.1.220(e) other-break cases only, time beyond six hours or overlapping WOCL is excluded from extension-credit duration; the suitable-accommodation branch uses qualified break duration",
+    "Reduced-rest and extension-combination prohibitions are represented as zero-occurrence constraints"
+  ],
+  "rules": [
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "No split-duty extension claimed"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.split_duty_extension_claimed",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Split-duty extension claimed"
+            }
+          }
+        ]
+      },
+      "id": "025673a6-dba0-5306-a5ab-a0999aa8c6da",
+      "limit": null,
+      "limit_updates": [],
+      "name": "Full FDP is at least the interval without the break plus the complete split-duty break",
+      "requirement": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "fdp.duration_without_split_break",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "requirement_updates": [
+        {
+          "method": "increase",
+          "name": "Include the complete break duration",
+          "table": {
+            "default": {
+              "clamp_lower": null,
+              "clamp_upper": null,
+              "field": "split_break.duration",
+              "kind": "field_value",
+              "multiplier": 1.0,
+              "offset": 0.0,
+              "phrase": "Matched"
+            },
+            "items": []
+          }
+        }
+      ],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "fdp.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "No split-duty extension claimed"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.split_duty_extension_claimed",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Split-duty extension claimed"
+            }
+          }
+        ]
+      },
+      "id": "5fa7ab7b-28ee-50ee-bcac-733ab55f5da9",
+      "limit": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "fdp.basic_maximum.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "limit_updates": [
+        {
+          "method": "increase",
+          "name": "Add up to 50 percent of the extension-eligible break",
+          "table": {
+            "default": {
+              "kind": "none_value",
+              "phrase": "Do nothing"
+            },
+            "items": [
+              {
+                "condition": [
+                  {
+                    "comparison": {
+                      "kind": "truth_comparison"
+                    },
+                    "field": "split_break.suitable_accommodation",
+                    "reverse_match": false
+                  }
+                ],
+                "value": {
+                  "clamp_lower": null,
+                  "clamp_upper": null,
+                  "field": "split_break.qualified_duration",
+                  "kind": "field_value",
+                  "multiplier": 0.5,
+                  "offset": 0.0,
+                  "phrase": "Half of qualified break when suitable accommodation is provided"
+                }
+              },
+              {
+                "condition": [
+                  {
+                    "comparison": {
+                      "kind": "false_comparison"
+                    },
+                    "field": "split_break.suitable_accommodation",
+                    "reverse_match": false
+                  }
+                ],
+                "value": {
+                  "clamp_lower": null,
+                  "clamp_upper": null,
+                  "field": "split_break.other_accommodation_extension_eligible.duration",
+                  "kind": "field_value",
+                  "multiplier": 0.5,
+                  "offset": 0.0,
+                  "phrase": "Half of eligible break in other cases after CS FTL.1.220(e) exclusions"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "name": "FDP with split duty is no more than the basic maximum plus half the eligible break",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "fdp.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "No suitable-accommodation trigger"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.split_duty_extension_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "ge_number_comparison",
+                  "number": 6.0
+                },
+                "field": "split_break.duration",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Break is at least six hours"
+            }
+          },
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.split_duty_extension_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "split_break.encroaches_wocl",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Break encroaches WOCL"
+            }
+          }
+        ]
+      },
+      "id": "71de1769-2359-5950-9964-48ee742cd7c5",
+      "limit": {
+        "default": {
+          "kind": "number_value",
+          "number": 0.0,
+          "phrase": "None"
+        },
+        "items": []
+      },
+      "limit_updates": [],
+      "name": "Suitable accommodation is provided for a break of at least six hours or any break encroaching WOCL",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "split_break.suitable_accommodation_missing.count",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Crew members without required suitable accommodation"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "Condition does not apply"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.split_duty_extension_claimed",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "lt_number_comparison",
+                  "number": 6.0
+                },
+                "field": "split_break.duration",
+                "reverse_match": false
+              },
+              {
+                "comparison": {
+                  "kind": "false_comparison"
+                },
+                "field": "split_break.encroaches_wocl",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Break is under six hours and does not encroach WOCL"
+            }
+          }
+        ]
+      },
+      "id": "2483b8a0-0560-53e3-b1f5-338960053d1f",
+      "limit": {
+        "default": {
+          "kind": "number_value",
+          "number": 0.0,
+          "phrase": "None"
+        },
+        "items": []
+      },
+      "limit_updates": [],
+      "name": "Accommodation is provided for other split-duty breaks",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "split_break.accommodation_missing.count",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Crew members without accommodation"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "No split-duty extension claimed"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.split_duty_extension_claimed",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Split-duty extension claimed"
+            }
+          }
+        ]
+      },
+      "id": "eaf310c4-c496-58a5-8d62-9649f2042f50",
+      "limit": null,
+      "limit_updates": [],
+      "name": "Operator-specified pre-flight, post-flight, and travel exclusions total at least 30 minutes",
+      "requirement": {
+        "default": {
+          "duration": "PT30M",
+          "kind": "duration_value",
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "split_break.excluded_duty_and_travel.duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "No split-duty extension claimed"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.split_duty_extension_claimed",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Split-duty extension claimed"
+            }
+          }
+        ]
+      },
+      "id": "3a0564db-ec3f-5b24-b1f5-53cf57b497dc",
+      "limit": null,
+      "limit_updates": [],
+      "name": "Split-duty break contains at least three consecutive qualified hours",
+      "requirement": {
+        "default": {
+          "duration": "PT3H",
+          "kind": "duration_value",
+          "phrase": "Three consecutive hours"
+        },
+        "items": []
+      },
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "split_break.qualified_duration",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "Matched"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "No split-duty extension claimed"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.split_duty_extension_claimed",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Split-duty extension claimed"
+            }
+          }
+        ]
+      },
+      "id": "7e7d94f2-389c-5c7b-9582-7e5fd86ff57d",
+      "limit": {
+        "default": {
+          "kind": "number_value",
+          "number": 0.0,
+          "phrase": "No prohibited occurrences"
+        },
+        "items": []
+      },
+      "limit_updates": [],
+      "name": "No split-duty occurrence follows reduced rest",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "split_duty.following_reduced_rest_occurrences.count",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "No split-duty occurrence follows reduced rest"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "No split-duty extension claimed"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.split_duty_extension_claimed",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Split-duty extension claimed"
+            }
+          }
+        ]
+      },
+      "id": "adb09d95-eb03-58c0-8d53-e56312b5d8d0",
+      "limit": {
+        "default": {
+          "kind": "number_value",
+          "number": 0.0,
+          "phrase": "No prohibited occurrences"
+        },
+        "items": []
+      },
+      "limit_updates": [],
+      "name": "No prohibited split-duty and in-flight-rest or basic-extension combination occurs",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "duty.prohibited_split_or_inflight_extension_combinations.count",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "No prohibited split-duty and in-flight-rest or basic-extension combination occurs"
+        },
+        "items": []
+      },
+      "value_updates": []
+    },
+    {
+      "applicability": {
+        "default": {
+          "applicable": false,
+          "kind": "applicable_value",
+          "phrase": "No split-duty extension claimed"
+        },
+        "items": [
+          {
+            "condition": [
+              {
+                "comparison": {
+                  "kind": "truth_comparison"
+                },
+                "field": "duty.split_duty_extension_claimed",
+                "reverse_match": false
+              }
+            ],
+            "value": {
+              "applicable": true,
+              "kind": "applicable_value",
+              "phrase": "Split-duty extension claimed"
+            }
+          }
+        ]
+      },
+      "id": "6a0de9a8-9ca8-566a-80aa-3021e80e299d",
+      "limit": {
+        "default": {
+          "kind": "number_value",
+          "number": 0.0,
+          "phrase": "No prohibited occurrences"
+        },
+        "items": []
+      },
+      "limit_updates": [],
+      "name": "No basic daily extension is combined with split duty or in-flight-rest extension",
+      "requirement": null,
+      "requirement_updates": [],
+      "scope": "duty",
+      "value": {
+        "default": {
+          "clamp_lower": null,
+          "clamp_upper": null,
+          "field": "duty.basic_extension_with_split_or_inflight_extension_occurrences.count",
+          "kind": "field_value",
+          "multiplier": 1.0,
+          "offset": 0.0,
+          "phrase": "No basic daily extension is combined with split duty or in-flight-rest extension"
+        },
+        "items": []
+      },
+      "value_updates": []
+    }
+  ],
+  "schema_gaps": [
+    "shared-definitions",
+    "rule-relationships",
+    "temporal-collection-definitions",
+    "source-bindings"
+  ],
+  "slug": "split_duty",
+  "sources": [
+    "ORO.FTL.220, Revision 24 (March 2026), p. 870.",
+    "CS FTL.1.220, Revision 24, p. 882.",
+    "ORO.FTL.105(6), (4), (3), (28), Revision 24, pp. 854–856.",
+    "ORO.FTL.205(d)(4), Revision 24, p. 867.",
+    "GM1 CS FTL.1.220(b), Revision 24, p. 882."
+  ],
+  "title": "Split duty"
+}
