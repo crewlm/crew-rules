@@ -185,7 +185,24 @@ try {
   const persistedDuringInvalid = await page.evaluate((id) => JSON.parse(localStorage.getItem(`airspec.rule-draft:${id}`)), firstModel.id);
   assert.equal(persistedDuringInvalid.revision, 1);
   assert.deepEqual(persistedDuringInvalid.rule, originalRule);
+
+  // JSON numeric overflow parses as Infinity in JavaScript, so reject it before save/export and keep the raw editor text.
+  const overflowDraft = structuredClone(originalRule);
+  overflowDraft.value.default = { kind: 'number_value', number: 'AIRSPEC_OVERFLOW_SENTINEL' };
+  const overflowText = JSON.stringify(overflowDraft, null, 2).replace('"AIRSPEC_OVERFLOW_SENTINEL"', '1e400');
+  await editor.fill(overflowText);
+  await page.getByText('Needs correction', { exact: true }).waitFor();
+  await page.getByText(/survive JSON serialization and parsing unchanged/).waitFor();
+  assert.equal(await editor.inputValue(), overflowText, 'rejecting 1e400 must not normalize or erase the editor text');
+  const overflowDiff = await page.locator('.diff-row').filter({ hasText: 'value.default.number' }).innerText();
+  assert.match(overflowDiff, /Infinity/, 'the changed-path view should show the parsed overflow value instead of JSON null');
+  assert.equal(await page.getByRole('button', { name: 'Save locally' }).isDisabled(), true);
+  assert.equal(await page.getByRole('button', { name: 'Export versioned JSON' }).isDisabled(), true);
+  const persistedDuringOverflow = await page.evaluate((id) => JSON.parse(localStorage.getItem(`airspec.rule-draft:${id}`)), firstModel.id);
+  assert.equal(persistedDuringOverflow.revision, 1);
+  assert.deepEqual(persistedDuringOverflow.rule, originalRule, 'overflow rejection must retain the prior safe stored revision');
   await editor.fill(JSON.stringify(originalRule, null, 2));
+  await page.getByText('Valid · non-executable', { exact: true }).waitFor();
 
   // Dirty edits survive definition and workspace navigation.
   const changed = structuredClone(originalRule);

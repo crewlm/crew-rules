@@ -36,7 +36,9 @@ per-definition and workspace-tab edit retention, automatic revision persistence
 before export, the revision high-water mark across source resets, stale writes
 and resets from a second tab, stable identity across repeated exports, source
 provenance, and page reload restoration. The AirSpec unit and catalogue Python
-tests also share 67 numeric, duration, time, datetime, and hashable-set cases;
-Python's `AnyRule` parser is the acceptance oracle for the browser validator.
+tests also share 69 numeric, duration, time, datetime, and hashable-set cases.
+The tests include a JSON-safety boundary for non-finite values that Python's
+`AnyRule` parser accepts in memory, because those values cannot be preserved in
+the browser's local storage and export round trip.
 
 The existing fast AirSpec unit checks remain available with `npm test`.

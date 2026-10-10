@@ -44,6 +44,37 @@ const UPDATE_METHODS = new Set(['set', 'increase', 'decrease', 'max', 'min', 'sc
 
 const issue = (path, code, message) => ({ path, code, message });
 
+export function findJsonRoundTripUnsafePath(value) {
+  const ancestors = new Set();
+  const visit = (candidate, path) => {
+    if (candidate === null || typeof candidate === 'string' || typeof candidate === 'boolean') return null;
+    if (typeof candidate === 'number') return Number.isFinite(candidate) && !Object.is(candidate, -0) ? null : path;
+    if (typeof candidate !== 'object') return path;
+    if (ancestors.has(candidate)) return path;
+    if (!Array.isArray(candidate) && ![Object.prototype, null].includes(Object.getPrototypeOf(candidate))) return path;
+
+    ancestors.add(candidate);
+    if (Array.isArray(candidate)) {
+      for (let index = 0; index < candidate.length; index += 1) {
+        if (!Object.hasOwn(candidate, index)) return `${path}[${index}]`;
+        const unsafePath = visit(candidate[index], `${path}[${index}]`);
+        if (unsafePath !== null) return unsafePath;
+      }
+    } else {
+      for (const key of Reflect.ownKeys(candidate)) {
+        if (typeof key !== 'string') return path;
+        const descriptor = Object.getOwnPropertyDescriptor(candidate, key);
+        if (!descriptor.enumerable || !Object.hasOwn(descriptor, 'value')) return `${path}.${key}`;
+        const unsafePath = visit(descriptor.value, `${path}.${key}`);
+        if (unsafePath !== null) return unsafePath;
+      }
+    }
+    ancestors.delete(candidate);
+    return null;
+  };
+  return visit(value, '$');
+}
+
 export function validateRuleDraft(draft) {
   const errors = [];
   const unsupported = [];
@@ -51,6 +82,8 @@ export function validateRuleDraft(draft) {
     errors.push(issue('$', 'DRAFT_NOT_OBJECT', 'Draft must be a JSON object.'));
     return { status: 'invalid', errors, unsupported };
   }
+  const unsafePath = findJsonRoundTripUnsafePath(draft);
+  if (unsafePath !== null) errors.push(issue(unsafePath, 'JSON_VALUE_UNSAFE', 'Draft values must survive JSON serialization and parsing unchanged; numeric values must be finite.'));
   if (draft.format !== DRAFT_FORMAT) errors.push(issue('format', 'FORMAT_MISMATCH', `format must be "${DRAFT_FORMAT}".`));
   if (draft.formatVersion !== FORMAT_VERSION) errors.push(issue('formatVersion', 'VERSION_UNSUPPORTED', `formatVersion must be "${FORMAT_VERSION}".`));
   if (typeof draft.definitionId !== 'string' || !draft.definitionId.trim()) errors.push(issue('definitionId', 'REQUIRED', 'A stable definitionId is required.'));
@@ -212,8 +245,9 @@ const DATETIME_NUMBER_STRING = /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)$/;
 
 function isPythonFloat(value) {
   if (typeof value === 'boolean') return true;
-  if (typeof value === 'number') return true;
-  return typeof value === 'string' && FLOAT_STRING.test(value);
+  if (typeof value === 'number') return Number.isFinite(value) && !Object.is(value, -0);
+  return typeof value === 'string' && FLOAT_STRING.test(value)
+    && Number.isFinite(Number(value.trim().replaceAll('_', '')));
 }
 
 function isPythonHashableJsonValue(value) {
@@ -315,16 +349,19 @@ function isPythonInteger(value) {
   return Number.isInteger(Number(value.replaceAll('_', '').trim()));
 }
 
-function stableJson(value) {
-  if (Array.isArray(value)) return value.map(stableJson);
-  if (value && typeof value === 'object') return Object.fromEntries(Object.keys(value).sort().map((key) => [key, stableJson(value[key])]));
-  return value;
+function sameJsonValue(left, right) {
+  if (Object.is(left, right)) return true;
+  if (!left || !right || typeof left !== 'object' || typeof right !== 'object' || Array.isArray(left) !== Array.isArray(right)) return false;
+  const leftKeys = Object.keys(left).sort();
+  const rightKeys = Object.keys(right).sort();
+  return leftKeys.length === rightKeys.length
+    && leftKeys.every((key, index) => key === rightKeys[index] && sameJsonValue(left[key], right[key]));
 }
 
 export function diffRuleDraft(before, after) {
   const changes = [];
   const walk = (left, right, path) => {
-    if (JSON.stringify(stableJson(left)) === JSON.stringify(stableJson(right))) return;
+    if (sameJsonValue(left, right)) return;
     if (left && right && typeof left === 'object' && typeof right === 'object' && !Array.isArray(left) && !Array.isArray(right)) {
       for (const key of [...new Set([...Object.keys(left), ...Object.keys(right)])].sort()) walk(left[key], right[key], path ? `${path}.${key}` : key);
     } else changes.push({ path: path || '$', before: left, after: right });

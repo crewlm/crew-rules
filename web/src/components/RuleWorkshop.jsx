@@ -52,6 +52,12 @@ function sameStoredDraft(left, right) {
   return JSON.stringify(stableJson(left)) === JSON.stringify(stableJson(right));
 }
 
+function displayChangeValue(value) {
+  if (Object.is(value, -0)) return '-0';
+  if (typeof value === 'number' && !Number.isFinite(value)) return String(value);
+  return JSON.stringify(value) ?? '—';
+}
+
 export function RuleWorkshop({ models, links, document, catalogueCommit }) {
   const [selectedId, setSelectedId] = useState(models[0]?.id ?? '');
   const [{ drafts: initialDrafts, savedDrafts: initialSaved, texts: initialTexts, notices: initialNotices }] = useState(() => initialDraftState(models, links, document, catalogueCommit));
@@ -203,7 +209,7 @@ export function RuleWorkshop({ models, links, document, catalogueCommit }) {
         {notice && <p className="workshop-notice" role="status">{notice}</p>}
         <div className="diff-panel"><div className="workshop-section-head"><h3>Changed paths</h3><span>{changes.length} changes</span></div>
           {!changes.length && <p className="empty-diff">No changes from the catalogue definition.</p>}
-          {changes.slice(0, 20).map((change) => <div className="diff-row" key={change.path}><code>{change.path}</code><span>{JSON.stringify(change.before) ?? '—'} <b>→</b> {JSON.stringify(change.after) ?? '—'}</span></div>)}
+          {changes.slice(0, 20).map((change) => <div className="diff-row" key={change.path}><code>{change.path}</code><span>{displayChangeValue(change.before)} <b>→</b> {displayChangeValue(change.after)}</span></div>)}
           {changes.length > 20 && <p className="empty-diff">Showing first 20 of {changes.length} changed paths.</p>}
         </div>
         <details className="provenance-json"><summary>Export provenance <span>{draft?.provenance?.length ?? 0} source links</span></summary><pre>{JSON.stringify(draft?.provenance ?? [], null, 2)}</pre></details>

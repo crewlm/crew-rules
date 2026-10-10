@@ -88,13 +88,44 @@ test('AnyRule structural errors stay invalid and separate from engine support', 
   assert.equal(validateRuleDraft(throwingUpdate).status, 'invalid');
 });
 
-test('67 canonical numeric, duration, time, datetime, and set cases match Python AnyRule', () => {
-  assert.equal(parityCases.length, 67);
+test('69 numeric, duration, time, datetime, and set cases apply AnyRule and JSON-safe constraints', () => {
+  assert.equal(parityCases.length, 69);
   for (const testCase of parityCases) {
-    const result = validateRuleDraft(parityRule(testCase));
+    const fixtureDraft = parityRule(testCase);
+    const result = validateRuleDraft(fixtureDraft);
     assert.equal(result.status !== 'invalid', testCase.valid, testCase.name);
     assert.equal(result.unsupported.length > 0, testCase.valid, `${testCase.name}: unsupported status tracks structural validity`);
+    if (testCase.valid) {
+      const reloaded = JSON.parse(JSON.stringify(fixtureDraft));
+      assert.deepEqual(reloaded, fixtureDraft, `${testCase.name}: fixture JSON round-trip must preserve its values`);
+      assert.deepEqual(validateRuleDraft(reloaded), result, `${testCase.name}: revalidation must preserve status and issues`);
+      const exportPayload = exportRuleDraft(reloaded);
+      const exported = JSON.parse(JSON.stringify(exportPayload));
+      assert.deepEqual(exported, exportPayload, `${testCase.name}: full exported definition JSON round-trip must preserve its values`);
+      assert.deepEqual(exported.rule, reloaded.rule, `${testCase.name}: exported rule JSON round-trip must preserve its values`);
+    }
   }
+});
+
+test('non-finite and JSON-normalized numbers are rejected by validation, export, and save', () => {
+  const values = [Infinity, NaN, -0, 'Infinity', 'NaN', '1e400'];
+  const valuesStore = new Map();
+  const storage = { setItem: (key, value) => valuesStore.set(key, value), getItem: (key) => valuesStore.get(key) ?? null, removeItem: (key) => valuesStore.delete(key) };
+  for (const number of values) {
+    const unsafe = structuredClone(draft);
+    unsafe.rule.value.default = { kind: 'number_value', number };
+    assert.equal(validateRuleDraft(unsafe).status, 'invalid', String(number));
+    assert.throws(() => exportRuleDraft(unsafe), /Invalid drafts/);
+    assert.throws(() => saveDraftLocally(storage, unsafe), /cannot survive JSON serialization|Invalid drafts/);
+  }
+  assert.equal(loadDraftLocally(storage, draft.definitionId), null, 'unsafe drafts must not enter local storage');
+
+  const unsafeExtra = structuredClone(draft);
+  unsafeExtra.unused = { number: Infinity };
+  assert.ok(validateRuleDraft(unsafeExtra).errors.some((item) => item.code === 'JSON_VALUE_UNSAFE'), 'the JSON-safety check must cover the entire draft');
+
+  const negativeZeroEdit = { ...draft, rule: { ...draft.rule, value: { ...draft.rule.value, default: { kind: 'number_value', number: -0 } } } };
+  assert.equal(diffRuleDraft(draft, negativeZeroEdit).some((change) => change.path === 'rule.value.default.number'), true, 'the changed-path view must distinguish negative zero from zero');
 });
 
 test('updates require their matching base requirement or limit', () => {

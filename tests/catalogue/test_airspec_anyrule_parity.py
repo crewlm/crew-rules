@@ -85,13 +85,13 @@ def parity_rule(case):
 
 
 @pytest.mark.parametrize("case", PARITY_CASES, ids=lambda case: case["name"])
-def test_js_anyrule_validator_cases_match_python_parser(case):
+def test_python_anyrule_acceptance_matches_each_fixture_expectation(case):
     try:
         AnyRule.validate_python(parity_rule(case))
         python_accepts = True
     except ValidationError:
         python_accepts = False
-    assert python_accepts is case["valid"]
+    assert python_accepts is case.get("pythonValid", case["valid"])
 
 
 @pytest.mark.parametrize(

@@ -26,6 +26,8 @@ The browser's rule workshop uses a versioned, engine-independent JSON contract. 
 
 `definitionId` is stable across revisions, while `revision` is a positive integer. Each provenance link preserves the source unit ID, citation, relation, note, source text, and locator where available. `coverageGaps` records limitations from the catalogue interpretation independently of executable support.
 
+Drafts and exports must round-trip through JSON serialization and parsing without changing values. Numeric values must remain finite and round-trip safe, including float fields supplied as strings; non-finite values, negative zero (which browser JSON serialization normalizes), and overflowing numbers such as `1e400` are invalid even where Python's `AnyRule` or float parser accepts them in memory. This JSON-safe boundary prevents local storage and exports from silently changing those values.
+
 ## Functions
 
 - `validateRuleDraft(draft)` returns `{status, errors, unsupported}`. `status` is `invalid` when structure is malformed and `valid_non_executable` for structurally valid drafts. `errors` are structural issues with `{path, code, message}`. `unsupported` currently reports `ENGINE_DISCONNECTED`; this means validity is not a compliance result.
